@@ -1,0 +1,250 @@
+{
+  "active": true,
+  "connections": {
+    "pesquisa_variavel_n8n_fluxo_api_oficial": {
+      "main": [
+        [
+          {
+            "node": "consulta_chip_api_oficial",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "consulta_chip_api_oficial": {
+      "main": [
+        [
+          {
+            "node": "busca_fluxo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "busca_fluxo": {
+      "main": [
+        [
+          {
+            "node": "envia_template",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "fluxo_chamado": {
+      "main": [
+        [
+          {
+            "node": "pesquisa_variavel_n8n_fluxo_api_oficial",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-03-06T21:56:35.028Z",
+  "id": "nSwxdbC0jWzlazQq",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "⌚[Fabio Soares][Manychat] - Envia Fluxo",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "select",
+        "table": {
+          "__rl": true,
+          "value": "variaveis_globais_n8n",
+          "mode": "list",
+          "cachedResultName": "variaveis_globais_n8n"
+        },
+        "where": {
+          "values": [
+            {
+              "column": "nome_variavel",
+              "value": "URL do Fluxo de Rotacionamento de API Oficial"
+            }
+          ]
+        },
+        "combineConditions": "OR",
+        "options": {}
+      },
+      "id": "76f3ba7e-5592-4b5c-aa65-fa37302cebaf",
+      "name": "pesquisa_variavel_n8n_fluxo_api_oficial",
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.4,
+      "position": [
+        112,
+        -48
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "mySql": {
+          "id": "SMjhjBLFctIENkHc",
+          "name": "[MySQL] - Fabio Soares"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $node[\"pesquisa_variavel_n8n_fluxo_api_oficial\"].json[\"valor_variavel\"] }}",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "id_user",
+              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_user\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        336,
+        -48
+      ],
+      "id": "93f8a9d9-c5b0-4a6f-97a4-0f353807bce0",
+      "name": "consulta_chip_api_oficial"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.manychat.com/fb/sending/sendFlow",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $node[\"consulta_chip_api_oficial\"].json[\"apikey\"] }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "subscriber_id",
+              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_manychat\"] }}"
+            },
+            {
+              "name": "flow_ns",
+              "value": "={{ $node[\"busca_fluxo\"].json[\"id_fluxo\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "da98d8af-558a-460b-9c5f-29d3f2a969c4",
+      "name": "envia_template",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        800,
+        -48
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT f.*\nFROM fluxo_wpp_etapas_funil f\nJOIN chips_api_oficial c ON f.id_chip_oficial = c.id\nWHERE c.telefone = '{{ $node[\"consulta_chip_api_oficial\"].json[\"telefone\"] }}'\nAND f.id_etapa_funil = {{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_etapa_funil\"] }};\n",
+        "options": {}
+      },
+      "id": "1fb268fb-aeed-4be6-aeb5-cabdad6e445a",
+      "name": "busca_fluxo",
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.4,
+      "position": [
+        576,
+        -48
+      ],
+      "credentials": {
+        "mySql": {
+          "id": "SMjhjBLFctIENkHc",
+          "name": "[MySQL] - Fabio Soares"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "path": "envia-fluxo-manychat",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -112,
+        -48
+      ],
+      "id": "4913e00d-b831-4d55-a26f-ea7444706825",
+      "name": "fluxo_chamado",
+      "webhookId": "b90b9788-6a0b-4ade-8c95-213c9d8415c3"
+    }
+  ],
+  "pinData": {
+    "consulta_chip_api_oficial": [
+      {
+        "json": {
+          "nome": "Camila Carvalho",
+          "telefone": "5519991041493",
+          "id_waba": "1246330733662195",
+          "apikey": "1930305:d4062f43d4b907a242c1a3ce43d11808"
+        }
+      }
+    ],
+    "fluxo_chamado": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n-n8n.zkgge2.easypanel.host",
+            "user-agent": "axios/1.7.4",
+            "content-length": "64",
+            "accept": "application/json,text/html,application/xhtml+xml,application/xml,text/*;q=0.9, image/*;q=0.8, */*;q=0.7",
+            "accept-encoding": "gzip, compress, deflate, br",
+            "content-type": "application/json",
+            "x-forwarded-for": "172.18.0.1",
+            "x-forwarded-host": "n8n-n8n.zkgge2.easypanel.host",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "4fe238010f60",
+            "x-real-ip": "172.18.0.1"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "id_etapa_funil": 19,
+            "id_user": 466092,
+            "id_manychat": "905638665"
+          },
+          "webhookUrl": "https://n8n-n8n.zkgge2.easypanel.host/webhook/envia-fluxo-manychat",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "JC1jRbnEV3QDh2TT"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2026-03-06T21:56:42.000Z",
+  "versionId": "2df1df67-86e7-41b4-ae02-56f8f5521134"
+}
