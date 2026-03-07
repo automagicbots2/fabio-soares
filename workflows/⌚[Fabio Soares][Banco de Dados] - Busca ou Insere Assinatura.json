@@ -1,0 +1,129 @@
+{
+  "active": true,
+  "connections": {
+    "executa_procedure": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "fluxo_chamado": {
+      "main": [
+        [
+          {
+            "node": "executa_procedure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-03-06T20:30:15.633Z",
+  "id": "YwfnfmnaypaC2ePo",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "⌚[Fabio Soares][Banco de Dados] - Busca ou Insere Assinatura",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "CALL busca_assinatura({{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_conversao\"] }}, {{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_produto\"] }}, '{{ $node[\"fluxo_chamado\"].json[\"body\"][\"data_conversao\"] }}', '{{ $node[\"fluxo_chamado\"].json[\"body\"][\"data_expiracao\"] }}', {{ $node[\"fluxo_chamado\"].json[\"body\"][\"status_da_compra\"] === \"Compra Reembolsada\" ? \"1\" : \"0\" }});\n",
+        "options": {
+          "detailedOutput": false
+        }
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.4,
+      "position": [
+        16,
+        48
+      ],
+      "id": "c7ee3c6e-1203-44db-934d-b0526ce6af53",
+      "name": "executa_procedure",
+      "credentials": {
+        "mySql": {
+          "id": "SMjhjBLFctIENkHc",
+          "name": "[MySQL] - Fabio Soares"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        208,
+        48
+      ],
+      "id": "e910aaad-f2a0-4741-bee4-eaadecb806ec",
+      "name": "Limit"
+    },
+    {
+      "parameters": {
+        "path": "add-subscription-bd",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -208,
+        48
+      ],
+      "id": "519d393a-2069-4c9f-9be0-2eb5f3961a25",
+      "name": "fluxo_chamado",
+      "webhookId": "7a046997-4089-434c-a0ae-f4da1d44546d"
+    }
+  ],
+  "pinData": {
+    "fluxo_chamado": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n-n8n.zkgge2.easypanel.host",
+            "user-agent": "axios/1.7.4",
+            "content-length": "146",
+            "accept": "application/json,text/html,application/xhtml+xml,application/xml,text/*;q=0.9, image/*;q=0.8, */*;q=0.7",
+            "accept-encoding": "gzip, compress, deflate, br",
+            "content-type": "application/json",
+            "x-forwarded-for": "172.18.0.1",
+            "x-forwarded-host": "n8n-n8n.zkgge2.easypanel.host",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "4fe238010f60",
+            "x-real-ip": "172.18.0.1"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "id_conversao": 20029,
+            "id_produto": 1,
+            "data_conversao": "2025-03-12 21:22:32",
+            "data_expiracao": "2026-03-13",
+            "status_da_compra": "Compra Reembolsada"
+          },
+          "webhookUrl": "https://n8n-n8n.zkgge2.easypanel.host/webhook/add-subscription-bd",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "JC1jRbnEV3QDh2TT"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2026-03-06T20:30:36.000Z",
+  "versionId": "efe161e1-a6ee-459e-9277-bf4fb188d762"
+}
