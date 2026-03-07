@@ -1,17 +1,6 @@
 {
-  "active": false,
+  "active": true,
   "connections": {
-    "GitHub": {
-      "main": [
-        [
-          {
-            "node": "Merge",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "github_status": {
       "main": [
         [
@@ -96,7 +85,7 @@
       "main": [
         [
           {
-            "node": "GitHub",
+            "node": "Get a file",
             "type": "main",
             "index": 0
           },
@@ -162,37 +151,27 @@
           }
         ]
       ]
+    },
+    "Get a file": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2026-03-06T17:58:20.986Z",
   "id": "fE04Q3hAxMHr66jZ",
   "isArchived": false,
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "name": "[Backup][GitHub] - Backup de Workflows",
   "nodes": [
-    {
-      "parameters": {
-        "authentication": "oAuth2",
-        "resource": "file",
-        "operation": "get",
-        "owner": "={{$node[\"Globals\"].json[\"repo\"][\"owner\"]}}",
-        "repository": "={{$node[\"Globals\"].json[\"repo\"][\"name\"]}}",
-        "filePath": "={{$node[\"Globals\"].json[\"repo\"][\"path\"]}}{{$json[\"name\"]}}.json",
-        "asBinaryProperty": false,
-        "additionalParameters": {}
-      },
-      "id": "611a9eed-27f3-468d-966c-25179cb9de07",
-      "name": "GitHub",
-      "type": "n8n-nodes-base.github",
-      "position": [
-        -816,
-        112
-      ],
-      "typeVersion": 1,
-      "alwaysOutputData": true,
-      "webhookId": "3f134038-002f-4750-9246-0510b3420370",
-      "continueOnFail": true
-    },
     {
       "parameters": {
         "dataType": "string",
@@ -274,7 +253,13 @@
         240
       ],
       "typeVersion": 1,
-      "webhookId": "d847f473-84ff-4947-a9d2-122bd47e0fc7"
+      "webhookId": "d847f473-84ff-4947-a9d2-122bd47e0fc7",
+      "credentials": {
+        "githubOAuth2Api": {
+          "id": "Mkid1fOQG3RfksCE",
+          "name": "[GitHub] - Automagic Bots"
+        }
+      }
     },
     {
       "parameters": {
@@ -294,7 +279,13 @@
         432
       ],
       "typeVersion": 1,
-      "webhookId": "5bc4d329-bc92-41e7-a060-56530928051f"
+      "webhookId": "5bc4d329-bc92-41e7-a060-56530928051f",
+      "credentials": {
+        "githubOAuth2Api": {
+          "id": "Mkid1fOQG3RfksCE",
+          "name": "[GitHub] - Automagic Bots"
+        }
+      }
     },
     {
       "parameters": {
@@ -320,7 +311,7 @@
             },
             {
               "name": "repo.name",
-              "value": "n8n-backup-workflows-wendell-carvalho"
+              "value": "fabio-soares"
             },
             {
               "name": "repo.path",
@@ -416,7 +407,13 @@
         -1264,
         272
       ],
-      "typeVersion": 1
+      "typeVersion": 1,
+      "credentials": {
+        "n8nApi": {
+          "id": "wHZJlHLLDbKWY8Np",
+          "name": "[n8n API]"
+        }
+      }
     },
     {
       "parameters": {
@@ -441,15 +438,46 @@
         240
       ],
       "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "file",
+        "operation": "get",
+        "owner": "={{$node[\"Globals\"].json[\"repo\"][\"owner\"]}}",
+        "repository": "={{$node[\"Globals\"].json[\"repo\"][\"name\"]}}",
+        "filePath": "={{$node[\"Globals\"].json[\"repo\"][\"path\"]}}{{$json[\"name\"]}}.json",
+        "asBinaryProperty": false,
+        "additionalParameters": {}
+      },
+      "id": "611a9eed-27f3-468d-966c-25179cb9de07",
+      "name": "Get a file",
+      "type": "n8n-nodes-base.github",
+      "position": [
+        -816,
+        112
+      ],
+      "typeVersion": 1,
+      "alwaysOutputData": true,
+      "webhookId": "3f134038-002f-4750-9246-0510b3420370",
+      "credentials": {
+        "githubOAuth2Api": {
+          "id": "Mkid1fOQG3RfksCE",
+          "name": "[GitHub] - Automagic Bots"
+        }
+      },
+      "continueOnFail": true
     }
   ],
   "pinData": {},
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "JC1jRbnEV3QDh2TT"
   },
   "staticData": null,
   "tags": [],
-  "triggerCount": 0,
-  "updatedAt": "2026-03-06T17:58:20.986Z",
-  "versionId": "884a3644-e7db-4a26-9a02-b363941a9526"
+  "triggerCount": 1,
+  "updatedAt": "2026-03-06T19:10:48.000Z",
+  "versionId": "1f8f891a-92a0-461d-84b4-f163214e6262"
 }
