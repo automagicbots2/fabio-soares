@@ -1,0 +1,124 @@
+{
+  "active": true,
+  "connections": {
+    "executa_procedure": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "fluxo_chamado": {
+      "main": [
+        [
+          {
+            "node": "executa_procedure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-03-06T20:34:28.479Z",
+  "id": "AYyDoGUSTeQyqgTS",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "⌚[Fabio Soares][Banco de Dados] - Busca ou Insere Cliente",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "CALL busca_cliente('{{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_user\"] }}', '{{ $node[\"fluxo_chamado\"].json[\"body\"][\"data_conversao\"] }}');",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.4,
+      "position": [
+        80,
+        -80
+      ],
+      "id": "fd34a7ec-8800-4635-89b2-e5d56bcbbe35",
+      "name": "executa_procedure",
+      "credentials": {
+        "mySql": {
+          "id": "SMjhjBLFctIENkHc",
+          "name": "[MySQL] - Fabio Soares"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        272,
+        -80
+      ],
+      "id": "d89184de-7ac9-41af-afbb-7b2bb879a98f",
+      "name": "Limit"
+    },
+    {
+      "parameters": {
+        "path": "add-customer-bd",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -144,
+        -80
+      ],
+      "id": "a9b4e909-e29a-48e9-b602-6810361d4477",
+      "name": "fluxo_chamado",
+      "webhookId": "4444154f-7de3-49ca-8e36-944610f0eb5b"
+    }
+  ],
+  "pinData": {
+    "fluxo_chamado": [
+      {
+        "json": {
+          "headers": {
+            "host": "webhookhetznerhenrysantos.automagicbots.com.br",
+            "user-agent": "axios/1.7.4",
+            "content-length": "53",
+            "accept": "application/json,text/html,application/xhtml+xml,application/xml,text/*;q=0.9, image/*;q=0.8, */*;q=0.7",
+            "accept-encoding": "gzip, compress, deflate, br",
+            "content-type": "application/json",
+            "x-forwarded-for": "172.18.0.1",
+            "x-forwarded-host": "webhookhetznerhenrysantos.automagicbots.com.br",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "b71525949d32",
+            "x-real-ip": "172.18.0.1"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "id_user": 29,
+            "data_conversao": "2025-01-15 16:16:09"
+          },
+          "webhookUrl": "https://webhookhetznerhenrysantos.automagicbots.com.br/webhook/add-customer-bd",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "JC1jRbnEV3QDh2TT"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2026-03-06T20:34:36.000Z",
+  "versionId": "6aaeaf72-695a-4c19-b9b6-81bf517d5f6f"
+}
