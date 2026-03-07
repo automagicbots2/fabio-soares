@@ -1,0 +1,1319 @@
+{
+  "active": true,
+  "connections": {
+    "cria_contato_manychat": {
+      "main": [
+        [
+          {
+            "node": "verifica_whatsapp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "verifica_whatsapp": {
+      "main": [
+        [],
+        [
+          {
+            "node": "atualiza_contato_manychat1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "pesquisa_user": {
+      "main": [
+        [
+          {
+            "node": "procura_subscriber_pelo_telefone_nativo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "erro_de_email_ou_telefone": {
+      "main": [
+        [
+          {
+            "node": "tem_campo_personalizado",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Stop and Error2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "atualiza_contato_manychat1": {
+      "main": [
+        [
+          {
+            "node": "erro_de_email_ou_telefone",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "procura_subscriber_pelo_telefone_nativo": {
+      "main": [
+        [
+          {
+            "node": "subscriber_existe",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "subscriber_existe": {
+      "main": [
+        [
+          {
+            "node": "atualiza_contato_manychat1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "procura_subscriber_pelo_email_nativo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "subscriber_existe1": {
+      "main": [
+        [
+          {
+            "node": "atualiza_contato_manychat1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "procura_subscriber_pelo_telefone_personalizado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "procura_subscriber_pelo_email_nativo": {
+      "main": [
+        [
+          {
+            "node": "subscriber_existe1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "formata_dados": {
+      "main": [
+        [
+          {
+            "node": "checkout",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "pesquisa_variavel_n8n_fluxo_api_oficial": {
+      "main": [
+        [
+          {
+            "node": "consulta_chip_api_oficial",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "consulta_chip_api_oficial": {
+      "main": [
+        [
+          {
+            "node": "pesquisa_user",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "subscriber_existe2": {
+      "main": [
+        [
+          {
+            "node": "atualiza_contato_manychat1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "cria_contato_manychat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "procura_subscriber_pelo_telefone_personalizado": {
+      "main": [
+        [
+          {
+            "node": "subscriber_existe2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "define_campos_personalizados_manychat": {
+      "main": [
+        [
+          {
+            "node": "retorna_dados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "formata_campos_deal2": {
+      "main": [
+        [
+          {
+            "node": "pesquisa_variavel_n8n_fluxo_api_oficial",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "formata_campos_deal3": {
+      "main": [
+        [
+          {
+            "node": "pesquisa_variavel_n8n_fluxo_api_oficial",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "agendamento": {
+      "main": [
+        [
+          {
+            "node": "pesquisa_json_fields_deal3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "pesquisa_json_fields_deal2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "pesquisa_json_fields_deal2": {
+      "main": [
+        [
+          {
+            "node": "formata_campos_deal2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "pesquisa_json_fields_deal3": {
+      "main": [
+        [
+          {
+            "node": "formata_campos_deal3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "checkout": {
+      "main": [
+        [
+          {
+            "node": "pesquisa_json_fields_deal1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "agendamento",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "pesquisa_json_fields_deal1": {
+      "main": [
+        [
+          {
+            "node": "formata_campos_deal1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "formata_campos_deal1": {
+      "main": [
+        [
+          {
+            "node": "pesquisa_variavel_n8n_fluxo_api_oficial",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "fluxo_chamado": {
+      "main": [
+        [
+          {
+            "node": "telefone_vazio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "telefone_vazio": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "formata_dados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "tem_campo_personalizado": {
+      "main": [
+        [
+          {
+            "node": "define_campos_personalizados_manychat",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "retorna_dados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-03-06T21:52:47.348Z",
+  "id": "5MGbjHZopR70KJdM",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "⌚[Fabio Soares][Manychat] - Cria ou Atualiza Contatos",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.manychat.com/fb/subscriber/createSubscriber",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "authorization",
+              "value": "=Bearer {{ $node[\"consulta_chip_api_oficial\"].json[\"apikey\"] }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "first_name",
+              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"nome\"] || $node[\"pesquisa_user\"].json[\"nome\"] || \"\" }}"
+            },
+            {
+              "name": "last_name",
+              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"sobrenome\"] || $node[\"pesquisa_user\"].json[\"sobrenome\"] || \"\" }}"
+            },
+            {
+              "name": "has_opt_in_sms",
+              "value": "true"
+            },
+            {
+              "name": "has_opt_in_email",
+              "value": "true"
+            },
+            {
+              "name": "consent_phrase",
+              "value": "Olá, aqui é da Automagic Bots. Posso ter seu contato?"
+            },
+            {
+              "name": "whatsapp_phone",
+              "value": "={{ $node[\"formata_dados\"].json[\"telefoneFormatado\"] || \"\"  }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b5c56a6a-45e3-437d-96c2-10f04977553a",
+      "name": "cria_contato_manychat",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        3104,
+        656
+      ],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "0b43ebf2-3b3b-4851-b3ff-a91252309dfd",
+              "leftValue": "={{ $json[\"error\"][\"message\"] }}",
+              "rightValue": "The input value is not a valid WhatsApp ID",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "4d31663f-771d-4745-b488-040e9636c0f9",
+      "name": "verifica_whatsapp",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        3328,
+        656
+      ]
+    },
+    {
+      "parameters": {
+        "errorMessage": "An error ocurred!"
+      },
+      "id": "d8d0afb0-8903-49d2-b9c0-de261381b9f4",
+      "name": "Stop and Error2",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        4064,
+        560
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "table": {
+          "__rl": true,
+          "value": "users",
+          "mode": "list",
+          "cachedResultName": "users"
+        },
+        "where": {
+          "values": [
+            {
+              "column": "id",
+              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_user\"] }}"
+            }
+          ]
+        },
+        "combineConditions": "OR",
+        "options": {}
+      },
+      "id": "fe32a4fe-f524-46e0-a1cf-64be1ae81033",
+      "name": "pesquisa_user",
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.4,
+      "position": [
+        1424,
+        256
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "mySql": {
+          "id": "SMjhjBLFctIENkHc",
+          "name": "[MySQL] - Fabio Soares"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json[\"error\"][\"message\"] }}",
+              "operation": "contains",
+              "value2": "This email address already exists"
+            },
+            {
+              "value1": "={{ $json[\"data\"][\"id\"] }}",
+              "operation": "isNotEmpty"
+            },
+            {
+              "value1": "={{ $json[\"error\"][\"message\"] }}",
+              "operation": "contains",
+              "value2": "Subscriber with the same phone number already exists in account"
+            },
+            {
+              "value1": "={{ $json[\"error\"][\"message\"] }}",
+              "operation": "contains",
+              "value2": "Email is invalid"
+            }
+          ]
+        },
+        "combineOperation": "any"
+      },
+      "id": "92b00296-0c4d-4212-b115-10360c57947f",
+      "name": "erro_de_email_ou_telefone",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        3824,
+        448
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.manychat.com/fb/subscriber/updateSubscriber",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "authorization",
+              "value": "=Bearer {{ $node[\"consulta_chip_api_oficial\"].json[\"apikey\"] }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "first_name",
+              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"nome\"] || $node[\"pesquisa_user\"].json[\"nome\"] || \"\" }}"
+            },
+            {
+              "name": "last_name",
+              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"sobrenome\"] || $node[\"pesquisa_user\"].json[\"sobrenome\"] || \"\" }}"
+            },
+            {
+              "name": "has_opt_in_sms",
+              "value": "true"
+            },
+            {
+              "name": "has_opt_in_email",
+              "value": "true"
+            },
+            {
+              "name": "consent_phrase",
+              "value": "Olá, aqui é da Automagic Bots. Posso ter seu contato?"
+            },
+            {
+              "name": "whatsapp_phone",
+              "value": "={{ $node[\"formata_dados\"].json[\"telefoneFormatado\"] || \"\"  }}"
+            },
+            {
+              "name": "phone",
+              "value": "=+{{ $node[\"formata_dados\"].json[\"telefoneFormatado\"] || \"\"  }}"
+            },
+            {
+              "name": "subscriber_id",
+              "value": "={{\n  $node[\"cria_contato_manychat\"].runIndex >= 0 \n    ? $node[\"cria_contato_manychat\"].json[\"data\"][\"id\"] : $node[\"procura_subscriber_pelo_telefone_personalizado\"].runIndex >= 0 \n    ? $node[\"procura_subscriber_pelo_telefone_personalizado\"].json[\"data\"][\"0\"][\"id\"] : $node[\"procura_subscriber_pelo_email_nativo\"].runIndex >= 0 \n      ? $node[\"procura_subscriber_pelo_email_nativo\"].json[\"data\"][\"id\"]\n    : $node[\"procura_subscriber_pelo_telefone_nativo\"].runIndex >= 0 \n      ? $node[\"procura_subscriber_pelo_telefone_nativo\"].json[\"data\"][\"id\"]\n              : null\n}}"
+            },
+            {
+              "name": "email",
+              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"email\"] || \"\" }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "14701c3c-fd1b-4c6a-9580-fffca1d8c56f",
+      "name": "atualiza_contato_manychat1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        3584,
+        448
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "url": "https://api.manychat.com/fb/subscriber/findBySystemField",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "phone",
+              "value": "=+{{ $node[\"formata_dados\"].json[\"telefoneFormatado\"] || \"\" }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $node[\"consulta_chip_api_oficial\"].json[\"apikey\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "8180872a-3dae-4832-91fd-436599d2f11f",
+      "name": "procura_subscriber_pelo_telefone_nativo",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1664,
+        256
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "f356d66b-c828-4460-8352-f048c50594d9",
+              "leftValue": "={{ $node[\"procura_subscriber_pelo_telefone_nativo\"].json[\"data\"][\"id\"] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1904,
+        256
+      ],
+      "id": "86fd43af-6961-4fc8-b609-5b887275b65a",
+      "name": "subscriber_existe"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "f356d66b-c828-4460-8352-f048c50594d9",
+              "leftValue": "={{ $node[\"procura_subscriber_pelo_email_nativo\"].json[\"data\"][\"id\"] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2352,
+        384
+      ],
+      "id": "cdd6bd54-63d4-4b02-8d56-d932e8e728cf",
+      "name": "subscriber_existe1"
+    },
+    {
+      "parameters": {
+        "url": "https://api.manychat.com/fb/subscriber/findBySystemField",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "email",
+              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"email\"] || \"\" }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $node[\"consulta_chip_api_oficial\"].json[\"apikey\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "fd9f46ff-52fc-4808-a2e4-1e8cc685f3df",
+      "name": "procura_subscriber_pelo_email_nativo",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        2112,
+        384
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Obtém o telefone do JSON\nconst telefoneOriginal = $node[\"fluxo_chamado\"].json[\"body\"][\"telefone\"] || \"\";\n\n// Verifica se o telefone está vazio\nif (!telefoneOriginal) {\n    return [{ json: { telefoneFormatado: \"Telefone vazio\" } }];\n}\n\n// Remove todos os caracteres não numéricos\nconst telefoneLimpo = telefoneOriginal.replace(/\\D/g, \"\");\n\n// Verifica se tem pelo menos 10 dígitos\nif (telefoneLimpo.length < 10) {\n    return [{ json: { telefoneFormatado: \"Número inválido\" } }];\n}\n\n// Verifica se o número começa com 55 (Brasil)\nconst isNacional = telefoneLimpo.startsWith(\"55\");\n\n// Se for internacional, retorna exatamente como veio\nif (!isNacional) {\n    return [{ json: { telefoneFormatado: telefoneLimpo } }];\n}\n\n// Se chegou até aqui, é do Brasil e precisa ser formatado\nconst telefoneSemDDI = telefoneLimpo.slice(2); // Remove o 55\nconst DDD = telefoneSemDDI.slice(0, 2);\nlet numero = telefoneSemDDI.slice(2);\n\n// Se DDD <= 28 e número tem 8 dígitos, adiciona o 9\nif (parseInt(DDD) <= 28 && numero.length === 8) {\n    numero = \"9\" + numero;\n}\n\n// Se DDD > 28 e número tem 8 dígitos, também adiciona o 9\nif (parseInt(DDD) > 28 && numero.length === 8) {\n    numero = \"9\" + numero;\n}\n\n// Retorna o número formatado com DDI (55)\nconst telefoneFormatado = `55${DDD}${numero}`;\n\nreturn [{ json: { telefoneFormatado } }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -176,
+        208
+      ],
+      "id": "2aff9dda-46fb-42af-bbf7-6f5d88680551",
+      "name": "formata_dados"
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "table": {
+          "__rl": true,
+          "value": "variaveis_globais_n8n",
+          "mode": "list",
+          "cachedResultName": "variaveis_globais_n8n"
+        },
+        "where": {
+          "values": [
+            {
+              "column": "nome_variavel",
+              "value": "URL do Fluxo de Rotacionamento de API Oficial"
+            }
+          ]
+        },
+        "combineConditions": "OR",
+        "options": {}
+      },
+      "id": "e2d362f8-b6ac-4bd5-a5ee-0374481b4873",
+      "name": "pesquisa_variavel_n8n_fluxo_api_oficial",
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.4,
+      "position": [
+        976,
+        256
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "mySql": {
+          "id": "SMjhjBLFctIENkHc",
+          "name": "[MySQL] - Fabio Soares"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $node[\"pesquisa_variavel_n8n_fluxo_api_oficial\"].json[\"valor_variavel\"] }}",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "id_user",
+              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_user\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1200,
+        256
+      ],
+      "id": "bbc54883-3b6f-4c79-a2e6-3aa221026808",
+      "name": "consulta_chip_api_oficial"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b7d2b83a-a6eb-467c-a6ae-328d63a322aa",
+              "name": "id_manychat",
+              "value": "={{\n  $node[\"cria_contato_manychat\"].runIndex >= 0 \n    ? $node[\"cria_contato_manychat\"].json[\"data\"][\"id\"] : $node[\"procura_subscriber_pelo_telefone_personalizado\"].runIndex >= 0 \n    ? $node[\"procura_subscriber_pelo_telefone_personalizado\"].json[\"data\"][\"0\"][\"id\"] : $node[\"procura_subscriber_pelo_email_nativo\"].runIndex >= 0 \n      ? $node[\"procura_subscriber_pelo_email_nativo\"].json[\"data\"][\"id\"]\n    : $node[\"procura_subscriber_pelo_telefone_nativo\"].runIndex >= 0 \n      ? $node[\"procura_subscriber_pelo_telefone_nativo\"].json[\"data\"][\"id\"]\n              : null\n}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        4592,
+        224
+      ],
+      "id": "b1b711d3-fc08-4450-926c-2edbbdc40cd7",
+      "name": "retorna_dados"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "f356d66b-c828-4460-8352-f048c50594d9",
+              "leftValue": "={{ $node[\"procura_subscriber_pelo_telefone_personalizado\"].json[\"data\"][\"0\"][\"id\"] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2864,
+        560
+      ],
+      "id": "85248f38-8cd0-4a05-8ab0-9059353cf7fe",
+      "name": "subscriber_existe2"
+    },
+    {
+      "parameters": {
+        "url": "https://api.manychat.com/fb/subscriber/findByCustomField",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "field_id",
+              "value": "=14325840"
+            },
+            {
+              "name": "field_value",
+              "value": "={{ $node[\"formata_dados\"].json[\"telefoneFormatado\"] || \"\" }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $node[\"consulta_chip_api_oficial\"].json[\"apikey\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "dc282219-dc66-4ae5-9557-1f6f57575fa3",
+      "name": "procura_subscriber_pelo_telefone_personalizado",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        2624,
+        560
+      ]
+    },
+    {
+      "parameters": {
+        "path": "cria-contato-manychat",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -608,
+        208
+      ],
+      "id": "f5c622e9-d92a-40af-8409-e0be5932ebac",
+      "name": "fluxo_chamado",
+      "webhookId": "bce4c42c-d9b4-48a9-ae4b-9a044d69119a"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.manychat.com/fb/subscriber/setCustomFields",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "authorization",
+              "value": "=Bearer {{ $node[\"consulta_chip_api_oficial\"].json[\"apikey\"] }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"subscriber_id\": {{\n  $node[\"cria_contato_manychat\"].runIndex >= 0 \n    ? $node[\"cria_contato_manychat\"].json[\"data\"][\"id\"] : $node[\"procura_subscriber_pelo_telefone_personalizado\"].runIndex >= 0 \n    ? $node[\"procura_subscriber_pelo_telefone_personalizado\"].json[\"data\"][\"0\"][\"id\"] : $node[\"procura_subscriber_pelo_email_nativo\"].runIndex >= 0 \n      ? $node[\"procura_subscriber_pelo_email_nativo\"].json[\"data\"][\"id\"]\n    : $node[\"procura_subscriber_pelo_telefone_nativo\"].runIndex >= 0 \n      ? $node[\"procura_subscriber_pelo_telefone_nativo\"].json[\"data\"][\"id\"]\n              : null\n}},\n  \"fields\": {{ $node[\"formata_campos_deal1\"].runIndex >= 0 \n      ? JSON.stringify($node[\"formata_campos_deal1\"].json[\"custom_fields_values\"]) \n      : $node[\"formata_campos_deal2\"].runIndex >= 0 \n    ? JSON.stringify($node[\"formata_campos_deal2\"].json[\"custom_fields_values\"]) : $node[\"formata_campos_deal3\"].runIndex >= 0 \n    ? JSON.stringify($node[\"formata_campos_deal3\"].json[\"custom_fields_values\"]) : null }}\n}",
+        "options": {}
+      },
+      "id": "9c15847e-6f9b-4ef0-a441-0627d0cad2de",
+      "name": "define_campos_personalizados_manychat",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        4336,
+        64
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// Obter o template do banco de dados\nlet template = $node[\"pesquisa_json_fields_deal2\"].json[\"payload_fields\"];\n\n// Verifique se o template é uma string JSON ou já um objeto\nif (typeof template === \"string\") {\n  try {\n    template = JSON.parse(template); // Converte a string JSON em um objeto\n  } catch (error) {\n    throw new Error(\"Erro ao converter template para JSON: \" + error.message);\n  }\n}\n\n// Obter os dados diretamente do \"body\" do webhook\nconst payload = $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"]; // Acessa o body diretamente\n\n// Função para sanitizar valores e substituir os placeholders no template\nconst replacePlaceholders = (template, data) => {\n  const stringified = JSON.stringify(template); // Converte o template para string\n  \n  const replaced = stringified.replace(/{{\\s*(\\w+)\\s*}}/g, (_, key) => {\n    if (data[key] !== undefined) {\n      // Sanitiza valores: remove caracteres problemáticos e escapa aspas\n      return String(data[key])\n        .replace(/[\\r\\n\\t]/g, \" \") // Remove quebras de linha e tabulações\n        .replace(/\"/g, '\\\\\"'); // Escapa aspas duplas\n    } else {\n      console.warn(`Placeholder {{ ${key} }} não encontrado no payload.`);\n      return ''; // Retorna vazio se o valor não existir\n    }\n  });\n\n  try {\n    return JSON.parse(replaced); // Converte de volta para JSON\n  } catch (error) {\n    throw new Error(\"Erro ao converter replaced para JSON: \" + error.message);\n  }\n};\n\n// Substituir os placeholders no template com os dados do webhook\nconst result = replacePlaceholders(template, payload);\n\n// Retornar o resultado para o próximo node\nreturn {\n  custom_fields_values: result\n};\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        704,
+        496
+      ],
+      "id": "e033c211-e04b-4a31-83cf-b6c2ebc4d1fc",
+      "name": "formata_campos_deal2",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Obter o template do banco de dados\nlet template = $node[\"pesquisa_json_fields_deal3\"].json[\"payload_fields\"];\n\n// Verifique se o template é uma string JSON ou já um objeto\nif (typeof template === \"string\") {\n  template = JSON.parse(template); // Converte a string JSON em um objeto\n}\n\n// Obter os dados diretamente do \"body\" do webhook\nconst payload = $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"]; // Acessa o body diretamente\n\n// Função para substituir os placeholders no template\nconst replacePlaceholders = (template, data) => {\n  const stringified = JSON.stringify(template); // Converte o template para string\n  const replaced = stringified.replace(/{{\\s*(\\w+)\\s*}}/g, (_, key) => {\n    if (data[key] !== undefined) {\n      return data[key]; // Substitui pelo valor correspondente\n    } else {\n      console.warn(`Placeholder {{ ${key} }} não encontrado no payload.`); // Aviso se o placeholder não for encontrado\n      return ''; // Retorna vazio se o valor não existir\n    }\n  });\n  return JSON.parse(replaced); // Converte de volta para JSON\n};\n\n// Substituir os placeholders no template com os dados do webhook\nconst result = replacePlaceholders(template, payload);\n\n// Retornar o resultado para o próximo node\nreturn {\n  custom_fields_values: result\n};\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        704,
+        256
+      ],
+      "id": "9a47c6f6-a1e1-49e9-808e-9e95c60295ef",
+      "name": "formata_campos_deal3",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "626e3f5f-0f35-4b9e-84e1-f493d495f742",
+              "leftValue": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"tipo_forms\"] }}",
+              "rightValue": "Agendamento",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "ea86b864-dc5d-416f-87da-99017264ee1f",
+      "name": "agendamento",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.1,
+      "position": [
+        224,
+        352
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "table": {
+          "__rl": true,
+          "value": "fields_manychat_etapas_funil",
+          "mode": "list",
+          "cachedResultName": "fields_manychat_etapas_funil"
+        },
+        "where": {
+          "values": [
+            {
+              "column": "id_etapa_funil",
+              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_etapa_funil\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "2df3281d-2def-437d-9565-c68d16657418",
+      "name": "pesquisa_json_fields_deal2",
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.4,
+      "position": [
+        480,
+        496
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "mySql": {
+          "id": "SMjhjBLFctIENkHc",
+          "name": "[MySQL] - Fabio Soares"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "table": {
+          "__rl": true,
+          "value": "fields_manychat_etapas_funil",
+          "mode": "list",
+          "cachedResultName": "fields_manychat_etapas_funil"
+        },
+        "where": {
+          "values": [
+            {
+              "column": "id_situacao_agendamento",
+              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_situacao_agendamento\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "4c93cbd6-eb56-41ac-889e-5bdfe4cf4da0",
+      "name": "pesquisa_json_fields_deal3",
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.4,
+      "position": [
+        480,
+        256
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "mySql": {
+          "id": "SMjhjBLFctIENkHc",
+          "name": "[MySQL] - Fabio Soares"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "626e3f5f-0f35-4b9e-84e1-f493d495f742",
+              "leftValue": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"tipo_forms\"] }}",
+              "rightValue": "Checkout",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "1c294b95-71ed-4e54-ba2f-278f0e9437d5",
+      "name": "checkout",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.1,
+      "position": [
+        32,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "table": {
+          "__rl": true,
+          "value": "fields_manychat_etapas_funil",
+          "mode": "list",
+          "cachedResultName": "fields_manychat_etapas_funil"
+        },
+        "where": {
+          "values": [
+            {
+              "column": "id_situacao_checkout",
+              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_situacao_checkout\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "7d717a6f-4852-49ba-bf8e-d9da66a75487",
+      "name": "pesquisa_json_fields_deal1",
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.4,
+      "position": [
+        480,
+        48
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "mySql": {
+          "id": "SMjhjBLFctIENkHc",
+          "name": "[MySQL] - Fabio Soares"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Obter o template do banco de dados\nlet template = $node[\"pesquisa_json_fields_deal1\"].json[\"payload_fields\"];\n\n// Verifique se o template é uma string JSON ou já um objeto\nif (typeof template === \"string\") {\n  template = JSON.parse(template); // Converte a string JSON em um objeto\n}\n\n// Obter os dados diretamente do \"body\" do webhook\nconst payload = $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"]; // Acessa o body diretamente\n\n// Função para substituir os placeholders no template\nconst replacePlaceholders = (template, data) => {\n  const stringified = JSON.stringify(template); // Converte o template para string\n  const replaced = stringified.replace(/{{\\s*(\\w+)\\s*}}/g, (_, key) => {\n    if (data[key] !== undefined) {\n      return data[key]; // Substitui pelo valor correspondente\n    } else {\n      console.warn(`Placeholder {{ ${key} }} não encontrado no payload.`); // Aviso se o placeholder não for encontrado\n      return ''; // Retorna vazio se o valor não existir\n    }\n  });\n  return JSON.parse(replaced); // Converte de volta para JSON\n};\n\n// Substituir os placeholders no template com os dados do webhook\nconst result = replacePlaceholders(template, payload);\n\n// Retornar o resultado para o próximo node\nreturn {\n  custom_fields_values: result\n};\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        704,
+        48
+      ],
+      "id": "f15c87f9-ef07-4a98-a302-9bf54d3fbf51",
+      "name": "formata_campos_deal1",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -176,
+        -80
+      ],
+      "id": "4433ab82-6789-4319-b2fa-3b2dbb53408d",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "3d823890-8c70-4974-953b-1b5cf31f5b36",
+              "leftValue": "={{ $json.body.telefone }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -400,
+        208
+      ],
+      "id": "e862db7f-d8b2-4aa3-afe8-32b9cccf9fb2",
+      "name": "telefone_vazio"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "16a8c2d8-3789-4855-a88e-111783283f71",
+              "leftValue": "={{ $node[\"formata_campos_deal1\"].runIndex >= 0        ? JSON.stringify($node[\"formata_campos_deal1\"].json[\"custom_fields_values\"])        : $node[\"formata_campos_deal2\"].runIndex >= 0      ? JSON.stringify($node[\"formata_campos_deal2\"].json[\"custom_fields_values\"]) : $node[\"formata_campos_deal3\"].runIndex >= 0      ? JSON.stringify($node[\"formata_campos_deal3\"].json[\"custom_fields_values\"]) : null }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        4048,
+        208
+      ],
+      "id": "c7a46e92-8096-43a5-8068-4b3003f993ec",
+      "name": "tem_campo_personalizado"
+    }
+  ],
+  "pinData": {
+    "fluxo_chamado": [
+      {
+        "json": {
+          "headers": {
+            "host": "c5l-mar26-n8n.pktqwb.easypanel.host",
+            "user-agent": "axios/1.13.5",
+            "content-length": "940",
+            "accept": "application/json,text/html,application/xhtml+xml,application/xml,text/*;q=0.9, image/*;q=0.8, */*;q=0.7",
+            "accept-encoding": "gzip, compress, deflate, br",
+            "content-type": "application/json",
+            "x-forwarded-for": "172.18.0.1",
+            "x-forwarded-host": "c5l-mar26-n8n.pktqwb.easypanel.host",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "d138e98f8a05",
+            "x-real-ip": "172.18.0.1"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "id_etapa_funil": 2,
+            "id_user": 3208,
+            "telefone": "",
+            "payload": {
+              "nome": "",
+              "sobrenome": "",
+              "email": "wendell@grupovirtus.com.br",
+              "telefone": "",
+              "instagram": "",
+              "data_aplicacao": "2026-03-04 10:23:52",
+              "id_forms": "9",
+              "id_ferramenta_forms": "pesquisa-c5l-mar26",
+              "utm_source": "",
+              "utm_campaign": "",
+              "utm_term": "",
+              "utm_medium": "",
+              "utm_content": "",
+              "idade": "45 a 54 anos",
+              "sexo": "Masculino",
+              "escolaridade": "Pós-graduação",
+              "estado_civil": "Casado(a)",
+              "tipo_forms": "Pesquisa",
+              "filhos": "Sim, tenho 1",
+              "id_funil": "1",
+              "momento_atual": "Sou empresário(a)",
+              "id_user": "3208",
+              "area_atuacao_autonomo": "",
+              "qtd_funcionarios": "Acima de 101 funcionários",
+              "renda_mensal": "Acima de R$ 30.000",
+              "desafios_financeiros": "",
+              "motivacao_prosperidade": "Garantir um futuro tranquilo para minha família",
+              "treinamento_online": "Participei de treinamentos com Wendell",
+              "pergunta_cafe": "",
+              "comprometimento_evento": 10,
+              "": ""
+            },
+            "email": "wendell@grupovirtus.com.br",
+            "nome": "",
+            "sobrenome": ""
+          },
+          "webhookUrl": "https://c5l-mar26-n8n.pktqwb.easypanel.host/webhook/cria-contato-manychat",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "JC1jRbnEV3QDh2TT"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2026-03-06T21:56:04.000Z",
+  "versionId": "b01bda59-7127-412c-8972-26639b951171"
+}
