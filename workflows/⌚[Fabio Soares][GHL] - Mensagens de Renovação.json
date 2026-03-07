@@ -1,0 +1,722 @@
+{
+  "active": false,
+  "connections": {
+    "formata_telefone5": {
+      "main": [
+        [
+          {
+            "node": "pesquisa_variavel_n8n_fluxo_users5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "sem_telefone5": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing5",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "formata_telefone5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "pesquisa_variavel_n8n_fluxo_users5": {
+      "main": [
+        [
+          {
+            "node": "cria_atualiza_user5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "cria_atualiza_user5": {
+      "main": [
+        [
+          {
+            "node": "dados5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "dados5": {
+      "main": [
+        [
+          {
+            "node": "busca_evento_pelo_id_automacao",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "create_update_contact_crm10": {
+      "main": [
+        [
+          {
+            "node": "pesquisa_acao_create_update_deal_crm5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "pesquisa_acao_create_update_contact_crm5": {
+      "main": [
+        [
+          {
+            "node": "create_update_contact_crm10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "create_update_contact_crm11": {
+      "main": [
+        [
+          {
+            "node": "pesquisa_acao_add_tag_contact_crm",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "pesquisa_acao_create_update_deal_crm5": {
+      "main": [
+        [
+          {
+            "node": "aviso_7d",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "fluxos_renovacao": {
+      "main": [
+        [
+          {
+            "node": "sem_telefone5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "busca_evento_pelo_id_automacao": {
+      "main": [
+        [
+          {
+            "node": "pesquisa_acao_create_update_contact_crm5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "pesquisa_acao_add_tag_contact_crm": {
+      "main": [
+        [
+          {
+            "node": "add_tag_contact_crm1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "aviso_7d": {
+      "main": [
+        [
+          {
+            "node": "add_tag_contact_crm1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "create_update_contact_crm11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-03-06T21:48:55.878Z",
+  "id": "Npnab6zTR8YCENCG",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "⌚[Fabio Soares][GHL] - Mensagens de Renovação",
+  "nodes": [
+    {
+      "parameters": {
+        "jsCode": "const telefoneClienteOriginal = $node[\"fluxos_renovacao\"].json[\"body\"][\"contact[phone]\"] || \"\";\n\n// Obter telefone e nome completo do payload\nlet payload = $node[\"fluxos_renovacao\"].json[\"body\"];\n\n// Obter os valores do payload\nconst firstName = $node[\"fluxos_renovacao\"].json[\"body\"][\"contact[first_name]\"] || \"\";\nconst lastName = $node[\"fluxos_renovacao\"].json[\"body\"][\"contact[last_name]\"] || \"\";\n\n// Criar a função para concatenar corretamente\nfunction getFullName(first, last) {\n    if (!first) return \"\"; // Se não houver first_name, retorna vazio\n    return last ? `${first} ${last}` : first; // Se houver last_name, concatena com espaço; senão, retorna apenas first_name\n}\n\n// Definir a variável full_name\nconst full_name = getFullName(firstName, lastName);\n\n// Formatar nome completo para URL encoded\npayload[\"nomeurl\"] = encodeURIComponent(full_name);\n// Formatar telefone\nlet telefoneFinal = \"\";\n\nif (telefoneClienteOriginal) {\n    const telefoneLimpo = telefoneClienteOriginal.replace(/\\D/g, \"\");\n\n    let DDI = '';\n    let DDD = '';\n    let numero = '';\n\n    if (telefoneLimpo.length > 11) {\n        DDI = telefoneLimpo.slice(0, 2);\n        DDD = telefoneLimpo.slice(2, 4);\n        numero = telefoneLimpo.slice(4);\n    } else if (telefoneLimpo.length === 11) {\n        DDI = '55';\n        DDD = telefoneLimpo.slice(0, 2);\n        numero = telefoneLimpo.slice(2);\n    } else if (telefoneLimpo.length === 10) {\n        DDI = '55';\n        DDD = telefoneLimpo.slice(0, 2);\n        numero = telefoneLimpo.slice(2);\n    } else {\n        telefoneFinal = telefoneLimpo;\n    }\n\n    if (DDD && numero) {\n        if (parseInt(DDD) > 28) {\n            if (numero.length === 9 && numero.startsWith(\"9\")) {\n                numero = numero.slice(1);\n            }\n        } else {\n            if (numero.length === 8) {\n                numero = `9${numero}`;\n            }\n        }\n    }\n\n    if (DDI && DDD && numero) {\n        telefoneFinal = `${DDI}${DDD}${numero}`;\n    }\n}\n\n// Capturar o valor do parâmetro\nconst boletoUrl = $node[\"fluxos_renovacao\"].json[\"body\"][\"contact[fields][link_do_boleto]\"] || \"\";\n\n// Codificar o valor para evitar erros na URL\nconst encodedBoletoUrl = encodeURIComponent(boletoUrl);\n\nconst result = {\n    whatsapp: telefoneFinal,\n    encodedURL: encodedBoletoUrl\n                }\n\n\n// Retornar payload atualizado\nreturn {payload, result};\n"
+      },
+      "id": "07fd4104-d005-458f-8fad-28abc64a8cea",
+      "name": "formata_telefone5",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "4562c1de-b744-4cfd-a5f2-5d9875796e4a",
+              "leftValue": "={{ $node[\"fluxos_renovacao\"].json[\"body\"][\"contact[phone]\"] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "8a8314ae-52bd-4996-bd37-7231f01d7ce6",
+      "name": "sem_telefone5",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -224,
+        224
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "e1e0e1d0-7cf4-491d-8626-87af4224809e",
+      "name": "No Operation, do nothing5",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "table": {
+          "__rl": true,
+          "value": "variaveis_globais_n8n",
+          "mode": "list",
+          "cachedResultName": "variaveis_globais_n8n"
+        },
+        "where": {
+          "values": [
+            {
+              "column": "nome_variavel",
+              "value": "URL do Fluxo de Verificação de Users"
+            }
+          ]
+        },
+        "combineConditions": "OR",
+        "options": {}
+      },
+      "id": "8a669220-32bc-441e-9d25-ab7ed7dbc60c",
+      "name": "pesquisa_variavel_n8n_fluxo_users5",
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.4,
+      "position": [
+        240,
+        224
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "mySql": {
+          "id": "SMjhjBLFctIENkHc",
+          "name": "[MySQL] - Fabio Soares"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $node[\"pesquisa_variavel_n8n_fluxo_users5\"].json[\"valor_variavel\"] }}",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "nome",
+              "value": "={{ ($node[\"formata_telefone5\"].json[\"payload\"][\"contact[first_name]\"] || \"\").replace(/[^a-zA-Z0-9\\s]/g, \"\") }}"
+            },
+            {
+              "name": "sobrenome",
+              "value": "={{ ($node[\"formata_telefone5\"].json[\"payload\"][\"contact[last_name]\"] || \"\").replace(/[^a-zA-Z0-9\\s]/g, \"\") }}"
+            },
+            {
+              "name": "email",
+              "value": "={{ $node[\"formata_telefone5\"].json[\"payload\"][\"contact[email]\"] || \"\" }}"
+            },
+            {
+              "name": "telefone",
+              "value": "={{ $node[\"formata_telefone5\"].json[\"result\"][\"whatsapp\"] || \"\" }}"
+            },
+            {
+              "name": "instagram",
+              "value": "={{ $node[\"formata_telefone5\"].json[\"payload\"][\"contact[instagram]\"] || \"\" }}"
+            },
+            {
+              "name": "cpf",
+              "value": "={{ $node[\"formata_telefone5\"].json[\"payload\"][\"contact[cpf]\"] || \"\" }}"
+            },
+            {
+              "name": "cnpj",
+              "value": "={{ $node[\"formata_telefone5\"].json[\"payload\"][\"contact[cnpj]\"] || \"\" }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        464,
+        224
+      ],
+      "id": "961c3908-01a8-4b1f-8ec8-96e35b03356f",
+      "name": "cria_atualiza_user5"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "be20dfce-fdf6-4f2f-a93b-d672a394b146",
+              "name": "nome",
+              "value": "={{ $node[\"formata_telefone5\"].json[\"payload\"][\"contact[first_name]\"] || $node[\"cria_atualiza_user5\"].json[\"nome\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "d64eb13a-b78d-4730-8095-c9c19f010374",
+              "name": "sobrenome",
+              "value": "={{ $node[\"formata_telefone5\"].json[\"payload\"][\"contact[last_name]\"] || $node[\"cria_atualiza_user5\"].json[\"sobrenome\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "7bba2970-da10-4bad-a1f3-99c343ef6b92",
+              "name": "email",
+              "value": "={{ $node[\"formata_telefone5\"].json[\"payload\"][\"contact[email]\"] || $node[\"cria_atualiza_user5\"].json[\"email\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "e70cdc41-4c5d-4281-94cc-d58efb6a6fb1",
+              "name": "telefone",
+              "value": "={{ $node[\"formata_telefone5\"].json[\"result\"][\"whatsapp\"] || $node[\"cria_atualiza_user5\"].json[\"telefone\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "f24084c9-429d-4b88-a491-c1363e45c43f",
+              "name": "codigo_pix",
+              "value": "={{ $node[\"fluxos_renovacao\"].json[\"body\"][\"contact[fields][combo_zi_mercado_livre_cdigo_do_pix]\"] || $node[\"fluxos_renovacao\"].json[\"body\"][\"contact[fields][formao_zi_cdigo_do_pixboleto]\"] || \"Seu PIX foi enviado no seu email\" }}",
+              "type": "string"
+            },
+            {
+              "id": "f17f934a-59f4-40fa-9c47-abfbf71ca556",
+              "name": "tipo_forms",
+              "value": "Checkout",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b977f08d-fc61-4422-a4c8-f282aa78c7c7",
+      "name": "dados5",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        704,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $node[\"pesquisa_acao_create_update_contact_crm5\"].json[\"endpoint_workflow\"] }}",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "id_etapa_funil",
+              "value": "="
+            },
+            {
+              "name": "id_funil",
+              "value": "="
+            },
+            {
+              "name": "id_user",
+              "value": "={{ $node[\"cria_atualiza_user5\"].json[\"id\"] }}"
+            },
+            {
+              "name": "payload",
+              "value": "={{ $node[\"dados5\"].json }}"
+            },
+            {
+              "name": "id_situacao_checkout",
+              "value": "={{ $node[\"busca_evento_pelo_id_automacao\"].json[\"id_situacao_checkout\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1440,
+        224
+      ],
+      "id": "4cac32ab-1785-45fc-9716-41494d49732c",
+      "name": "create_update_contact_crm10"
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "table": {
+          "__rl": true,
+          "value": "acoes_workflows",
+          "mode": "list",
+          "cachedResultName": "acoes_workflows"
+        },
+        "where": {
+          "values": [
+            {
+              "column": "acao",
+              "value": "create_update_contact_crm"
+            }
+          ]
+        },
+        "combineConditions": "OR",
+        "options": {}
+      },
+      "id": "a79c0d50-e1c9-44e7-9571-3da02037f321",
+      "name": "pesquisa_acao_create_update_contact_crm5",
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.4,
+      "position": [
+        1184,
+        224
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "mySql": {
+          "id": "SMjhjBLFctIENkHc",
+          "name": "[MySQL] - Fabio Soares"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $node[\"pesquisa_acao_create_update_deal_crm5\"].json[\"endpoint_workflow\"] }}",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "id_etapa_funil",
+              "value": "="
+            },
+            {
+              "name": "id_funil",
+              "value": "="
+            },
+            {
+              "name": "id_user",
+              "value": "={{ $node[\"cria_atualiza_user5\"].json[\"id\"] }}"
+            },
+            {
+              "name": "payload",
+              "value": "={{ $node[\"dados5\"].json }}"
+            },
+            {
+              "name": "id_situacao_checkout",
+              "value": "={{ $node[\"busca_evento_pelo_id_automacao\"].json[\"id_situacao_checkout\"] }}"
+            },
+            {
+              "name": "qualificacao",
+              "value": "={{ $node[\"fluxos_renovacao\"].json[\"body\"][\"qualificacao\"]  || \"\" }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2160,
+        368
+      ],
+      "id": "61a243ee-3935-420e-8460-5febcf977a7a",
+      "name": "create_update_contact_crm11"
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "table": {
+          "__rl": true,
+          "value": "acoes_workflows",
+          "mode": "list",
+          "cachedResultName": "acoes_workflows"
+        },
+        "where": {
+          "values": [
+            {
+              "column": "acao",
+              "value": "create_update_deal_crm"
+            }
+          ]
+        },
+        "combineConditions": "OR",
+        "options": {}
+      },
+      "id": "70d5313c-32b8-418f-8fc4-51cc6036e0aa",
+      "name": "pesquisa_acao_create_update_deal_crm5",
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.4,
+      "position": [
+        1696,
+        224
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "mySql": {
+          "id": "SMjhjBLFctIENkHc",
+          "name": "[MySQL] - Fabio Soares"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "eventos-renovacao-fzi",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "5e912795-c1bc-423f-8c5f-2b0c494451a9",
+      "name": "fluxos_renovacao",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -448,
+        224
+      ],
+      "webhookId": "87518431-fc5b-4e18-9fc4-510969a9eed7"
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "table": {
+          "__rl": true,
+          "value": "automacao_evento_renovacao",
+          "mode": "list",
+          "cachedResultName": "automacao_evento_renovacao"
+        },
+        "where": {
+          "values": [
+            {
+              "column": "id_automacao",
+              "value": "={{ $node[\"fluxos_renovacao\"].json[\"body\"][\"seriesid\"] }}"
+            }
+          ]
+        },
+        "combineConditions": "OR",
+        "options": {}
+      },
+      "id": "bf2a4cd2-dbda-482c-aa22-e6054f072a50",
+      "name": "busca_evento_pelo_id_automacao",
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.4,
+      "position": [
+        912,
+        224
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "mySql": {
+          "id": "SMjhjBLFctIENkHc",
+          "name": "[MySQL] - Fabio Soares"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $node[\"pesquisa_acao_add_tag_contact_crm\"].json[\"endpoint_workflow\"] }}",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "id_etapa_funil",
+              "value": "="
+            },
+            {
+              "name": "id_user",
+              "value": "={{ $node[\"cria_atualiza_user5\"].json[\"id\"] || \"\" }}"
+            },
+            {
+              "name": "id_situacao_checkout",
+              "value": "={{ $node[\"busca_evento_pelo_id_automacao\"].json[\"id_situacao_checkout\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2656,
+        224
+      ],
+      "id": "b71bc3ec-c8f7-4446-a3bf-70b82cb55610",
+      "name": "add_tag_contact_crm1"
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "table": {
+          "__rl": true,
+          "value": "acoes_workflows",
+          "mode": "list",
+          "cachedResultName": "acoes_workflows"
+        },
+        "where": {
+          "values": [
+            {
+              "column": "acao",
+              "value": "add_tag_contact_crm"
+            }
+          ]
+        },
+        "combineConditions": "OR",
+        "options": {}
+      },
+      "id": "e0c2ca98-473f-4c5a-a402-91580e497647",
+      "name": "pesquisa_acao_add_tag_contact_crm",
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.4,
+      "position": [
+        2400,
+        368
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "mySql": {
+          "id": "SMjhjBLFctIENkHc",
+          "name": "[MySQL] - Fabio Soares"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "4a6b2ca2-c0f4-4a55-bc13-5873d0a05aa6",
+              "leftValue": "={{ $node[\"busca_evento_pelo_id_automacao\"].json[\"id_situacao_checkout\"] }}",
+              "rightValue": "90",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1904,
+        224
+      ],
+      "id": "58f214b1-b15c-4d23-ae57-8c637fd9b21b",
+      "name": "aviso_7d"
+    }
+  ],
+  "pinData": {
+    "fluxos_renovacao": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n-n8n.zkgge2.easypanel.host",
+            "user-agent": "GuzzleHttp/7",
+            "content-length": "471",
+            "content-type": "application/x-www-form-urlencoded",
+            "x-forwarded-for": "18.213.77.190",
+            "x-forwarded-host": "n8n-n8n.zkgge2.easypanel.host",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "c81dc40e1dde",
+            "x-real-ip": "18.213.77.190",
+            "accept-encoding": "gzip"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "contact[id]": "1015118",
+            "contact[email]": "teste@automagicbots.com.br",
+            "contact[first_name]": "Gabriel",
+            "contact[last_name]": "Amaral",
+            "contact[phone]": "5511955835870",
+            "contact[orgname]": "",
+            "contact[customer_acct_name]": "",
+            "contact[tags]": "[Formação ZI] - Boleto Gerado na Renovação, Lead Novo 60 Dias",
+            "contact[ip4]": "127.0.0.1",
+            "contact[fields][link_do_boleto]": "http://e8667dba-ca46-44da-8632-0017cb38a7aa.com",
+            "seriesid": "290"
+          },
+          "webhookUrl": "https://n8n-n8n.zkgge2.easypanel.host/webhook/eventos-renovacao-fzi",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "JC1jRbnEV3QDh2TT"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-03-06T21:51:08.000Z",
+  "versionId": "dd931f30-a4e3-492a-b388-26848e7a909f"
+}
