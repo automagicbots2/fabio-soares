@@ -1,5 +1,5 @@
 {
-  "active": false,
+  "active": true,
   "connections": {
     "fluxo_chamado": {
       "main": [
@@ -345,13 +345,7 @@
     },
     "pesquisa_url_rotacionamento_colaboradores2": {
       "main": [
-        [
-          {
-            "node": "cria_ou_atualiza_contact_na_clint1",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "formata_campos_contact6": {
@@ -1453,9 +1447,9 @@
         "operation": "select",
         "table": {
           "__rl": true,
-          "value": "situacao_pipeline_stage2",
+          "value": "situacao_pipeline_stage",
           "mode": "list",
-          "cachedResultName": "situacao_pipeline_stage2"
+          "cachedResultName": "situacao_pipeline_stage"
         },
         "where": {
           "values": [
@@ -1489,56 +1483,86 @@
       {
         "json": {
           "headers": {
-            "host": "n8n-n8n.zkgge2.easypanel.host",
-            "user-agent": "axios/1.12.0",
-            "content-length": "772",
+            "host": "n8n-n8n.yqd7ni.easypanel.host",
+            "user-agent": "axios/1.8.3",
+            "content-length": "1398",
             "accept": "application/json,text/html,application/xhtml+xml,application/xml,text/*;q=0.9, image/*;q=0.8, */*;q=0.7",
             "accept-encoding": "gzip, compress, deflate, br",
             "content-type": "application/json",
             "x-forwarded-for": "172.18.0.1",
-            "x-forwarded-host": "n8n-n8n.zkgge2.easypanel.host",
+            "x-forwarded-host": "n8n-n8n.yqd7ni.easypanel.host",
             "x-forwarded-port": "443",
             "x-forwarded-proto": "https",
-            "x-forwarded-server": "5ccb6035c033",
+            "x-forwarded-server": "95876c3beb17",
             "x-real-ip": "172.18.0.1"
           },
           "params": {},
           "query": {},
           "body": {
-            "id_etapa_funil": 44,
-            "id_funil": "13",
-            "id_user": 825820,
+            "id_etapa_funil": 1,
+            "id_funil": "1",
+            "id_user": 1,
             "payload": {
-              "nome_completo": "Gabriel",
-              "nome": "Gabriel",
-              "sobrenome": "",
-              "email": "teste@automagicbots.com.br",
-              "telefone": "5511955835870",
-              "estagio_atual": "Sim, Formal",
-              "qtd_importacoes": "4–10",
-              "onde_vende": "Mercado Livre, Shopee, Amazon",
-              "estado_atual": "Conciliando com CLT",
-              "tem_cnpj": "Sim",
-              "capital_disponivel": "+200k",
-              "tempo_disponivel": "+20h",
-              "maior_desafio": "Não sei montar estratégia",
-              "motivo_de_buscar_ajuda": "Ajuda",
-              "objetivo": "objetivo 6 meses",
-              "objetivo_financeiro": "100k–200k",
-              "id_funil": "13",
-              "tipo_forms": "Aplicação",
-              "id_forms": "133",
-              "utm_source": "",
-              "utm_campaign": "",
-              "utm_term": "",
-              "utm_medium": "",
-              "utm_content": "",
-              "comprometimento": "Sim, totalmente",
-              "inicio_imediato": "Sim"
+              "nome": "Otavio",
+              "sobrenome": "Baptista da Costa",
+              "nome_completo": "Otavio Baptista da Costa",
+              "email": "obcosta@gmail.com",
+              "telefone": "5511991272357",
+              "cpf": "144.244.378-25",
+              "utm_source": "ig",
+              "utm_campaign": "social",
+              "utm_term": "instagram",
+              "utm_medium": "link_in_bio",
+              "utm_content": "bio",
+              "form_id": "ogl1dc1y",
+              "form_name": "",
+              "value": 37.9,
+              "transaction_id": "HP1912030247",
+              "net_value": 37.04,
+              "trans_status": "Compra Aprovada",
+              "payment_method": "Cartão de Crédito",
+              "refund_date": "",
+              "event_date": "2026-03-08 16:50:41",
+              "payment_date": "2026-03-08 16:50:30",
+              "product_type": "Cobrança única",
+              "product_id": 6238670,
+              "product_name": "Ingresso Silver – Desafio As 7 Chaves da Riqueza",
+              "warranty_date": "2026-03-14",
+              "offer_code": "ogl1dc1y",
+              "discount_coupon": "",
+              "street": "",
+              "address_number": "",
+              "country": "",
+              "district": "",
+              "address_complement": "",
+              "city": "",
+              "address_state": "",
+              "zipcode": "",
+              "affiliate_value": "",
+              "gateway_comission": 0.86,
+              "billet_barcode": "",
+              "currency": "BRL",
+              "bankslip": "",
+              "recurrenceExpirationDate": "",
+              "cancelledDate": "",
+              "cnpj": "",
+              "installments": 1,
+              "billetExpirationDate": "",
+              "recurrenceNumber": "",
+              "src": "",
+              "sck": "ig|social|instagram|link_in_bio|bio|/optin-a/",
+              "refusalReason": "",
+              "subscriberCode": "",
+              "planName": "",
+              "planId": "",
+              "eventId": "7ebb8555-efd2-47cf-8782-06df29f0fe4f",
+              "tipo_forms": "Cadastro",
+              "id_funil": "1",
+              "id_forms": "1"
             },
-            "tipo_forms": "Aplicação"
+            "tipo_forms": "Cadastro"
           },
-          "webhookUrl": "https://n8n-n8n.zkgge2.easypanel.host/webhook/c429a2f4-80e0-43d8-9fc9-fd66b0ceadda",
+          "webhookUrl": "https://n8n-n8n.yqd7ni.easypanel.host/webhook/cria-contato-ghl",
           "executionMode": "production"
         }
       }
@@ -1551,7 +1575,7 @@
   },
   "staticData": null,
   "tags": [],
-  "triggerCount": 0,
-  "updatedAt": "2026-03-06T21:36:03.000Z",
-  "versionId": "0c68a131-3287-451d-bc0f-11be4c597bd9"
+  "triggerCount": 1,
+  "updatedAt": "2026-03-10T02:01:37.000Z",
+  "versionId": "e4994570-4748-4ccc-a954-f6b68fdc429c"
 }
