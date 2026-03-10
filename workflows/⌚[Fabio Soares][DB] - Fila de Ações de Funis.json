@@ -957,6 +957,11 @@
           }
         ]
       ]
+    },
+    "No Operation, do nothing": {
+      "main": [
+        []
+      ]
     }
   },
   "createdAt": "2026-03-06T17:50:21.650Z",
@@ -3840,32 +3845,72 @@
       {
         "json": {
           "fields": {
-            "consumerTag": "amq.ctag-UfRYWSvhZHp-dil37KC-rA",
-            "deliveryTag": 14844,
+            "consumerTag": "amq.ctag-YgcS4-JXkG-q6DjVCSYkUw",
+            "deliveryTag": 1,
             "redelivered": false,
             "exchange": "",
-            "routingKey": "[Gustavo Becker] - Fila de Ações de Funis"
+            "routingKey": "Fila de Ações de Funis"
           },
           "properties": {
             "headers": {}
           },
           "content": {
-            "nome": "Marcela",
-            "sobrenome": "Bello Domingos",
-            "email": "marcelabellodomingos@outlook.com",
-            "telefone": "5511966121991",
-            "utm_source": "meta-ads",
-            "utm_campaign": "[CES]+[LP-V6]+[Q]+[ABO]+ESCALA+Criativo+Imagens+|+26.02.26",
-            "utm_term": "01+-+Envolvimento+7D",
-            "utm_medium": "Instagram_Feed",
-            "utm_content": "IMG]+AD+4",
-            "id_funil": "1",
-            "instagram": "",
-            "id_forms": "1",
+            "nome": "Otavio",
+            "sobrenome": "Baptista da Costa",
+            "nome_completo": "Otavio Baptista da Costa",
+            "email": "obcosta@gmail.com",
+            "telefone": "5511991272357",
+            "cpf": "144.244.378-25",
+            "utm_source": "ig",
+            "utm_campaign": "social",
+            "utm_term": "instagram",
+            "utm_medium": "link_in_bio",
+            "utm_content": "bio",
+            "form_id": "ogl1dc1y",
+            "form_name": "",
+            "value": 37.9,
+            "transaction_id": "HP1912030247",
+            "net_value": 37.04,
+            "trans_status": "Compra Aprovada",
+            "payment_method": "Cartão de Crédito",
+            "refund_date": "",
+            "event_date": "2026-03-08 16:50:41",
+            "payment_date": "2026-03-08 16:50:30",
+            "product_type": "Cobrança única",
+            "product_id": 6238670,
+            "product_name": "Ingresso Silver – Desafio As 7 Chaves da Riqueza",
+            "warranty_date": "2026-03-14",
+            "offer_code": "ogl1dc1y",
+            "discount_coupon": "",
+            "street": "",
+            "address_number": "",
+            "country": "",
+            "district": "",
+            "address_complement": "",
+            "city": "",
+            "address_state": "",
+            "zipcode": "",
+            "affiliate_value": "",
+            "gateway_comission": 0.86,
+            "billet_barcode": "",
+            "currency": "BRL",
+            "bankslip": "",
+            "recurrenceExpirationDate": "",
+            "cancelledDate": "",
+            "cnpj": "",
+            "installments": 1,
+            "billetExpirationDate": "",
+            "recurrenceNumber": "",
+            "src": "",
+            "sck": "ig|social|instagram|link_in_bio|bio|/optin-a/",
+            "refusalReason": "",
+            "subscriberCode": "",
+            "planName": "",
+            "planId": "",
+            "eventId": "7ebb8555-efd2-47cf-8782-06df29f0fe4f",
             "tipo_forms": "Cadastro",
-            "chip_atribuido": "5519989667236",
-            "pagina": "https://page.gustavobeckeroficial.com.br/v6/",
-            "data_cadastro": "2026-02-26 21:44:22"
+            "id_funil": "1",
+            "id_forms": "1"
           }
         }
       }
@@ -3879,6 +3924,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-03-06T17:55:17.000Z",
-  "versionId": "905b0154-fdfe-4c36-a26f-966e4d6692fb"
+  "updatedAt": "2026-03-10T02:01:31.000Z",
+  "versionId": "85b6f361-1800-48ed-b6e6-1cdd2b19f5bc"
 }
