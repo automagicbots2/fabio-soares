@@ -91,7 +91,13 @@
     },
     "chega_da_fila": {
       "main": [
-        []
+        [
+          {
+            "node": "assinatura_cancelada_ou_atualizacao_de_data_de_assinatura1",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "assinatura_cancelada_ou_atualizacao_de_data_de_assinatura1": {
@@ -594,7 +600,7 @@
           "parameters": [
             {
               "name": "Authorization",
-              "value": "Basic Njg0ZTg2NmQtMjVjNi00ZmRjLWJhZGQtM2RhZDczZThjMGExOjVlYmRhMzU5LWMxMjYtNDdiZS05NmQ4LTI4NjQ3NjBmMWQzOA=="
+              "value": "Basic NmJkNDJmMDktMzFiMC00MGJiLThkYzMtYzIxZGU2NTdkOWJiOmQ1ZTkxOTM4LWRhZTAtNGMyNC04MmM2LWE0MzRlZmQ3NDllNA=="
             }
           ]
         },
@@ -720,17 +726,17 @@
       {
         "json": {
           "headers": {
-            "host": "n8n-n8n.zkgge2.easypanel.host",
+            "host": "n8n-n8n.yqd7ni.easypanel.host",
             "user-agent": "Jodd HTTP",
-            "content-length": "1916",
+            "content-length": "1841",
             "content-type": "application/json",
-            "x-forwarded-for": "13.220.140.9",
-            "x-forwarded-host": "n8n-n8n.zkgge2.easypanel.host",
+            "x-forwarded-for": "54.175.106.6",
+            "x-forwarded-host": "n8n-n8n.yqd7ni.easypanel.host",
             "x-forwarded-port": "443",
             "x-forwarded-proto": "https",
-            "x-forwarded-server": "d8060f799e06",
-            "x-hotmart-hottok": "17x07zm8gJX5Z5wDzEO3dIpjUgxR6Y42665136",
-            "x-real-ip": "13.220.140.9",
+            "x-forwarded-server": "95876c3beb17",
+            "x-hotmart-hottok": "Jlr2kFGO38ox72jGMWM32KO84895830bbaf9cd-370a-4ef2-bc68-8d96714bb048",
+            "x-real-ip": "54.175.106.6",
             "accept-encoding": "gzip"
           },
           "params": {},
@@ -738,63 +744,69 @@
           "body": {
             "data": {
               "product": {
-                "support_email": "",
+                "support_email": "contact@avengersagency.com",
                 "has_co_production": false,
-                "name": "ROTA SIMPLIFICADA",
+                "name": "Ingresso Silver – Desafio As 7 Chaves da Riqueza",
+                "warranty_date": "2026-03-15T00:00:00Z",
                 "is_physical_product": false,
-                "id": 4130718,
-                "ucode": "d2b32499-f674-44bf-8189-1381dc5b3564"
+                "id": 6238670,
+                "ucode": "4ac6c808-2df8-439d-9881-b00b620231e5"
               },
               "commissions": [
                 {
-                  "currency_value": "BRL",
+                  "currency_value": "USD",
                   "source": "MARKETPLACE",
-                  "value": 68.37
+                  "value": 0.86
                 },
                 {
-                  "currency_value": "BRL",
+                  "currency_conversion": {
+                    "converted_value": 5.92,
+                    "converted_to_currency": "USD",
+                    "conversion_rate": 1
+                  },
+                  "currency_value": "USD",
                   "source": "PRODUCER",
-                  "value": 1426.14
+                  "value": 5.92
                 }
               ],
               "purchase": {
                 "original_offer_price": {
                   "currency_value": "BRL",
-                  "value": 1497
+                  "value": 37.9
                 },
                 "subscription_anticipation_purchase": false,
                 "checkout_country": {
                   "iso": "BR",
                   "name": "Brasil"
                 },
+                "origin": {
+                  "sck": "ig|social|instagram|link_in_bio|bio|/optin-a/"
+                },
                 "order_bump": {
                   "is_order_bump": false
                 },
+                "approved_date": 1772999430000,
                 "offer": {
-                  "code": "5c7kr3gv",
-                  "name": "Cheio"
+                  "code": "ogl1dc1y"
                 },
-                "is_funnel": false,
-                "order_date": 1771528620000,
+                "is_funnel": true,
+                "order_date": 1772999427000,
                 "price": {
                   "currency_value": "BRL",
-                  "value": 1497
+                  "value": 37.9
                 },
                 "payment": {
-                  "pix_qrcode": "https://live-us.adyen.com/hpp/generateQRCodeImage.shtml?url=00020101021226900014br.gov.bcb.pix2568pix.adyen.com%2Fpixqrcodelocation%2Fpixloc%2Fv1%2Floc%2FZJiwWshCSi23HUsOKl17zA5204000053039865802BR5924LAUNCH+PAD+TECNOLOGIA+SE6009SAO+PAULO62070503***6304BC9C",
-                  "pix_expiration_date": 1771701421000,
                   "installments_number": 1,
-                  "type": "PIX",
-                  "pix_code": "00020101021226900014br.gov.bcb.pix2568pix.adyen.com/pixqrcodelocation/pixloc/v1/loc/ZJiwWshCSi23HUsOKl17zA5204000053039865802BR5924LAUNCH PAD TECNOLOGIA SE6009SAO PAULO62070503***6304BC9C"
+                  "type": "CREDIT_CARD"
                 },
                 "full_price": {
                   "currency_value": "BRL",
-                  "value": 1497
+                  "value": 37.9
                 },
-                "business_model": "I",
+                "business_model": "A",
                 "invoice_by": "SELLER",
-                "transaction": "HP3901567931",
-                "status": "BILLET_PRINTED"
+                "transaction": "HP1912030247",
+                "status": "APPROVED"
               },
               "affiliates": [
                 {
@@ -804,30 +816,37 @@
               ],
               "producer": {
                 "legal_nature": "Pessoa Jurídica",
-                "document": "48515907000110",
-                "name": "CAMILA CARVALHO DIGITAL LTDA"
+                "document": "850623633",
+                "name": "Avengers Agency, LLC"
               },
               "buyer": {
-                "checkout_phone_code": "31",
+                "checkout_phone_code": "11",
                 "address": {
+                  "zipcode": "05640004",
                   "country": "Brasil",
+                  "number": "2308",
+                  "address": "Avenida Doutor Guilherme Dumont Vilares",
+                  "city": "São Paulo",
+                  "state": "SP",
+                  "neighborhood": "Jardim Londrina",
+                  "complement": "Apto 22",
                   "country_iso": "BR"
                 },
-                "document": "11108706630",
-                "name": "Mateus Porto",
-                "last_name": "Porto",
-                "checkout_phone": "31985752596",
-                "first_name": "Mateus",
-                "email": "contato.mportob@gmail.com",
+                "document": "14424437825",
+                "name": "Otavio Baptista da Costa",
+                "last_name": "Costa",
+                "checkout_phone": "11991272357",
+                "first_name": "Otavio",
+                "email": "obcosta@gmail.com",
                 "document_type": "CPF"
               }
             },
-            "id": "6962ea6c-cc77-40a2-877f-7c5cd0064d57",
-            "creation_date": 1771528632531,
-            "event": "PURCHASE_BILLET_PRINTED",
+            "id": "7ebb8555-efd2-47cf-8782-06df29f0fe4f",
+            "creation_date": 1772999441886,
+            "event": "PURCHASE_APPROVED",
             "version": "2.0.0"
           },
-          "webhookUrl": "https://n8n-n8n.zkgge2.easypanel.host/webhook/0689e445-d5af-42ff-bde2-07a23a5dbdb0",
+          "webhookUrl": "https://n8n-n8n.yqd7ni.easypanel.host/webhook/eventos-hotmart",
           "executionMode": "production"
         }
       }
@@ -836,8 +855,8 @@
       {
         "json": {
           "fields": {
-            "consumerTag": "amq.ctag-YEjkZ3c2tKXmb98d-lCJ4g",
-            "deliveryTag": 15,
+            "consumerTag": "amq.ctag-Ju4UoPawDSZynQz_KYj2Pw",
+            "deliveryTag": 4,
             "redelivered": false,
             "exchange": "",
             "routingKey": "[Hotmart] - Trata Dados"
@@ -847,17 +866,17 @@
           },
           "content": {
             "headers": {
-              "host": "n8n-n8n.zkgge2.easypanel.host",
+              "host": "n8n-n8n.yqd7ni.easypanel.host",
               "user-agent": "Jodd HTTP",
-              "content-length": "2499",
+              "content-length": "1841",
               "content-type": "application/json",
-              "x-forwarded-for": "13.220.109.162",
-              "x-forwarded-host": "n8n-n8n.zkgge2.easypanel.host",
+              "x-forwarded-for": "54.175.106.6",
+              "x-forwarded-host": "n8n-n8n.yqd7ni.easypanel.host",
               "x-forwarded-port": "443",
               "x-forwarded-proto": "https",
-              "x-forwarded-server": "d8060f799e06",
-              "x-hotmart-hottok": "17x07zm8gJX5Z5wDzEO3dIpjUgxR6Y42665136",
-              "x-real-ip": "13.220.109.162",
+              "x-forwarded-server": "95876c3beb17",
+              "x-hotmart-hottok": "Jlr2kFGO38ox72jGMWM32KO84895830bbaf9cd-370a-4ef2-bc68-8d96714bb048",
+              "x-real-ip": "54.175.106.6",
               "accept-encoding": "gzip"
             },
             "params": {},
@@ -865,84 +884,68 @@
             "body": {
               "data": {
                 "product": {
-                  "support_email": "suporte@formacaozi.com.br",
+                  "support_email": "contact@avengersagency.com",
                   "has_co_production": false,
-                  "name": "Formação do Zero à Importador com Bônus Mercado Livre Descomplicado Grátis",
-                  "warranty_date": "2026-03-12T00:00:00Z",
+                  "name": "Ingresso Silver – Desafio As 7 Chaves da Riqueza",
+                  "warranty_date": "2026-03-15T00:00:00Z",
                   "is_physical_product": false,
-                  "id": 2241838,
-                  "ucode": "eace5083-e356-4ba9-92d8-64711e66fab4",
-                  "content": {
-                    "has_physical_products": false,
-                    "products": [
-                      {
-                        "name": "Formação do Zero a Importador com Camila Carvalho",
-                        "is_physical_product": false,
-                        "id": 2220574,
-                        "ucode": "d327108a-6175-4412-866e-7898c2d0864d"
-                      },
-                      {
-                        "name": "Mercado Livre Descomplicado",
-                        "is_physical_product": false,
-                        "id": 2241764,
-                        "ucode": "cb4fad64-d477-4fc2-9fc0-ffe131f1c020"
-                      }
-                    ]
-                  }
+                  "id": 6238670,
+                  "ucode": "4ac6c808-2df8-439d-9881-b00b620231e5"
                 },
                 "commissions": [
                   {
-                    "currency_value": "BRL",
+                    "currency_value": "USD",
                     "source": "MARKETPLACE",
-                    "value": 42.94
+                    "value": 0.86
                   },
                   {
-                    "currency_value": "BRL",
+                    "currency_conversion": {
+                      "converted_value": 5.92,
+                      "converted_to_currency": "USD",
+                      "conversion_rate": 1
+                    },
+                    "currency_value": "USD",
                     "source": "PRODUCER",
-                    "value": 950.57
+                    "value": 5.92
                   }
                 ],
                 "purchase": {
                   "original_offer_price": {
                     "currency_value": "BRL",
-                    "value": 998.5
+                    "value": 37.9
                   },
-                  "recurrence_number": 1,
                   "subscription_anticipation_purchase": false,
                   "checkout_country": {
                     "iso": "BR",
                     "name": "Brasil"
                   },
+                  "origin": {
+                    "sck": "ig|social|instagram|link_in_bio|bio|/optin-a/"
+                  },
                   "order_bump": {
                     "is_order_bump": false
                   },
-                  "approved_date": 1772693670000,
+                  "approved_date": 1772999430000,
                   "offer": {
-                    "code": "6fm8lgv9",
-                    "coupon_code": "80%OFFRENO",
-                    "name": "80%OFFRENO",
-                    "description": "80% DE DESCONTO NA RENOVAÇÃO PARA EX ALUNOS"
+                    "code": "ogl1dc1y"
                   },
-                  "is_funnel": false,
-                  "order_date": 1772633245000,
-                  "date_next_charge": 1804161600000,
+                  "is_funnel": true,
+                  "order_date": 1772999427000,
                   "price": {
                     "currency_value": "BRL",
-                    "value": 998.5
+                    "value": 37.9
                   },
                   "payment": {
-                    "billet_url": "https://hotm.co/bHP2293478395",
-                    "billet_barcode": "34191097193863104054089356830003313760000099850",
                     "installments_number": 1,
-                    "type": "BILLET"
+                    "type": "CREDIT_CARD"
                   },
                   "full_price": {
                     "currency_value": "BRL",
-                    "value": 998.5
+                    "value": 37.9
                   },
-                  "business_model": "I",
+                  "business_model": "A",
                   "invoice_by": "SELLER",
-                  "transaction": "HP2293478395",
+                  "transaction": "HP1912030247",
                   "status": "APPROVED"
                 },
                 "affiliates": [
@@ -953,48 +956,37 @@
                 ],
                 "producer": {
                   "legal_nature": "Pessoa Jurídica",
-                  "document": "48515907000110",
-                  "name": "CAMILA CARVALHO DIGITAL LTDA"
-                },
-                "subscription": {
-                  "subscriber": {
-                    "code": "YL5QZ26Y"
-                  },
-                  "plan": {
-                    "name": "Preço Regular",
-                    "id": 407340
-                  },
-                  "status": "ACTIVE"
+                  "document": "850623633",
+                  "name": "Avengers Agency, LLC"
                 },
                 "buyer": {
-                  "checkout_phone_code": "61",
+                  "checkout_phone_code": "11",
                   "address": {
-                    "zipcode": "72130570",
+                    "zipcode": "05640004",
                     "country": "Brasil",
-                    "number": "36",
-                    "address": "Setor QNH 7",
-                    "city": "Brasília",
-                    "state": "DF",
-                    "neighborhood": "Taguatinga Norte (Taguatinga)",
-                    "complement": "Apto 102",
+                    "number": "2308",
+                    "address": "Avenida Doutor Guilherme Dumont Vilares",
+                    "city": "São Paulo",
+                    "state": "SP",
+                    "neighborhood": "Jardim Londrina",
+                    "complement": "Apto 22",
                     "country_iso": "BR"
                   },
-                  "document": "11108706630",
-                  "name": "Mateus Porto",
-                  "last_name": "Porto",
-                  "checkout_phone": "31985752596",
-                  "first_name": "Mateus",
-                  "email": "contato.mportob@gmail.com",
+                  "document": "14424437825",
+                  "name": "Otavio Baptista da Costa",
+                  "last_name": "Costa",
+                  "checkout_phone": "11991272357",
+                  "first_name": "Otavio",
+                  "email": "obcosta@gmail.com",
                   "document_type": "CPF"
                 }
               },
-              "hottok": "17x07zm8gJX5Z5wDzEO3dIpjUgxR6Y42665136",
-              "id": "ce8f55ca-a056-4137-8cdf-e339000029b9",
-              "creation_date": 1772693680380,
+              "id": "7ebb8555-efd2-47cf-8782-06df29f0fe4f",
+              "creation_date": 1772999441886,
               "event": "PURCHASE_APPROVED",
               "version": "2.0.0"
             },
-            "webhookUrl": "https://n8n-n8n.zkgge2.easypanel.host/webhook/0689e445-d5af-42ff-bde2-07a23a5dbdb0",
+            "webhookUrl": "https://n8n-n8n.yqd7ni.easypanel.host/webhook/eventos-hotmart",
             "executionMode": "production"
           }
         }
@@ -1009,6 +1001,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 2,
-  "updatedAt": "2026-03-07T15:19:49.000Z",
-  "versionId": "3e3b4a7d-757f-4154-846d-444beea0cc82"
+  "updatedAt": "2026-03-09T19:20:58.000Z",
+  "versionId": "1bfc2c99-49c9-4484-841d-37baf6d0e21b"
 }
