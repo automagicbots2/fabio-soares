@@ -1,5 +1,306 @@
 {
   "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-03-12T14:51:39.412Z",
+    "createdAt": "2026-03-12T14:51:39.412Z",
+    "versionId": "9d7eb466-5232-4d54-8d1f-554ab10e682d",
+    "workflowId": "yNsxCuf7ON4Dy0c2",
+    "nodes": [
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "CALL busca_usuario($1, $2, $3, $4, $5, $6, $7);\n",
+          "options": {
+            "queryReplacement": "={{  $node[\"fluxo_chamado\"].json.body.email || null}},{{$node[\"fluxo_chamado\"].json.body.instagram || null}},{{$node[\"fluxo_chamado\"].json.body.telefone || null}},{{$node[\"fluxo_chamado\"].json.body.cnpj || null}},{{$node[\"fluxo_chamado\"].json.body.cpf || null}},{{$node[\"fluxo_chamado\"].json.body.nome || null}},{{$node[\"fluxo_chamado\"].json.body.sobrenome || null }}"
+          }
+        },
+        "type": "n8n-nodes-base.mySql",
+        "typeVersion": 2.4,
+        "position": [
+          -848,
+          -16
+        ],
+        "id": "102e698e-6ef9-48ac-8cee-957c7ca571f3",
+        "name": "executa_procedure",
+        "credentials": {
+          "mySql": {
+            "id": "SMjhjBLFctIENkHc",
+            "name": "[MySQL] - Fabio Soares"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "table": {
+            "__rl": true,
+            "value": "users",
+            "mode": "list",
+            "cachedResultName": "users"
+          },
+          "dataMode": "defineBelow",
+          "valuesToSend": {
+            "values": [
+              {
+                "column": "data_de_entrada",
+                "value": "={{ $now }}"
+              },
+              {
+                "column": "nome",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"nome\"] || NULL }}"
+              },
+              {
+                "column": "sobrenome",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"sobrenome\"] || NULL }}"
+              },
+              {
+                "column": "email",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"email\"] || NULL }}"
+              },
+              {
+                "column": "telefone",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"telefone\"] || NULL }}"
+              },
+              {
+                "column": "instagram",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"instagram\"] || NULL }}"
+              },
+              {
+                "column": "cpf",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"cpf\"] || NULL }}"
+              },
+              {
+                "column": "cnpj",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"cnpj\"] || NULL }}"
+              },
+              {
+                "column": "status_atividade_wpp",
+                "value": "Y"
+              },
+              {
+                "column": "data_atualizacao",
+                "value": "={{ $now }}"
+              }
+            ]
+          },
+          "options": {
+            "replaceEmptyStrings": true,
+            "detailedOutput": true
+          }
+        },
+        "id": "0ce08cfe-3694-4fb6-886e-9919c65deaf8",
+        "name": "insert_user",
+        "type": "n8n-nodes-base.mySql",
+        "typeVersion": 2.4,
+        "position": [
+          -160,
+          -128
+        ],
+        "alwaysOutputData": true,
+        "credentials": {
+          "mySql": {
+            "id": "SMjhjBLFctIENkHc",
+            "name": "[MySQL] - Fabio Soares"
+          }
+        }
+      },
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.limit",
+        "typeVersion": 1,
+        "position": [
+          -624,
+          -16
+        ],
+        "id": "456978c0-d686-48d1-8bf7-9e65e58d8c86",
+        "name": "Limit"
+      },
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.limit",
+        "typeVersion": 1,
+        "position": [
+          240,
+          -128
+        ],
+        "id": "6ca717de-bc47-4864-a1ba-ed9d5d716de3",
+        "name": "Limit1"
+      },
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.noOp",
+        "typeVersion": 1,
+        "position": [
+          -160,
+          112
+        ],
+        "id": "234a7f32-3228-46fc-ad55-05b9e1c3e2b7",
+        "name": "No Operation, do nothing"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 1
+            },
+            "conditions": [
+              {
+                "id": "5bd24527-ff6f-4b26-83a7-ef658d80ce02",
+                "leftValue": "={{ $json[0].mensagem }}",
+                "rightValue": "Usuário não encontrado",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals",
+                  "name": "filter.operator.equals"
+                }
+              },
+              {
+                "id": "3a22455b-ca0d-4db5-965a-5ad6dec68c96",
+                "leftValue": "={{ $json }}",
+                "rightValue": "{{ $json }}",
+                "operator": {
+                  "type": "array",
+                  "operation": "empty",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "or"
+          },
+          "options": {}
+        },
+        "id": "f082d4c5-1deb-4a5e-b941-f46840e887f3",
+        "name": "user_nao_existe",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.1,
+        "position": [
+          -416,
+          -16
+        ]
+      },
+      {
+        "parameters": {
+          "path": "cria-atualiza-user",
+          "responseMode": "lastNode",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          -1072,
+          -16
+        ],
+        "id": "7ad76b79-b39b-40ec-a344-c1c57549bb55",
+        "name": "fluxo_chamado",
+        "webhookId": "480e1e30-05c3-4aba-9470-4421b90f0da2"
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "CALL busca_usuario($1, $2, $3, $4, $5, $6, $7);\n",
+          "options": {
+            "queryReplacement": "={{  $node[\"fluxo_chamado\"].json.body.email || null}},{{$node[\"fluxo_chamado\"].json.body.instagram || null}},{{$node[\"fluxo_chamado\"].json.body.telefone || null}},{{$node[\"fluxo_chamado\"].json.body.cnpj || null}},{{$node[\"fluxo_chamado\"].json.body.cpf || null}},{{$node[\"fluxo_chamado\"].json.body.nome || null}},{{$node[\"fluxo_chamado\"].json.body.sobrenome || null }}"
+          }
+        },
+        "type": "n8n-nodes-base.mySql",
+        "typeVersion": 2.4,
+        "position": [
+          32,
+          -128
+        ],
+        "id": "44629d44-1f87-4096-a1e5-508db6d56fac",
+        "name": "executa_procedure2",
+        "credentials": {
+          "mySql": {
+            "id": "SMjhjBLFctIENkHc",
+            "name": "[MySQL] - Fabio Soares"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "executa_procedure": {
+        "main": [
+          [
+            {
+              "node": "Limit",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "insert_user": {
+        "main": [
+          [
+            {
+              "node": "executa_procedure2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Limit": {
+        "main": [
+          [
+            {
+              "node": "user_nao_existe",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "user_nao_existe": {
+        "main": [
+          [
+            {
+              "node": "insert_user",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "No Operation, do nothing",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "fluxo_chamado": {
+        "main": [
+          [
+            {
+              "node": "executa_procedure",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "executa_procedure2": {
+        "main": [
+          [
+            {
+              "node": "Limit1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null,
+    "autosaved": false
+  },
+  "activeVersionId": "9d7eb466-5232-4d54-8d1f-554ab10e682d",
   "connections": {
     "executa_procedure": {
       "main": [
@@ -337,6 +638,15 @@
     "callerPolicy": "workflowsFromSameOwner",
     "errorWorkflow": "JC1jRbnEV3QDh2TT"
   },
+  "shared": [
+    {
+      "updatedAt": "2026-03-06T17:41:18.827Z",
+      "createdAt": "2026-03-06T17:41:18.827Z",
+      "role": "workflow:owner",
+      "workflowId": "yNsxCuf7ON4Dy0c2",
+      "projectId": "DsELi0ezptx4jHSs"
+    }
+  ],
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
