@@ -1,5 +1,90 @@
 {
   "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-03-12T14:51:39.412Z",
+    "createdAt": "2026-03-12T14:51:39.412Z",
+    "versionId": "ee468fee-5df6-4786-a47b-444cd2a5765d",
+    "workflowId": "nJ07PerAHaExiqFL",
+    "nodes": [
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "CALL busca_produto('{{ $node[\"fluxo_chamado\"].json[\"body\"][\"product_id\"] }}', '{{ $node[\"fluxo_chamado\"].json[\"body\"][\"product_name\"] }}', '{{ $node[\"fluxo_chamado\"].json[\"body\"][\"value\"] || 0 }}');",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.mySql",
+        "typeVersion": 2.4,
+        "position": [
+          176,
+          -112
+        ],
+        "id": "e86bebd3-2b6c-4f4b-bd66-ab51ff915a54",
+        "name": "executa_procedure",
+        "credentials": {
+          "mySql": {
+            "id": "SMjhjBLFctIENkHc",
+            "name": "[MySQL] - Fabio Soares"
+          }
+        }
+      },
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.limit",
+        "typeVersion": 1,
+        "position": [
+          368,
+          -112
+        ],
+        "id": "ebced71f-81a4-46a3-9bee-15b7920aaa59",
+        "name": "Limit"
+      },
+      {
+        "parameters": {
+          "path": "verificada-produto",
+          "responseMode": "lastNode",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          -48,
+          -112
+        ],
+        "id": "539c45e7-249e-4332-9bb6-bea4ef77fb1b",
+        "name": "fluxo_chamado",
+        "webhookId": "78d28a6e-8198-4f81-9926-e2e6c6164519"
+      }
+    ],
+    "connections": {
+      "executa_procedure": {
+        "main": [
+          [
+            {
+              "node": "Limit",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "fluxo_chamado": {
+        "main": [
+          [
+            {
+              "node": "executa_procedure",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null,
+    "autosaved": false
+  },
+  "activeVersionId": "ee468fee-5df6-4786-a47b-444cd2a5765d",
   "connections": {
     "executa_procedure": {
       "main": [
@@ -117,6 +202,15 @@
     "callerPolicy": "workflowsFromSameOwner",
     "errorWorkflow": "JC1jRbnEV3QDh2TT"
   },
+  "shared": [
+    {
+      "updatedAt": "2026-03-06T20:30:59.336Z",
+      "createdAt": "2026-03-06T20:30:59.336Z",
+      "role": "workflow:owner",
+      "workflowId": "nJ07PerAHaExiqFL",
+      "projectId": "DsELi0ezptx4jHSs"
+    }
+  ],
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
