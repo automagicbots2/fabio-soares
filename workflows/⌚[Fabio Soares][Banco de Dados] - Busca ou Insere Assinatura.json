@@ -1,5 +1,92 @@
 {
   "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-03-12T14:51:39.412Z",
+    "createdAt": "2026-03-12T14:51:39.412Z",
+    "versionId": "efe161e1-a6ee-459e-9277-bf4fb188d762",
+    "workflowId": "YwfnfmnaypaC2ePo",
+    "nodes": [
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "CALL busca_assinatura({{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_conversao\"] }}, {{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_produto\"] }}, '{{ $node[\"fluxo_chamado\"].json[\"body\"][\"data_conversao\"] }}', '{{ $node[\"fluxo_chamado\"].json[\"body\"][\"data_expiracao\"] }}', {{ $node[\"fluxo_chamado\"].json[\"body\"][\"status_da_compra\"] === \"Compra Reembolsada\" ? \"1\" : \"0\" }});\n",
+          "options": {
+            "detailedOutput": false
+          }
+        },
+        "type": "n8n-nodes-base.mySql",
+        "typeVersion": 2.4,
+        "position": [
+          16,
+          48
+        ],
+        "id": "c7ee3c6e-1203-44db-934d-b0526ce6af53",
+        "name": "executa_procedure",
+        "credentials": {
+          "mySql": {
+            "id": "SMjhjBLFctIENkHc",
+            "name": "[MySQL] - Fabio Soares"
+          }
+        }
+      },
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.limit",
+        "typeVersion": 1,
+        "position": [
+          208,
+          48
+        ],
+        "id": "e910aaad-f2a0-4741-bee4-eaadecb806ec",
+        "name": "Limit"
+      },
+      {
+        "parameters": {
+          "path": "add-subscription-bd",
+          "responseMode": "lastNode",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          -208,
+          48
+        ],
+        "id": "519d393a-2069-4c9f-9be0-2eb5f3961a25",
+        "name": "fluxo_chamado",
+        "webhookId": "7a046997-4089-434c-a0ae-f4da1d44546d"
+      }
+    ],
+    "connections": {
+      "executa_procedure": {
+        "main": [
+          [
+            {
+              "node": "Limit",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "fluxo_chamado": {
+        "main": [
+          [
+            {
+              "node": "executa_procedure",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null,
+    "autosaved": false
+  },
+  "activeVersionId": "efe161e1-a6ee-459e-9277-bf4fb188d762",
   "connections": {
     "executa_procedure": {
       "main": [
@@ -121,6 +208,15 @@
     "callerPolicy": "workflowsFromSameOwner",
     "errorWorkflow": "JC1jRbnEV3QDh2TT"
   },
+  "shared": [
+    {
+      "updatedAt": "2026-03-06T20:30:15.635Z",
+      "createdAt": "2026-03-06T20:30:15.635Z",
+      "role": "workflow:owner",
+      "workflowId": "YwfnfmnaypaC2ePo",
+      "projectId": "DsELi0ezptx4jHSs"
+    }
+  ],
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
