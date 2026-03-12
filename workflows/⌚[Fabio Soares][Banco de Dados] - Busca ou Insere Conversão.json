@@ -1,5 +1,92 @@
 {
   "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-03-12T14:51:39.412Z",
+    "createdAt": "2026-03-12T14:51:39.412Z",
+    "versionId": "ffc781c0-0c4f-4b14-b094-4af765c91666",
+    "workflowId": "HgbnWYWxmMVfBpw2",
+    "nodes": [
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "CALL busca_conversao(\n    {{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_transacao_checkout\"] ? `'` + $node[\"fluxo_chamado\"].json[\"body\"][\"id_transacao_checkout\"] + `'` : 'NULL' }},\n    {{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_user\"] ? `'` + $node[\"fluxo_chamado\"].json[\"body\"][\"id_user\"] + `'` : 'NULL' }},\n    {{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_cliente\"] ? $node[\"fluxo_chamado\"].json[\"body\"][\"id_cliente\"] : 'NULL' }},\n    {{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_funil\"] ? `'` + $node[\"fluxo_chamado\"].json[\"body\"][\"id_funil\"] + `'` : 'NULL' }},\n    {{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_produto\"] ? `'` + $node[\"fluxo_chamado\"].json[\"body\"][\"id_produto\"] + `'` : 'NULL' }},\n    {{ $node[\"fluxo_chamado\"].json[\"body\"][\"valor\"] ? `'` + $node[\"fluxo_chamado\"].json[\"body\"][\"valor\"] + `'` : 'NULL' }},\n    {{ $node[\"fluxo_chamado\"].json[\"body\"][\"parcelas\"] ? $node[\"fluxo_chamado\"].json[\"body\"][\"parcelas\"] : 'NULL' }},\n    {{ $node[\"fluxo_chamado\"].json[\"body\"][\"oferta\"] ? `'` + $node[\"fluxo_chamado\"].json[\"body\"][\"oferta\"] + `'` : 'NULL' }},\n    {{ $node[\"fluxo_chamado\"].json[\"body\"][\"comissao_gateway\"] ? `'` + $node[\"fluxo_chamado\"].json[\"body\"][\"comissao_gateway\"] + `'` : 'NULL' }},\n    {{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_vendedor\"] ? $node[\"fluxo_chamado\"].json[\"body\"][\"id_vendedor\"] : 'NULL' }},\n    {{ $node[\"fluxo_chamado\"].json[\"body\"][\"moeda\"] ? `'` + $node[\"fluxo_chamado\"].json[\"body\"][\"moeda\"] + `'` : 'NULL' }},\n    {{ $node[\"fluxo_chamado\"].json[\"body\"][\"forma_de_pagamento\"] ? `'` + $node[\"fluxo_chamado\"].json[\"body\"][\"forma_de_pagamento\"] + `'` : 'NULL' }},\n    {{ $node[\"fluxo_chamado\"].json[\"body\"][\"status_da_compra\"] ? `'` + $node[\"fluxo_chamado\"].json[\"body\"][\"status_da_compra\"] + `'` : 'NULL' }},\n    {{ $node[\"fluxo_chamado\"].json[\"body\"][\"data_garantia\"] ? `'` + $node[\"fluxo_chamado\"].json[\"body\"][\"data_garantia\"] + `'` : 'NULL' }},\n    {{ $node[\"fluxo_chamado\"].json[\"body\"][\"data_conversao\"] ? `'` + $node[\"fluxo_chamado\"].json[\"body\"][\"data_conversao\"] + `'` : 'NULL' }},\n    {{ $node[\"fluxo_chamado\"].json[\"body\"][\"utm_source\"] ? `'` + $node[\"fluxo_chamado\"].json[\"body\"][\"utm_source\"] + `'` : 'NULL' }},\n    {{ $node[\"fluxo_chamado\"].json[\"body\"][\"utm_campaign\"] ? `'` + $node[\"fluxo_chamado\"].json[\"body\"][\"utm_campaign\"] + `'` : 'NULL' }},\n    {{ $node[\"fluxo_chamado\"].json[\"body\"][\"utm_term\"] ? `'` + $node[\"fluxo_chamado\"].json[\"body\"][\"utm_term\"] + `'` : 'NULL' }},\n    {{ $node[\"fluxo_chamado\"].json[\"body\"][\"utm_medium\"] ? `'` + $node[\"fluxo_chamado\"].json[\"body\"][\"utm_medium\"] + `'` : 'NULL' }},\n    {{ $node[\"fluxo_chamado\"].json[\"body\"][\"utm_content\"] ? `'` + $node[\"fluxo_chamado\"].json[\"body\"][\"utm_content\"] + `'` : 'NULL' }}\n);\n",
+          "options": {
+            "detailedOutput": false
+          }
+        },
+        "type": "n8n-nodes-base.mySql",
+        "typeVersion": 2.4,
+        "position": [
+          96,
+          -96
+        ],
+        "id": "cfe7d8af-be3a-4a5d-a368-e9fe59ae0dff",
+        "name": "executa_procedure",
+        "credentials": {
+          "mySql": {
+            "id": "SMjhjBLFctIENkHc",
+            "name": "[MySQL] - Fabio Soares"
+          }
+        }
+      },
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.limit",
+        "typeVersion": 1,
+        "position": [
+          304,
+          -96
+        ],
+        "id": "055e853b-6d79-4c84-baeb-a1fe25a3489f",
+        "name": "Limit"
+      },
+      {
+        "parameters": {
+          "path": "add-conversion-bd",
+          "responseMode": "lastNode",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          -128,
+          -96
+        ],
+        "id": "eb1dc035-0013-4064-ad69-c2f72ea6900e",
+        "name": "fluxo_chamado",
+        "webhookId": "d6fc03ca-a4ba-4e0c-90d9-a7117cad574b"
+      }
+    ],
+    "connections": {
+      "executa_procedure": {
+        "main": [
+          [
+            {
+              "node": "Limit",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "fluxo_chamado": {
+        "main": [
+          [
+            {
+              "node": "executa_procedure",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null,
+    "autosaved": false
+  },
+  "activeVersionId": "ffc781c0-0c4f-4b14-b094-4af765c91666",
   "connections": {
     "executa_procedure": {
       "main": [
@@ -89,6 +176,15 @@
     "callerPolicy": "workflowsFromSameOwner",
     "errorWorkflow": "JC1jRbnEV3QDh2TT"
   },
+  "shared": [
+    {
+      "updatedAt": "2026-03-06T20:22:53.900Z",
+      "createdAt": "2026-03-06T20:22:53.900Z",
+      "role": "workflow:owner",
+      "workflowId": "HgbnWYWxmMVfBpw2",
+      "projectId": "DsELi0ezptx4jHSs"
+    }
+  ],
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
