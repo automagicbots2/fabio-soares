@@ -1,5 +1,667 @@
 {
   "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-03-12T14:51:39.412Z",
+    "createdAt": "2026-03-12T14:51:39.412Z",
+    "versionId": "697dd161-c24e-423b-b9d6-9fbc839eab1e",
+    "workflowId": "45rNt16ARPBAsYJ6",
+    "nodes": [
+      {
+        "parameters": {
+          "jsCode": "const body = $node[\"chega_da_fila\"].json[\"content\"][\"body\"] || {};\n\n// Captura segura dos dados (NOVO PAYLOAD)\nconst fullNameAnswer = body[\"name\"] || body[\"nome\"] || body[\"nome_completo\"] || \"\"; // (provavelmente vazio nesse caso)\nconst emailAnswer = body[\"email\"] || \"\";\nconst telefoneClienteOriginal = body[\"phonenumber\"] || body[\"phone\"] || body[\"telefone\"] || \"\";\n\n// UTM (NOVO PAYLOAD)\nconst utm_source   = body[\"utm_source\"]   || \"\";\nconst utm_campaign = body[\"utm_campaign\"] || \"\";\nconst utm_medium   = body[\"utm_medium\"]   || \"\";\nconst utm_term     = body[\"utm_term\"]     || \"\";\nconst utm_content  = body[\"utm_content\"]  || \"\";\n\n// Form info (NOVO PAYLOAD)\nconst form_id   = body[\"form_id\"]   || \"\";\nconst form_name = body[\"form_name\"] || \"\";\n\n// Funções auxiliares já existentes\nfunction capitalizeName(fullName) {\n  if (!fullName) return { fname: '', lname: '', fullname: '' };\n\n  const lowerCaseWords = ['da', 'de', 'do', 'di', 'du'];\n  let words = fullName.toLowerCase().split(' ').map((word, index) => {\n    if (lowerCaseWords.includes(word) && index !== 0) return word;\n    return word.charAt(0).toUpperCase() + word.slice(1);\n  });\n\n  let fname = words.shift();\n  let lname = words.join(' ');\n\n  return { fname, lname, fullname: lname ? `${fname} ${lname}` : fname };\n}\n\nfunction formatEmail(email) {\n  return String(email || \"\").toLowerCase().trim();\n}\n\n// Tratamento avançado do telefone\nfunction formatTelefone(telefone) {\n  const telefoneLimpo = String(telefone || \"\").replace(/\\D/g, \"\");\n\n  // Se vier com DDI (ex: 5511955...), mantém e tenta ajustar a parte nacional\n  if (telefoneLimpo.length === 13 && telefoneLimpo.startsWith(\"55\")) {\n    const DDI = \"55\";\n    const DDD = telefoneLimpo.slice(2, 4);\n    let numero = telefoneLimpo.slice(4);\n\n    if (Number(DDD) > 28 && numero.length === 9 && numero.startsWith(\"9\")) {\n      numero = numero.slice(1);\n    } else if (Number(DDD) <= 28 && numero.length === 8) {\n      numero = `9${numero}`;\n    }\n\n    return `${DDI}${DDD}${numero}`;\n  }\n\n  // Se vier sem DDI (10 ou 11 dígitos)\n  if (telefoneLimpo.length === 11 || telefoneLimpo.length === 10) {\n    const DDI = \"55\";\n    const DDD = telefoneLimpo.slice(0, 2);\n    let numero = telefoneLimpo.slice(2);\n\n    if (Number(DDD) > 28 && numero.length === 9 && numero.startsWith(\"9\")) {\n      numero = numero.slice(1);\n    } else if (Number(DDD) <= 28 && numero.length === 8) {\n      numero = `9${numero}`;\n    }\n\n    return `${DDI}${DDD}${numero}`;\n  }\n\n  return telefoneLimpo;\n}\n\n// Formatação final\nconst formattedNames = capitalizeName(fullNameAnswer);\nconst formattedEmail = formatEmail(emailAnswer);\nconst telefoneFinal = formatTelefone(telefoneClienteOriginal);\n\n// Resultado\nconst result = {\n  ...formattedNames,\n  email: formattedEmail,\n  whatsapp: telefoneFinal,\n  instagram: \"\",\n  cpf: \"\",\n  cnpj: \"\",\n  utm_source,\n  utm_campaign,\n  utm_term,\n  utm_medium,\n  utm_content,\n  form_id,\n  form_name\n};\n\nreturn [{ json: result }];"
+        },
+        "id": "96e7cf79-eca2-4c4a-b802-4d002359b3d0",
+        "name": "formata_dados",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -2048,
+          288
+        ]
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "c74589e2-452e-44a5-8a49-b98c6fcdeca8",
+                "name": "nome",
+                "value": "={{ $node[\"formata_dados\"].json[\"fname\"] }}",
+                "type": "string"
+              },
+              {
+                "id": "f17267b5-65b0-4c2b-b9f5-d719193bb457",
+                "name": "sobrenome",
+                "value": "={{ $node[\"formata_dados\"].json[\"lname\"] }}",
+                "type": "string"
+              },
+              {
+                "id": "79edcf9f-8602-409f-8d04-ced41c06d16f",
+                "name": "email",
+                "value": "={{ $node[\"formata_dados\"].json[\"email\"] }}",
+                "type": "string"
+              },
+              {
+                "id": "93103cc7-1870-4962-bb01-59462196b4de",
+                "name": "telefone",
+                "value": "={{ $node[\"formata_dados\"].json[\"whatsapp\"] }}",
+                "type": "string"
+              },
+              {
+                "id": "4750507c-f44a-45d5-b5ce-2a681d5a5581",
+                "name": "utm_source",
+                "value": "={{ $node[\"formata_dados\"].json[\"utm_source\"] }}",
+                "type": "string"
+              },
+              {
+                "id": "a68b8a08-b2d1-4352-affb-0a6f4045cf4a",
+                "name": "utm_campaign",
+                "value": "={{ $node[\"formata_dados\"].json[\"utm_campaign\"] }}",
+                "type": "string"
+              },
+              {
+                "id": "71c74ec7-51b3-422e-a2d5-ae7bbf3bd1b0",
+                "name": "utm_term",
+                "value": "={{ $node[\"formata_dados\"].json[\"utm_term\"] }}",
+                "type": "string"
+              },
+              {
+                "id": "57aa10ae-6631-4352-8925-35138b1c9b7a",
+                "name": "utm_medium",
+                "value": "={{ $node[\"formata_dados\"].json[\"utm_medium\"] }}",
+                "type": "string"
+              },
+              {
+                "id": "4e84ee54-3122-48e4-92d9-1f9db59e0b94",
+                "name": "utm_content",
+                "value": "={{ $node[\"formata_dados\"].json[\"utm_content\"] }}",
+                "type": "string"
+              },
+              {
+                "id": "2bb4770b-d984-4366-a4c5-6e323c3889c1",
+                "name": "id_funil",
+                "value": "={{ $node[\"busca_funil\"].json[\"id_funil\"] }}",
+                "type": "string"
+              },
+              {
+                "id": "b9134b79-303b-4d22-8c4c-36002bd7e7f8",
+                "name": "instagram",
+                "value": "={{ $node[\"formata_dados\"].json[\"instagram\"] || \"\" }}",
+                "type": "string"
+              },
+              {
+                "id": "f94127c8-00db-445d-b77e-bfb06bed512a",
+                "name": "id_forms",
+                "value": "={{ $node[\"busca_funil\"].json[\"id_forms\"] }}",
+                "type": "string"
+              },
+              {
+                "id": "45655fc0-b71d-4f90-a243-6e1f04e25a95",
+                "name": "tipo_forms",
+                "value": "={{ $node[\"busca_funil\"].json[\"tipo_forms\"] }}",
+                "type": "string"
+              },
+              {
+                "id": "18560feb-62d4-45da-a9e3-937ab2b28636",
+                "name": "chip_atribuido",
+                "value": "={{ $node[\"consulta_chip_api_oficial\"].json[\"telefone\"] || \"\" }}",
+                "type": "string"
+              },
+              {
+                "id": "1f0f1b9c-2ae4-4407-b49c-65c91cd93623",
+                "name": "pagina",
+                "value": "={{ $node[\"busca_funil\"].json[\"id_forms\"] || \"\" }}",
+                "type": "string"
+              },
+              {
+                "id": "20985621-0122-425e-8c0e-aba9542d5e8f",
+                "name": "data_cadastro",
+                "value": "={{ $now.toFormat(\"yyyy-MM-dd HH:mm:ss\") }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "840bb5da-1b7a-4f85-a2ba-324c7dcf2a0f",
+        "name": "dados",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.3,
+        "position": [
+          -544,
+          288
+        ]
+      },
+      {
+        "parameters": {
+          "url": "={{ $node[\"pesquisa_variavel_n8n_fluxo_funis\"].json[\"valor_variavel\"] }}",
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "id_forms",
+                "value": "={{ $node[\"formata_dados\"].json[\"form_id\"] }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          -1616,
+          288
+        ],
+        "id": "7887cf9c-97d3-4d24-afe9-082e00581c9d",
+        "name": "busca_funil"
+      },
+      {
+        "parameters": {
+          "operation": "select",
+          "table": {
+            "__rl": true,
+            "value": "variaveis_globais_n8n",
+            "mode": "list",
+            "cachedResultName": "variaveis_globais_n8n"
+          },
+          "where": {
+            "values": [
+              {
+                "column": "nome_variavel",
+                "value": "URL do Fluxo de Verificação de Funis"
+              }
+            ]
+          },
+          "combineConditions": "OR",
+          "options": {}
+        },
+        "id": "09c1786e-940c-4d40-870b-2f835a9707b8",
+        "name": "pesquisa_variavel_n8n_fluxo_funis",
+        "type": "n8n-nodes-base.mySql",
+        "typeVersion": 2.4,
+        "position": [
+          -1824,
+          288
+        ],
+        "alwaysOutputData": true,
+        "credentials": {
+          "mySql": {
+            "id": "SMjhjBLFctIENkHc",
+            "name": "[MySQL] - Fabio Soares"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "queue": "Fila de Ações de Funis",
+          "options": {
+            "arguments": {
+              "argument": [
+                {
+                  "key": "x-queue-type",
+                  "value": "quorum"
+                }
+              ]
+            },
+            "durable": true
+          }
+        },
+        "id": "bec0d077-adcc-4c84-9bea-04c4d3fc679d",
+        "name": "fila_acoes_funis",
+        "type": "n8n-nodes-base.rabbitmq",
+        "typeVersion": 1,
+        "position": [
+          -320,
+          288
+        ],
+        "credentials": {
+          "rabbitmq": {
+            "id": "eKnFCoTy5bVlhIj3",
+            "name": "[RabbitMQ] - Fabio Soares"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "url": "={{ $node[\"pesquisa_variavel_n8n_fluxo_users\"].json[\"valor_variavel\"] }}",
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "nome",
+                "value": "={{ ($node[\"formata_dados\"].json[\"fname\"] || \"\").replace(/[^a-zA-Z0-9\\s]/g, \"\") }}"
+              },
+              {
+                "name": "sobrenome",
+                "value": "={{ ($node[\"formata_dados\"].json[\"lname\"] || \"\").replace(/[^a-zA-Z0-9\\s]/g, \"\") }}"
+              },
+              {
+                "name": "email",
+                "value": "={{ $node[\"formata_dados\"].json[\"email\"] || \"\" }}"
+              },
+              {
+                "name": "telefone",
+                "value": "={{ $node[\"formata_dados\"].json[\"whatsapp\"] || \"\" }}"
+              },
+              {
+                "name": "instagram",
+                "value": "={{ $node[\"formata_dados\"].json[\"instagram\"] || \"\" }}"
+              },
+              {
+                "name": "cpf",
+                "value": "={{ $node[\"formata_dados\"].json[\"cpf\"] || \"\" }}"
+              },
+              {
+                "name": "cnpj",
+                "value": "={{ $node[\"formata_dados\"].json[\"cnpj\"] || \"\" }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          -1200,
+          288
+        ],
+        "id": "8b2f90d6-bdbb-4286-8005-2134225162cf",
+        "name": "cria_atualiza_user"
+      },
+      {
+        "parameters": {
+          "operation": "select",
+          "table": {
+            "__rl": true,
+            "value": "variaveis_globais_n8n",
+            "mode": "list",
+            "cachedResultName": "variaveis_globais_n8n"
+          },
+          "where": {
+            "values": [
+              {
+                "column": "nome_variavel",
+                "value": "URL do Fluxo de Verificação de Users"
+              }
+            ]
+          },
+          "combineConditions": "OR",
+          "options": {}
+        },
+        "id": "1d9ffbab-1497-476f-b715-33c57196f369",
+        "name": "pesquisa_variavel_n8n_fluxo_users",
+        "type": "n8n-nodes-base.mySql",
+        "typeVersion": 2.4,
+        "position": [
+          -1408,
+          288
+        ],
+        "alwaysOutputData": true,
+        "credentials": {
+          "mySql": {
+            "id": "SMjhjBLFctIENkHc",
+            "name": "[MySQL] - Fabio Soares"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "challenge-mar26-cadastrou",
+          "options": {}
+        },
+        "id": "562e1b03-ee17-40ea-9ebf-1360426dc3a4",
+        "name": "cadastro_na_lp",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          -2256,
+          496
+        ],
+        "webhookId": "7a2963e4-b710-41c5-8c5d-c2b09c7d5f53"
+      },
+      {
+        "parameters": {
+          "queue": "[fabio soares] - Trata Dados",
+          "options": {
+            "arguments": {
+              "argument": [
+                {
+                  "key": "x-queue-type",
+                  "value": "quorum"
+                }
+              ]
+            },
+            "durable": true
+          }
+        },
+        "id": "a908c59f-aa69-4e39-a89d-e40a4e3c2cfb",
+        "name": "fila_acoes_funis2",
+        "type": "n8n-nodes-base.rabbitmq",
+        "typeVersion": 1,
+        "position": [
+          -2048,
+          496
+        ],
+        "credentials": {
+          "rabbitmq": {
+            "id": "eKnFCoTy5bVlhIj3",
+            "name": "[RabbitMQ] - Fabio Soares"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "queue": "[fabio soares] - Trata Dados",
+          "options": {
+            "arguments": {
+              "argument": [
+                {
+                  "key": "x-queue-type",
+                  "value": "quorum"
+                }
+              ]
+            },
+            "acknowledge": "executionFinishesSuccessfully",
+            "jsonParseBody": "={{ true }}",
+            "parallelMessages": 5
+          }
+        },
+        "id": "c506cefd-55aa-4c27-846e-a572114ffff3",
+        "name": "chega_da_fila",
+        "type": "n8n-nodes-base.rabbitmqTrigger",
+        "typeVersion": 1,
+        "position": [
+          -2256,
+          288
+        ],
+        "credentials": {
+          "rabbitmq": {
+            "id": "eKnFCoTy5bVlhIj3",
+            "name": "[RabbitMQ] - Fabio Soares"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "select",
+          "table": {
+            "__rl": true,
+            "value": "variaveis_globais_n8n",
+            "mode": "list",
+            "cachedResultName": "variaveis_globais_n8n"
+          },
+          "where": {
+            "values": [
+              {
+                "column": "nome_variavel",
+                "value": "URL do Fluxo de Rotacionamento de API Oficial"
+              }
+            ]
+          },
+          "combineConditions": "OR",
+          "options": {}
+        },
+        "id": "4273a8b0-8f3c-44ce-bcd4-6c647f516e02",
+        "name": "pesquisa_variavel_n8n_fluxo_api_oficial",
+        "type": "n8n-nodes-base.mySql",
+        "typeVersion": 2.4,
+        "position": [
+          -976,
+          288
+        ],
+        "alwaysOutputData": true,
+        "credentials": {
+          "mySql": {
+            "id": "SMjhjBLFctIENkHc",
+            "name": "[MySQL] - Fabio Soares"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "url": "={{ $node[\"pesquisa_variavel_n8n_fluxo_api_oficial\"].json[\"valor_variavel\"] }}",
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "id_user",
+                "value": "={{ $node[\"cria_atualiza_user\"].json[\"id\"] }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          -752,
+          288
+        ],
+        "id": "0e5b3f04-3732-438f-9ec4-f9ea7e9a3c78",
+        "name": "consulta_chip_api_oficial"
+      },
+      {
+        "parameters": {
+          "queue": "[fabio soares] - Envia n8n",
+          "options": {
+            "arguments": {
+              "argument": [
+                {
+                  "key": "x-queue-type",
+                  "value": "quorum"
+                }
+              ]
+            },
+            "durable": true
+          }
+        },
+        "id": "974fc318-61c6-40c9-a364-bed119708965",
+        "name": "fila_acoes_funis1",
+        "type": "n8n-nodes-base.rabbitmq",
+        "typeVersion": 1,
+        "position": [
+          -320,
+          96
+        ],
+        "credentials": {
+          "rabbitmq": {
+            "id": "eKnFCoTy5bVlhIj3",
+            "name": "[RabbitMQ] - Fabio Soares"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "queue": "[fabio soares] - Insere Google Sheets",
+          "options": {
+            "arguments": {
+              "argument": [
+                {
+                  "key": "x-queue-type",
+                  "value": "quorum"
+                }
+              ]
+            },
+            "durable": true
+          }
+        },
+        "id": "34939e9e-81b0-4c6f-bb91-0242bf70f6fd",
+        "name": "fila_acoes_funis3",
+        "type": "n8n-nodes-base.rabbitmq",
+        "typeVersion": 1,
+        "position": [
+          -320,
+          -112
+        ],
+        "credentials": {
+          "rabbitmq": {
+            "id": "eKnFCoTy5bVlhIj3",
+            "name": "[RabbitMQ] - Fabio Soares"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "queue": "[fabio soares] - Insere Google Sheets",
+          "options": {
+            "arguments": {
+              "argument": [
+                {
+                  "key": "x-queue-type",
+                  "value": "quorum"
+                }
+              ]
+            },
+            "acknowledge": "executionFinishesSuccessfully",
+            "jsonParseBody": "={{ true }}",
+            "parallelMessages": 1
+          }
+        },
+        "id": "6f35a9b0-b23f-497f-976a-1f5fd65dabb9",
+        "name": "chega_da_fila1",
+        "type": "n8n-nodes-base.rabbitmqTrigger",
+        "typeVersion": 1,
+        "position": [
+          -16,
+          -112
+        ],
+        "credentials": {
+          "rabbitmq": {
+            "id": "eKnFCoTy5bVlhIj3",
+            "name": "[RabbitMQ] - Fabio Soares"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "formata_dados": {
+        "main": [
+          [
+            {
+              "node": "pesquisa_variavel_n8n_fluxo_funis",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "dados": {
+        "main": [
+          [
+            {
+              "node": "fila_acoes_funis",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "fila_acoes_funis1",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "fila_acoes_funis3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "busca_funil": {
+        "main": [
+          [
+            {
+              "node": "pesquisa_variavel_n8n_fluxo_users",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "pesquisa_variavel_n8n_fluxo_funis": {
+        "main": [
+          [
+            {
+              "node": "busca_funil",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "cria_atualiza_user": {
+        "main": [
+          [
+            {
+              "node": "pesquisa_variavel_n8n_fluxo_api_oficial",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "pesquisa_variavel_n8n_fluxo_users": {
+        "main": [
+          [
+            {
+              "node": "cria_atualiza_user",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "cadastro_na_lp": {
+        "main": [
+          [
+            {
+              "node": "fila_acoes_funis2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "chega_da_fila": {
+        "main": [
+          [
+            {
+              "node": "formata_dados",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "pesquisa_variavel_n8n_fluxo_api_oficial": {
+        "main": [
+          [
+            {
+              "node": "consulta_chip_api_oficial",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "consulta_chip_api_oficial": {
+        "main": [
+          [
+            {
+              "node": "dados",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null,
+    "autosaved": false
+  },
+  "activeVersionId": "697dd161-c24e-423b-b9d6-9fbc839eab1e",
   "connections": {
     "formata_dados": {
       "main": [
@@ -796,6 +1458,15 @@
     "callerPolicy": "workflowsFromSameOwner",
     "errorWorkflow": "JC1jRbnEV3QDh2TT"
   },
+  "shared": [
+    {
+      "updatedAt": "2026-03-06T18:44:33.934Z",
+      "createdAt": "2026-03-06T18:44:33.934Z",
+      "role": "workflow:owner",
+      "workflowId": "45rNt16ARPBAsYJ6",
+      "projectId": "DsELi0ezptx4jHSs"
+    }
+  ],
   "staticData": null,
   "tags": [],
   "triggerCount": 3,
