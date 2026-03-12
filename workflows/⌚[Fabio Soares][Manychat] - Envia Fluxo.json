@@ -1,5 +1,205 @@
 {
   "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-03-12T14:51:39.412Z",
+    "createdAt": "2026-03-12T14:51:39.412Z",
+    "versionId": "2df1df67-86e7-41b4-ae02-56f8f5521134",
+    "workflowId": "nSwxdbC0jWzlazQq",
+    "nodes": [
+      {
+        "parameters": {
+          "operation": "select",
+          "table": {
+            "__rl": true,
+            "value": "variaveis_globais_n8n",
+            "mode": "list",
+            "cachedResultName": "variaveis_globais_n8n"
+          },
+          "where": {
+            "values": [
+              {
+                "column": "nome_variavel",
+                "value": "URL do Fluxo de Rotacionamento de API Oficial"
+              }
+            ]
+          },
+          "combineConditions": "OR",
+          "options": {}
+        },
+        "id": "76f3ba7e-5592-4b5c-aa65-fa37302cebaf",
+        "name": "pesquisa_variavel_n8n_fluxo_api_oficial",
+        "type": "n8n-nodes-base.mySql",
+        "typeVersion": 2.4,
+        "position": [
+          112,
+          -48
+        ],
+        "alwaysOutputData": true,
+        "credentials": {
+          "mySql": {
+            "id": "SMjhjBLFctIENkHc",
+            "name": "[MySQL] - Fabio Soares"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "url": "={{ $node[\"pesquisa_variavel_n8n_fluxo_api_oficial\"].json[\"valor_variavel\"] }}",
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "id_user",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_user\"] }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          336,
+          -48
+        ],
+        "id": "93f8a9d9-c5b0-4a6f-97a4-0f353807bce0",
+        "name": "consulta_chip_api_oficial"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://api.manychat.com/fb/sending/sendFlow",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "accept",
+                "value": "application/json"
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "=Bearer {{ $node[\"consulta_chip_api_oficial\"].json[\"apikey\"] }}"
+              }
+            ]
+          },
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "subscriber_id",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_manychat\"] }}"
+              },
+              {
+                "name": "flow_ns",
+                "value": "={{ $node[\"busca_fluxo\"].json[\"id_fluxo\"] }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "da98d8af-558a-460b-9c5f-29d3f2a969c4",
+        "name": "envia_template",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 3,
+        "position": [
+          800,
+          -48
+        ]
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "SELECT f.*\nFROM fluxo_wpp_etapas_funil f\nJOIN chips_api_oficial c ON f.id_chip_oficial = c.id\nWHERE c.telefone = '{{ $node[\"consulta_chip_api_oficial\"].json[\"telefone\"] }}'\nAND f.id_etapa_funil = {{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_etapa_funil\"] }};\n",
+          "options": {}
+        },
+        "id": "1fb268fb-aeed-4be6-aeb5-cabdad6e445a",
+        "name": "busca_fluxo",
+        "type": "n8n-nodes-base.mySql",
+        "typeVersion": 2.4,
+        "position": [
+          576,
+          -48
+        ],
+        "credentials": {
+          "mySql": {
+            "id": "SMjhjBLFctIENkHc",
+            "name": "[MySQL] - Fabio Soares"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "path": "envia-fluxo-manychat",
+          "responseMode": "lastNode",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          -112,
+          -48
+        ],
+        "id": "4913e00d-b831-4d55-a26f-ea7444706825",
+        "name": "fluxo_chamado",
+        "webhookId": "b90b9788-6a0b-4ade-8c95-213c9d8415c3"
+      }
+    ],
+    "connections": {
+      "pesquisa_variavel_n8n_fluxo_api_oficial": {
+        "main": [
+          [
+            {
+              "node": "consulta_chip_api_oficial",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "consulta_chip_api_oficial": {
+        "main": [
+          [
+            {
+              "node": "busca_fluxo",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "busca_fluxo": {
+        "main": [
+          [
+            {
+              "node": "envia_template",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "fluxo_chamado": {
+        "main": [
+          [
+            {
+              "node": "pesquisa_variavel_n8n_fluxo_api_oficial",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null,
+    "autosaved": false
+  },
+  "activeVersionId": "2df1df67-86e7-41b4-ae02-56f8f5521134",
   "connections": {
     "pesquisa_variavel_n8n_fluxo_api_oficial": {
       "main": [
@@ -242,6 +442,15 @@
     "callerPolicy": "workflowsFromSameOwner",
     "errorWorkflow": "JC1jRbnEV3QDh2TT"
   },
+  "shared": [
+    {
+      "updatedAt": "2026-03-06T21:56:35.030Z",
+      "createdAt": "2026-03-06T21:56:35.030Z",
+      "role": "workflow:owner",
+      "workflowId": "nSwxdbC0jWzlazQq",
+      "projectId": "DsELi0ezptx4jHSs"
+    }
+  ],
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
