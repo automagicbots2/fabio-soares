@@ -1,5 +1,7 @@
 {
   "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
   "connections": {
     "formata_telefone5": {
       "main": [
@@ -654,6 +656,15 @@
     "callerPolicy": "workflowsFromSameOwner",
     "errorWorkflow": "JC1jRbnEV3QDh2TT"
   },
+  "shared": [
+    {
+      "updatedAt": "2026-03-06T21:48:08.142Z",
+      "createdAt": "2026-03-06T21:48:08.142Z",
+      "role": "workflow:owner",
+      "workflowId": "A9RxbsUoKbKv5twj",
+      "projectId": "DsELi0ezptx4jHSs"
+    }
+  ],
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
