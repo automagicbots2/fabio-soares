@@ -1,5 +1,141 @@
 {
   "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-03-12T14:51:39.412Z",
+    "createdAt": "2026-03-12T14:51:39.412Z",
+    "versionId": "04ac5039-ca31-4df7-b9dc-9739bed32483",
+    "workflowId": "v07vq3Kf8TXVsvJP",
+    "nodes": [
+      {
+        "parameters": {
+          "table": {
+            "__rl": true,
+            "value": "cadastros",
+            "mode": "list",
+            "cachedResultName": "cadastros"
+          },
+          "dataMode": "defineBelow",
+          "valuesToSend": {
+            "values": [
+              {
+                "column": "id_funil",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_funil\"] }}"
+              },
+              {
+                "column": "nome",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"nome\"] || NULL }}"
+              },
+              {
+                "column": "sobrenome",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"sobrenome\"] || NULL }}"
+              },
+              {
+                "column": "email",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"email\"] || NULL }}"
+              },
+              {
+                "column": "telefone",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"telefone\"] || NULL }}"
+              },
+              {
+                "column": "instagram",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"instagram\"] || NULL }}"
+              },
+              {
+                "column": "utm_source",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"utm_source\"] || NULL }}"
+              },
+              {
+                "column": "utm_campaign",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"utm_campaign\"] || NULL }}"
+              },
+              {
+                "column": "utm_term",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"utm_term\"] || NULL }}"
+              },
+              {
+                "column": "utm_medium",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"utm_medium\"] || NULL }}"
+              },
+              {
+                "column": "utm_content",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"utm_content\"] || NULL }}"
+              },
+              {
+                "column": "data_cadastro",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"data_cadastro\"] || $now.toFormat('yyyy-MM-dd HH:mm:ss') }}"
+              },
+              {
+                "column": "id_user",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_user\"] }}"
+              },
+              {
+                "column": "id_forms",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_forms\"] || \"\" }}"
+              },
+              {
+                "column": "pagina",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"pagina\"] || NULL }}"
+              }
+            ]
+          },
+          "options": {
+            "replaceEmptyStrings": true,
+            "detailedOutput": true
+          }
+        },
+        "id": "7ee3ca32-1c91-4b2b-8298-4925740f9701",
+        "name": "insert_cadastro",
+        "type": "n8n-nodes-base.mySql",
+        "typeVersion": 2.4,
+        "position": [
+          160,
+          -144
+        ],
+        "alwaysOutputData": true,
+        "credentials": {
+          "mySql": {
+            "id": "SMjhjBLFctIENkHc",
+            "name": "[MySQL] - Fabio Soares"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "path": "insere-cadastro",
+          "responseMode": "lastNode",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          -64,
+          -144
+        ],
+        "id": "ab76d5bf-565e-46f0-a2ec-6087307240c2",
+        "name": "fluxo_chamado",
+        "webhookId": "697ca672-f32b-489c-bc69-d8ae2e5f0679"
+      }
+    ],
+    "connections": {
+      "fluxo_chamado": {
+        "main": [
+          [
+            {
+              "node": "insert_cadastro",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null,
+    "autosaved": false
+  },
+  "activeVersionId": "04ac5039-ca31-4df7-b9dc-9739bed32483",
   "connections": {
     "fluxo_chamado": {
       "main": [
@@ -179,6 +315,15 @@
     "callerPolicy": "workflowsFromSameOwner",
     "errorWorkflow": "JC1jRbnEV3QDh2TT"
   },
+  "shared": [
+    {
+      "updatedAt": "2026-03-06T17:55:53.246Z",
+      "createdAt": "2026-03-06T17:55:53.246Z",
+      "role": "workflow:owner",
+      "workflowId": "v07vq3Kf8TXVsvJP",
+      "projectId": "DsELi0ezptx4jHSs"
+    }
+  ],
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
