@@ -1,5 +1,1487 @@
 {
   "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-03-12T14:51:39.412Z",
+    "createdAt": "2026-03-12T14:51:39.412Z",
+    "versionId": "e4994570-4748-4ccc-a954-f6b68fdc429c",
+    "workflowId": "fD0qAgNM6ackkDpv",
+    "nodes": [
+      {
+        "parameters": {
+          "path": "cria-contato-ghl",
+          "responseMode": "lastNode",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          -5584,
+          320
+        ],
+        "id": "cf12c0b0-71ef-403e-a37f-7d7482850db6",
+        "name": "fluxo_chamado",
+        "webhookId": "c429a2f4-80e0-43d8-9fc9-fd66b0ceadda"
+      },
+      {
+        "parameters": {
+          "operation": "select",
+          "table": {
+            "__rl": true,
+            "value": "fields_crm_etapas_funil",
+            "mode": "list",
+            "cachedResultName": "fields_crm_etapas_funil"
+          },
+          "where": {
+            "values": [
+              {
+                "column": "id_etapa_funil",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_etapa_funil\"] }}"
+              },
+              {
+                "column": "entidade",
+                "value": "contact"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "78503242-1cc8-418f-941f-318153138f4b",
+        "name": "pesquisa_json_fields_contact3",
+        "type": "n8n-nodes-base.mySql",
+        "typeVersion": 2.4,
+        "position": [
+          -3088,
+          624
+        ],
+        "alwaysOutputData": true,
+        "credentials": {
+          "mySql": {
+            "id": "SMjhjBLFctIENkHc",
+            "name": "[MySQL] - Fabio Soares"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "select",
+          "table": {
+            "__rl": true,
+            "value": "variaveis_globais_n8n",
+            "mode": "list",
+            "cachedResultName": "variaveis_globais_n8n"
+          },
+          "where": {
+            "values": [
+              {
+                "column": "nome_variavel",
+                "value": "URL do Fluxo de Rotacionamento de Colaboradores"
+              }
+            ]
+          },
+          "combineConditions": "OR",
+          "options": {}
+        },
+        "id": "6fb86ca2-883b-4574-a256-c4e1b5420f20",
+        "name": "pesquisa_url_rotacionamento_colaboradores1",
+        "type": "n8n-nodes-base.mySql",
+        "typeVersion": 2.4,
+        "position": [
+          -2624,
+          320
+        ],
+        "alwaysOutputData": true,
+        "credentials": {
+          "mySql": {
+            "id": "SMjhjBLFctIENkHc",
+            "name": "[MySQL] - Fabio Soares"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "select",
+          "table": {
+            "__rl": true,
+            "value": "variaveis_globais_n8n",
+            "mode": "list",
+            "cachedResultName": "variaveis_globais_n8n"
+          },
+          "where": {
+            "values": [
+              {
+                "column": "nome_variavel",
+                "value": "URL Base do CRM"
+              }
+            ]
+          },
+          "combineConditions": "OR",
+          "options": {}
+        },
+        "id": "ee18e9e9-c676-4e10-89b2-5d0fa1a65c4a",
+        "name": "pesquisa_url_base_crm1",
+        "type": "n8n-nodes-base.mySql",
+        "typeVersion": 2.4,
+        "position": [
+          -4352,
+          320
+        ],
+        "alwaysOutputData": true,
+        "credentials": {
+          "mySql": {
+            "id": "SMjhjBLFctIENkHc",
+            "name": "[MySQL] - Fabio Soares"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "// Obter o template do banco de dados\nlet template = $node[\"pesquisa_json_fields_contact3\"].json[\"payload_fields\"];\n\n// Verifique se o template é uma string JSON ou já um objeto\nif (typeof template === \"string\") {\n  template = JSON.parse(template);\n}\n\n// Obter os dados diretamente do \"body.payload\" do webhook\nconst payload = $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"];\n\n// Função para substituir os placeholders no template\nconst replacePlaceholders = (template, data) => {\n  const stringified = JSON.stringify(template);\n  const replaced = stringified.replace(/{{\\s*(\\w+)\\s*}}/g, (_, key) => {\n    const valor = data[key];\n    if (valor !== undefined && valor !== null) {\n      return valor;\n    } else {\n      console.warn(`Placeholder {{ ${key} }} não encontrado no payload.`);\n      return '';\n    }\n  });\n  return JSON.parse(replaced);\n};\n\n// Substituir os placeholders no template com os dados do webhook\nlet result = replacePlaceholders(template, payload);\n\n// Remover campos com valores inválidos (vazio, apenas \"+\", null ou undefined)\nresult = result.filter(field => {\n  const value = field.field_value;\n  if (value === '' || value === '+' || value === undefined || value === null) {\n    console.warn(`Removendo o campo vazio ou inválido: ${field.key}`);\n    return false;\n  }\n  return true;\n});\n\n// Retornar resultado dentro de custom_fields_values\nreturn {\n  custom_fields_values: result\n};\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -2864,
+          624
+        ],
+        "id": "6bfa43d5-518c-4a22-920e-dfdc4b0cc082",
+        "name": "formata_campos_contact3"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "7ac6581d-d1e7-4377-a773-08ce146eeb4e",
+                "leftValue": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"tipo_forms\"] }}",
+                "rightValue": "Checkout",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals",
+                  "name": "filter.operator.equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          -3584,
+          320
+        ],
+        "id": "7bed9e27-a4c1-40a0-bb41-395bf49764c3",
+        "name": "checkout1"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Obter o template do banco de dados\nlet template = $node[\"pesquisa_json_fields_contact5\"].json[\"payload_fields\"];\n\n// Verifique se o template é uma string JSON ou já um objeto\nif (typeof template === \"string\") {\n  template = JSON.parse(template);\n}\n\n// Obter os dados diretamente do \"body.payload\" do webhook\nconst payload = $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"];\n\n// Função para substituir os placeholders no template\nconst replacePlaceholders = (template, data) => {\n  const stringified = JSON.stringify(template);\n  const replaced = stringified.replace(/{{\\s*(\\w+)\\s*}}/g, (_, key) => {\n    const valor = data[key];\n    if (valor !== undefined && valor !== null) {\n      return valor;\n    } else {\n      console.warn(`Placeholder {{ ${key} }} não encontrado no payload.`);\n      return '';\n    }\n  });\n  return JSON.parse(replaced);\n};\n\n// Substituir os placeholders no template com os dados do webhook\nlet result = replacePlaceholders(template, payload);\n\n// Remover campos com valores inválidos (vazio, apenas \"+\", null ou undefined)\nresult = result.filter(field => {\n  const value = field.field_value;\n  if (value === '' || value === '+' || value === undefined || value === null) {\n    console.warn(`Removendo o campo vazio ou inválido: ${field.key}`);\n    return false;\n  }\n  return true;\n});\n\n// Retornar resultado dentro de custom_fields_values\nreturn {\n  custom_fields_values: result\n};\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -2864,
+          128
+        ],
+        "id": "d0111f86-dc27-4886-a39c-77e3b1ca8c9f",
+        "name": "formata_campos_contact4"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "61f80b07-fba4-4704-a1f0-424c3d5c2157",
+                "leftValue": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"tipo_forms\"] }}",
+                "rightValue": "Agendamento",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals",
+                  "name": "filter.operator.equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          -3344,
+          432
+        ],
+        "id": "c2aeedff-b65a-459d-af95-b9b82747bf41",
+        "name": "agendamento1"
+      },
+      {
+        "parameters": {
+          "operation": "select",
+          "table": {
+            "__rl": true,
+            "value": "fields_crm_etapas_funil",
+            "mode": "list",
+            "cachedResultName": "fields_crm_etapas_funil"
+          },
+          "where": {
+            "values": [
+              {
+                "column": "id_situacao_agendamento",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_situacao_agendamento\"] }}"
+              },
+              {
+                "column": "entidade",
+                "value": "contact"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "34343021-f902-4e38-897d-edad4845d5dc",
+        "name": "pesquisa_json_fields_contact4",
+        "type": "n8n-nodes-base.mySql",
+        "typeVersion": 2.4,
+        "position": [
+          -3088,
+          384
+        ],
+        "alwaysOutputData": true,
+        "credentials": {
+          "mySql": {
+            "id": "SMjhjBLFctIENkHc",
+            "name": "[MySQL] - Fabio Soares"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "// Obter o template do banco de dados\nlet template = $node[\"pesquisa_json_fields_contact4\"].json[\"payload_fields\"];\n\n// Verifique se o template é uma string JSON ou já um objeto\nif (typeof template === \"string\") {\n  template = JSON.parse(template);\n}\n\n// Obter os dados diretamente do \"body.payload\" do webhook\nconst payload = $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"];\n\n// Função para substituir os placeholders no template\nconst replacePlaceholders = (template, data) => {\n  const stringified = JSON.stringify(template);\n  const replaced = stringified.replace(/{{\\s*(\\w+)\\s*}}/g, (_, key) => {\n    const valor = data[key];\n    if (valor !== undefined && valor !== null) {\n      return valor;\n    } else {\n      console.warn(`Placeholder {{ ${key} }} não encontrado no payload.`);\n      return '';\n    }\n  });\n  return JSON.parse(replaced);\n};\n\n// Substituir os placeholders no template com os dados do webhook\nlet result = replacePlaceholders(template, payload);\n\n// Remover campos com valores inválidos (vazio, apenas \"+\", null ou undefined)\nresult = result.filter(field => {\n  const value = field.field_value;\n  if (value === '' || value === '+' || value === undefined || value === null) {\n    console.warn(`Removendo o campo vazio ou inválido: ${field.key}`);\n    return false;\n  }\n  return true;\n});\n\n// Retornar resultado dentro de custom_fields_values\nreturn {\n  custom_fields_values: result\n};\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -2864,
+          384
+        ],
+        "id": "31e2e798-c4a9-4a60-a68c-4da0141ae4f4",
+        "name": "formata_campos_contact5"
+      },
+      {
+        "parameters": {
+          "operation": "select",
+          "table": {
+            "__rl": true,
+            "value": "variaveis_globais_n8n",
+            "mode": "list",
+            "cachedResultName": "variaveis_globais_n8n"
+          },
+          "where": {
+            "values": [
+              {
+                "column": "nome_variavel",
+                "value": "API Key 2 do GoHighLevel"
+              }
+            ]
+          },
+          "combineConditions": "OR",
+          "options": {}
+        },
+        "id": "c69f1aab-4280-4514-80fc-1a5c37975871",
+        "name": "pesquisa_api_key_crm1",
+        "type": "n8n-nodes-base.mySql",
+        "typeVersion": 2.4,
+        "position": [
+          -4112,
+          320
+        ],
+        "alwaysOutputData": true,
+        "credentials": {
+          "mySql": {
+            "id": "SMjhjBLFctIENkHc",
+            "name": "[MySQL] - Fabio Soares"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "select",
+          "table": {
+            "__rl": true,
+            "value": "variaveis_globais_n8n",
+            "mode": "list",
+            "cachedResultName": "variaveis_globais_n8n"
+          },
+          "where": {
+            "values": [
+              {
+                "column": "nome_variavel",
+                "value": "Location 2 do GoHighLevel"
+              }
+            ]
+          },
+          "combineConditions": "OR",
+          "options": {}
+        },
+        "id": "634f251b-b770-4b12-82a0-188f571f2275",
+        "name": "pesquisa_location_crm1",
+        "type": "n8n-nodes-base.mySql",
+        "typeVersion": 2.4,
+        "position": [
+          -3872,
+          320
+        ],
+        "alwaysOutputData": true,
+        "credentials": {
+          "mySql": {
+            "id": "SMjhjBLFctIENkHc",
+            "name": "[MySQL] - Fabio Soares"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "={{ $node[\"pesquisa_url_base_crm1\"].json[\"valor_variavel\"] }}contacts/",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Version",
+                "value": "2021-07-28"
+              },
+              {
+                "name": "Authorization",
+                "value": "=Bearer {{ $node[\"pesquisa_api_key_crm1\"].json[\"valor_variavel\"] }}"
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Accept",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ JSON.stringify(\n  (() => {\n    const fx = $node[\"fluxo_chamado\"].json.body.payload || {};\n    const pu = $node[\"pesquisa_user1\"].json || {};\n\n    const firstName  = fx.nome ?? pu.nome ?? \"\";\n    const lastName   = fx.sobrenome ?? pu.sobrenome ?? \"\";\n    const phone      = fx.telefone ?? pu.telefone ?? \"\";\n    const email      = fx.email ?? pu.email ?? \"\";\n    const locationId = $node[\"pesquisa_location_crm1\"].json.valor_variavel;\n\n    const name = `${firstName}${lastName ? \" \" + lastName : \"\"}`.trim();\n\n    // Helpers\n    const nonEmpty = (v) => Array.isArray(v) && v.length > 0;\n\n    const getCF = (nodeName) => {\n      if ($node[nodeName]?.runIndex >= 0) {\n        const viaItems = $items(nodeName, 0)?.json?.custom_fields_values;\n        if (nonEmpty(viaItems)) return viaItems;\n\n        const viaNode = $node[nodeName]?.json?.custom_fields_values;\n        if (nonEmpty(viaNode)) return viaNode;\n      }\n      return null;\n    };\n\n    const cf =\n      getCF(\"formata_campos_contact3\") ||\n      getCF(\"formata_campos_contact4\") ||\n      getCF(\"formata_campos_contact5\") ||\n      null;\n\n    // removido assignedTo\n    const body = { firstName, lastName, name, locationId };\n\n    if (phone) body.phone = phone;   // inclui só se houver valor\n    if (email) body.email = email;   // idem\n    if (cf) body.customFields = cf;  // inclui apenas se não vazio\n\n    return body;\n  })()\n) }}\n",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          -464,
+          928
+        ],
+        "id": "fd468a25-472f-4b01-992f-f918d602d2cd",
+        "name": "cria_contato1"
+      },
+      {
+        "parameters": {
+          "operation": "select",
+          "table": {
+            "__rl": true,
+            "value": "fields_crm_etapas_funil",
+            "mode": "list",
+            "cachedResultName": "fields_crm_etapas_funil"
+          },
+          "where": {
+            "values": [
+              {
+                "column": "id_situacao_checkout",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_situacao_checkout\"] }}"
+              },
+              {
+                "column": "entidade",
+                "value": "contact"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "e67f590b-08e0-40c4-94ea-124f78f08da2",
+        "name": "pesquisa_json_fields_contact5",
+        "type": "n8n-nodes-base.mySql",
+        "typeVersion": 2.4,
+        "position": [
+          -3088,
+          128
+        ],
+        "alwaysOutputData": true,
+        "credentials": {
+          "mySql": {
+            "id": "SMjhjBLFctIENkHc",
+            "name": "[MySQL] - Fabio Soares"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "select",
+          "table": {
+            "__rl": true,
+            "value": "etapas_funil",
+            "mode": "list",
+            "cachedResultName": "etapas_funil"
+          },
+          "where": {
+            "values": [
+              {
+                "column": "id",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_etapa_funil\"] }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "c1a89247-4c0c-4825-a155-85a096d35a12",
+        "name": "pesquisa_etapa_funil1",
+        "type": "n8n-nodes-base.mySql",
+        "typeVersion": 2.4,
+        "position": [
+          -2384,
+          320
+        ],
+        "alwaysOutputData": true,
+        "credentials": {
+          "mySql": {
+            "id": "SMjhjBLFctIENkHc",
+            "name": "[MySQL] - Fabio Soares"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "url": "={{ $node[\"pesquisa_url_rotacionamento_colaboradores1\"].json[\"valor_variavel\"] }}",
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "time",
+                "value": "={{ $node[\"pesquisa_etapa_funil1\"].json[\"nome\"].replace('Cadastro','SDR').replace('Aplicação','SDR').replace('Agendamento','Closer').replace('Pesquisa','SDR').replace('Checkout', 'Closer') }}"
+              },
+              {
+                "name": "id_user",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_user\"] }}"
+              },
+              {
+                "name": "email_colaborador",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"email_responsavel\"] || \"\" }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          -2160,
+          320
+        ],
+        "id": "03543d5d-ed07-4c9e-9258-0c435170905e",
+        "name": "consulta_colaborador1",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "operation": "select",
+          "table": {
+            "__rl": true,
+            "value": "users",
+            "mode": "list",
+            "cachedResultName": "users"
+          },
+          "where": {
+            "values": [
+              {
+                "column": "id",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_user\"] }}"
+              }
+            ]
+          },
+          "combineConditions": "OR",
+          "options": {}
+        },
+        "id": "db4f9b5d-5ad5-410c-af00-7434b4b5d7df",
+        "name": "pesquisa_user1",
+        "type": "n8n-nodes-base.mySql",
+        "typeVersion": 2.4,
+        "position": [
+          -1920,
+          320
+        ],
+        "alwaysOutputData": true,
+        "credentials": {
+          "mySql": {
+            "id": "SMjhjBLFctIENkHc",
+            "name": "[MySQL] - Fabio Soares"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "f684eeae-7bf1-4946-86a7-d10259ff7122",
+                "leftValue": "={{ $node[\"pesquisa_user1\"].json[\"id_contact_crm\"] }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEmpty",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          -1680,
+          320
+        ],
+        "id": "f2b43a44-e2b1-4258-a4cd-b074a560fc12",
+        "name": "existe_no_crm1"
+      },
+      {
+        "parameters": {
+          "method": "PUT",
+          "url": "={{ $node[\"pesquisa_url_base_crm1\"].json[\"valor_variavel\"] }}contacts/{{ $node[\"cria_contato1\"].runIndex >= 0      ? $node[\"cria_contato1\"].json[\"contact\"][\"id\"] :  $node[\"busca_contato_pelo_telefone1\"].runIndex >= 0      ? $node[\"busca_contato_pelo_telefone1\"].json[\"contacts\"][\"0\"][\"id\"] : $node[\"busca_contato_pelo_email1\"].runIndex >= 0      ? $node[\"busca_contato_pelo_email1\"].json[\"contacts\"][\"0\"][\"id\"] : $node[\"pesquisa_user1\"].runIndex >= 0      ?  $node[\"pesquisa_user1\"].json[\"id_contact_crm\"] : null }}",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Version",
+                "value": "2021-07-28"
+              },
+              {
+                "name": "Authorization",
+                "value": "=Bearer {{ $node[\"pesquisa_api_key_crm1\"].json[\"valor_variavel\"] }}"
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Accept",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ JSON.stringify(\n  (() => {\n    const fx = $node[\"fluxo_chamado\"].json.body.payload || {};\n    const pu = $node[\"pesquisa_user1\"].json || {};\n\n    const firstName  = fx.nome ?? pu.nome ?? \"\";\n    const lastName   = fx.sobrenome ?? pu.sobrenome ?? \"\";\n    const phone      = fx.telefone ?? pu.telefone ?? \"\";\n    const email      = fx.email ?? pu.email ?? \"\";\n\n    const name = `${firstName}${lastName ? \" \" + lastName : \"\"}`.trim();\n\n    // Helpers\n    const nonEmpty = (v) => Array.isArray(v) && v.length > 0;\n\n    const getCF = (nodeName) => {\n      if ($node[nodeName]?.runIndex >= 0) {\n        const viaItems = $items(nodeName, 0)?.json?.custom_fields_values;\n        if (nonEmpty(viaItems)) return viaItems;\n\n        const viaNode = $node[nodeName]?.json?.custom_fields_values;\n        if (nonEmpty(viaNode)) return viaNode;\n      }\n      return null;\n    };\n\n    const cf =\n      getCF(\"formata_campos_contact3\") ||\n      getCF(\"formata_campos_contact4\") ||\n      getCF(\"formata_campos_contact5\") ||\n      null;\n\n    // removidos locationId e assignedTo\n    const body = { firstName, lastName, name };\n\n    if (phone) body.phone = phone;\n    if (email) body.email = email;\n    if (cf) body.customFields = cf;\n\n    return body;\n  })()\n) }}\n",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          -1424,
+          192
+        ],
+        "id": "7e568d0d-862f-4418-873d-546256ad14dc",
+        "name": "atualiza_contato1",
+        "onError": "continueErrorOutput"
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "UPDATE users\nSET \n    id_contact_crm = '{{ $node[\"cria_contato1\"].runIndex >= 0      ? $node[\"cria_contato1\"].json[\"contact\"][\"id\"] :  $node[\"busca_contato_pelo_telefone1\"].runIndex >= 0      ? $node[\"busca_contato_pelo_telefone1\"].json[\"contacts\"][\"0\"][\"id\"] : $node[\"busca_contato_pelo_email1\"].runIndex >= 0      ? $node[\"busca_contato_pelo_email1\"].json[\"contacts\"][\"0\"][\"id\"] : $node[\"pesquisa_user1\"].runIndex >= 0      ?  $node[\"pesquisa_user1\"].json[\"id_contact_crm\"] : null }}',\n      data_atualizacao = CURRENT_TIMESTAMP -- Define a data/hora atual no formato TIMESTAMP\nWHERE \n    id = {{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_user\"] }};",
+          "options": {}
+        },
+        "id": "6a51c531-3c09-4280-a2e2-0feca81928ad",
+        "name": "update_id_crm1",
+        "type": "n8n-nodes-base.mySql",
+        "typeVersion": 2.4,
+        "position": [
+          -224,
+          0
+        ],
+        "alwaysOutputData": true,
+        "credentials": {
+          "mySql": {
+            "id": "SMjhjBLFctIENkHc",
+            "name": "[MySQL] - Fabio Soares"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "41487899-9afe-4a75-980a-e25a254ef80b",
+                "name": "id_contact_crm",
+                "value": "={{ $node[\"cria_contato1\"].runIndex >= 0      ? $node[\"cria_contato1\"].json[\"contact\"][\"id\"] :  $node[\"busca_contato_pelo_telefone1\"].runIndex >= 0      ? $node[\"busca_contato_pelo_telefone1\"].json[\"contacts\"][\"0\"][\"id\"] : $node[\"busca_contato_pelo_email1\"].runIndex >= 0      ? $node[\"busca_contato_pelo_email1\"].json[\"contacts\"][\"0\"][\"id\"] : $node[\"pesquisa_user1\"].runIndex >= 0      ?  $node[\"pesquisa_user1\"].json[\"id_contact_crm\"] : null }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          0,
+          0
+        ],
+        "id": "04d05a62-7ea5-486e-90b3-804cba015a1a",
+        "name": "retorna_dados1"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "f684eeae-7bf1-4946-86a7-d10259ff7122",
+                "leftValue": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"email\"] || $node[\"pesquisa_user1\"].json[\"email\"] }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "exists",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          -1424,
+          544
+        ],
+        "id": "d7bc6336-6f72-4d00-8b05-339021401240",
+        "name": "email_preenchido1"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "={{ $node[\"pesquisa_url_base_crm1\"].json[\"valor_variavel\"] }}contacts/search",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Version",
+                "value": "2021-07-28"
+              },
+              {
+                "name": "Authorization",
+                "value": "=Bearer {{ $node[\"pesquisa_api_key_crm1\"].json[\"valor_variavel\"] }}"
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Accept",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"pageLimit\": 50,\n  \"locationId\": \"{{ $node[\"pesquisa_location_crm1\"].json[\"valor_variavel\"] }}\",\n  \"filters\": [\n        {\n          \"field\": \"email\",\n          \"operator\": \"eq\",\n          \"value\": \"{{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"email\"] || $node[\"pesquisa_user1\"].json[\"email\"] || \"\" }}\"\n        }\n  ]\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          -1184,
+          464
+        ],
+        "id": "3ed5482a-2e2c-40aa-a610-eff2c949556f",
+        "name": "busca_contato_pelo_email1"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "274af756-eb8c-4711-8ea2-298f7e7994c2",
+                "leftValue": "={{ $node[\"busca_contato_pelo_email1\"].json[\"contacts\"] }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "array",
+                  "operation": "notEmpty",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "id": "cc7a636f-0a8f-4a21-b962-06084f833212",
+        "name": "contato_encontrado2",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          -960,
+          464
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "f684eeae-7bf1-4946-86a7-d10259ff7122",
+                "leftValue": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"telefone\"] || $node[\"pesquisa_user1\"].json[\"telefone\"] }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "exists",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          -1184,
+          784
+        ],
+        "id": "b1d42a65-deec-4ad8-a6ff-a482f8672dd6",
+        "name": "telefone_preenchido1"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "274af756-eb8c-4711-8ea2-298f7e7994c2",
+                "leftValue": "={{ $node[\"busca_contato_pelo_telefone1\"].json[\"contacts\"] }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "array",
+                  "operation": "notEmpty",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "id": "dab4f464-5533-45a7-8125-30fe42df4b6d",
+        "name": "contato_encontrado3",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          -736,
+          688
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "={{ $node[\"pesquisa_url_base_crm1\"].json[\"valor_variavel\"] }}contacts/search",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Version",
+                "value": "2021-07-28"
+              },
+              {
+                "name": "Authorization",
+                "value": "=Bearer {{ $node[\"pesquisa_api_key_crm1\"].json[\"valor_variavel\"] }}"
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Accept",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"pageLimit\": 50,\n  \"locationId\": \"{{ $node[\"pesquisa_location_crm1\"].json[\"valor_variavel\"] }}\",\n  \"filters\": [\n        {\n          \"field\": \"phone\",\n          \"operator\": \"eq\",\n          \"value\": \"+{{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"telefone\"] || $node[\"pesquisa_user1\"].json[\"telefone\"] || \"\" }}\"\n        }\n  ]\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          -944,
+          688
+        ],
+        "id": "7797f941-28de-4dc2-ac5a-24b3e14b528e",
+        "name": "busca_contato_pelo_telefone1"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "={{ $node[\"pesquisa_json_fields_contact6\"].json[\"webhook\"] }}",
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "nome_completo",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"nome_completo\"] || \"\"}}"
+              },
+              {
+                "name": "email",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"email\"] || \"\" }}"
+              },
+              {
+                "name": "telefone",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"telefone\"] || \"\" }}"
+              },
+              {
+                "name": "instagram",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"instagram\"] || \"\" }}"
+              },
+              {
+                "name": "utm_source",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"utm_source\"] || \"\" }}"
+              },
+              {
+                "name": "utm_campaign",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"utm_campaign\"] || \"\" }}"
+              },
+              {
+                "name": "utm_term",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"utm_term\"] || \"\" }}"
+              },
+              {
+                "name": "utm_medium",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"utm_medium\"] || \"\"}}"
+              },
+              {
+                "name": "utm_content",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"utm_content\"] || \"\"}}"
+              },
+              {
+                "name": "tempo_importacao",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"tempo_importacao\"] || \"\" }}"
+              },
+              {
+                "name": "modalidade",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"modalidade\"] || \"\" }}"
+              },
+              {
+                "name": "qtd_importacoes",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"qtd_importacoes\"] ||\"\" }}"
+              },
+              {
+                "name": "faturamento",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"faturamento\"] ||\"\" }}"
+              },
+              {
+                "name": "capital_disponivel",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"capital_disponivel\"] ||\"\" }}"
+              },
+              {
+                "name": "tem_equipe",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"tem_equipe\"] || \"\" }}"
+              },
+              {
+                "name": "onde_vende",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"onde_vende\"] || \"\" }}"
+              },
+              {
+                "name": "fluxo_de_caixa",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"fluxo_de_caixa\"] || \"\" }}"
+              },
+              {
+                "name": "objetivo_12m",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"objetivo_12m\"] || \"\" }}"
+              },
+              {
+                "name": "tempo_disponivel",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"tempo_disponivel\"] || \"\"}}"
+              },
+              {
+                "name": "perfil",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"perfil\"] ||\"\" }}"
+              },
+              {
+                "name": "estagio_atual",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"estagio_atual\"] ||\"\" }}"
+              },
+              {
+                "name": "qtd_importacoes",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"qtd_importacoes\"] || \"\" }}"
+              },
+              {
+                "name": "onde_vende",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"onde_vende\"] || \"\" }}"
+              },
+              {
+                "name": "estado_atual",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"estado_atual\"] || \"\" }}"
+              },
+              {
+                "name": "tem_cnpj",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"tem_cnpj\"] || \"\" }}"
+              },
+              {
+                "name": "capital_disponivel",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"capital_disponivel\"] || \"\" }}"
+              },
+              {
+                "name": "tempo_disponivel",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"tempo_disponivel\"] || \"\" }}"
+              },
+              {
+                "name": "maior_desafio",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"maior_desafio\"] || \"\" }}"
+              },
+              {
+                "name": "motivo_de_buscar_ajuda",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"motivo_de_buscar_ajuda\"] || \"\" }}"
+              },
+              {
+                "name": "objetivo",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"objetivo\"] || \"\" }}"
+              },
+              {
+                "name": "objetivo_financeiro",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"objetivo_financeiro\"] || \"\" }}"
+              },
+              {
+                "name": "comprometimento",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"comprometimento\"] ||\"\" }}"
+              },
+              {
+                "name": "inicio_imediato",
+                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"inicio_imediato\"] || \"\" }}"
+              },
+              {
+                "name": "aluno"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "2168c2e8-b467-4cb5-b606-0ddaf2d098e2",
+        "name": "cria_ou_atualiza_contact_na_clint1",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.1,
+        "position": [
+          -4688,
+          320
+        ]
+      },
+      {
+        "parameters": {
+          "operation": "select",
+          "table": {
+            "__rl": true,
+            "value": "variaveis_globais_n8n",
+            "mode": "list",
+            "cachedResultName": "variaveis_globais_n8n"
+          },
+          "where": {
+            "values": [
+              {
+                "column": "nome_variavel",
+                "value": "URL do Fluxo de Rotacionamento de Colaboradores"
+              }
+            ]
+          },
+          "combineConditions": "OR",
+          "options": {}
+        },
+        "id": "93c434df-8f70-43ce-aa80-8fbfdc827d4b",
+        "name": "pesquisa_url_rotacionamento_colaboradores2",
+        "type": "n8n-nodes-base.mySql",
+        "typeVersion": 2.4,
+        "position": [
+          -4928,
+          320
+        ],
+        "alwaysOutputData": true,
+        "credentials": {
+          "mySql": {
+            "id": "SMjhjBLFctIENkHc",
+            "name": "[MySQL] - Fabio Soares"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "// Obter o template do banco de dados\nlet template = $node[\"pesquisa_json_fields_contact6\"].json[\"payload_fields\"];\n\n// Verifique se o template é válido (precisa ser um objeto)\nif (typeof template !== \"object\" || template === null) {\n    throw new Error(\"O template payload_fields não é um objeto válido.\");\n}\n\n// Obter os dados diretamente do \"body\" do webhook\nconst payload = $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"];\n\n// Criar uma cópia do payload e adicionar o campo \"nome\" concatenado com \"sobrenome\"\nconst payloadAtualizado = { \n    ...payload, \n    nome: `${payload.nome || ''} ${payload.sobrenome || ''}`.trim() \n};\n\n// Função para substituir os placeholders\nconst replacePlaceholders = (template, data) => {\n    return Object.keys(template).map(key => {\n        let fieldValue = template[key];\n\n        if (typeof fieldValue === \"string\") {\n            // Substituir placeholders no formato {{ chave }}\n            fieldValue = fieldValue.replace(/{{\\s*(\\w+)\\s*}}/g, (_, key) => {\n                return data[key] !== undefined ? data[key] : ''; // Substitui ou deixa vazio se não encontrado\n            });\n        }\n\n        return { field: key, value: fieldValue };\n    });\n};\n\n// Substituir os placeholders no template com os dados do webhook atualizado\nlet result = replacePlaceholders(template, payloadAtualizado);\n\n// Retornar o resultado no formato esperado\nreturn {\n    custom_fields_values: result\n};\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -5168,
+          320
+        ],
+        "id": "022d4b37-01db-4c51-9e07-537a6965349d",
+        "name": "formata_campos_contact6"
+      },
+      {
+        "parameters": {
+          "operation": "select",
+          "table": {
+            "__rl": true,
+            "value": "situacao_pipeline_stage",
+            "mode": "list",
+            "cachedResultName": "situacao_pipeline_stage"
+          },
+          "where": {
+            "values": [
+              {
+                "column": "entidade",
+                "value": "contact"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "280f3889-4cba-4930-8b81-1f10d2c4644a",
+        "name": "pesquisa_json_fields_contact6",
+        "type": "n8n-nodes-base.mySql",
+        "typeVersion": 2.4,
+        "position": [
+          -5376,
+          320
+        ],
+        "alwaysOutputData": true,
+        "credentials": {
+          "mySql": {
+            "id": "SMjhjBLFctIENkHc",
+            "name": "[MySQL] - Fabio Soares"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "fluxo_chamado": {
+        "main": [
+          [
+            {
+              "node": "pesquisa_json_fields_contact6",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "pesquisa_json_fields_contact3": {
+        "main": [
+          [
+            {
+              "node": "formata_campos_contact3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "pesquisa_url_rotacionamento_colaboradores1": {
+        "main": [
+          [
+            {
+              "node": "pesquisa_etapa_funil1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "pesquisa_url_base_crm1": {
+        "main": [
+          [
+            {
+              "node": "pesquisa_api_key_crm1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "formata_campos_contact3": {
+        "main": [
+          [
+            {
+              "node": "pesquisa_url_rotacionamento_colaboradores1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "checkout1": {
+        "main": [
+          [
+            {
+              "node": "pesquisa_json_fields_contact5",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "agendamento1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "formata_campos_contact4": {
+        "main": [
+          [
+            {
+              "node": "pesquisa_url_rotacionamento_colaboradores1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "agendamento1": {
+        "main": [
+          [
+            {
+              "node": "pesquisa_json_fields_contact4",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "pesquisa_json_fields_contact3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "pesquisa_json_fields_contact4": {
+        "main": [
+          [
+            {
+              "node": "formata_campos_contact5",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "formata_campos_contact5": {
+        "main": [
+          [
+            {
+              "node": "pesquisa_url_rotacionamento_colaboradores1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "pesquisa_api_key_crm1": {
+        "main": [
+          [
+            {
+              "node": "pesquisa_location_crm1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "pesquisa_location_crm1": {
+        "main": [
+          [
+            {
+              "node": "checkout1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "cria_contato1": {
+        "main": [
+          [
+            {
+              "node": "update_id_crm1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "pesquisa_json_fields_contact5": {
+        "main": [
+          [
+            {
+              "node": "formata_campos_contact4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "pesquisa_etapa_funil1": {
+        "main": [
+          [
+            {
+              "node": "consulta_colaborador1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "consulta_colaborador1": {
+        "main": [
+          [
+            {
+              "node": "pesquisa_user1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "pesquisa_user1": {
+        "main": [
+          [
+            {
+              "node": "existe_no_crm1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "existe_no_crm1": {
+        "main": [
+          [
+            {
+              "node": "atualiza_contato1",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "email_preenchido1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "atualiza_contato1": {
+        "main": [
+          [
+            {
+              "node": "update_id_crm1",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "email_preenchido1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "update_id_crm1": {
+        "main": [
+          [
+            {
+              "node": "retorna_dados1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "email_preenchido1": {
+        "main": [
+          [
+            {
+              "node": "busca_contato_pelo_email1",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "telefone_preenchido1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "busca_contato_pelo_email1": {
+        "main": [
+          [
+            {
+              "node": "contato_encontrado2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "contato_encontrado2": {
+        "main": [
+          [
+            {
+              "node": "atualiza_contato1",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "telefone_preenchido1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "telefone_preenchido1": {
+        "main": [
+          [
+            {
+              "node": "busca_contato_pelo_telefone1",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "cria_contato1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "contato_encontrado3": {
+        "main": [
+          [
+            {
+              "node": "atualiza_contato1",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "cria_contato1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "busca_contato_pelo_telefone1": {
+        "main": [
+          [
+            {
+              "node": "contato_encontrado3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "pesquisa_url_rotacionamento_colaboradores2": {
+        "main": [
+          []
+        ]
+      },
+      "formata_campos_contact6": {
+        "main": [
+          [
+            {
+              "node": "pesquisa_url_rotacionamento_colaboradores2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "pesquisa_json_fields_contact6": {
+        "main": [
+          [
+            {
+              "node": "formata_campos_contact6",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null,
+    "autosaved": false
+  },
+  "activeVersionId": "e4994570-4748-4ccc-a954-f6b68fdc429c",
   "connections": {
     "fluxo_chamado": {
       "main": [
@@ -1573,6 +3055,15 @@
     "callerPolicy": "workflowsFromSameOwner",
     "errorWorkflow": "JC1jRbnEV3QDh2TT"
   },
+  "shared": [
+    {
+      "updatedAt": "2026-03-06T21:33:27.246Z",
+      "createdAt": "2026-03-06T21:33:27.246Z",
+      "role": "workflow:owner",
+      "workflowId": "fD0qAgNM6ackkDpv",
+      "projectId": "DsELi0ezptx4jHSs"
+    }
+  ],
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
