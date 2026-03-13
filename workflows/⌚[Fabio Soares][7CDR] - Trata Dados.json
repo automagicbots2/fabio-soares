@@ -1,14 +1,14 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-03-12T15:10:48.000Z",
-    "createdAt": "2026-03-12T15:10:41.283Z",
-    "versionId": "0143969a-8f51-4dc4-bdb8-9a9c1b9a0c9f",
+    "updatedAt": "2026-03-12T22:46:24.000Z",
+    "createdAt": "2026-03-12T22:29:28.920Z",
+    "versionId": "cad3ac66-459e-46ea-b857-d6a312c44c9e",
     "workflowId": "vTuYolwZNf9vjfDr",
     "nodes": [
       {
         "parameters": {
-          "jsCode": "const body = $node[\"chega_da_fila\"].json[\"content\"][\"body\"] || {};\n\n// Captura segura dos dados (NOVO PAYLOAD)\nconst fullNameAnswer = body[\"name\"] || body[\"nome\"] || body[\"nome_completo\"] || \"\"; // (provavelmente vazio nesse caso)\nconst emailAnswer = body[\"email\"] || \"\";\nconst telefoneClienteOriginal = body[\"phonenumber\"] || body[\"phone\"] || body[\"telefone\"] || \"\";\n\n// UTM (NOVO PAYLOAD)\nconst utm_source   = body[\"utm_source\"]   || \"\";\nconst utm_campaign = body[\"utm_campaign\"] || \"\";\nconst utm_medium   = body[\"utm_medium\"]   || \"\";\nconst utm_term     = body[\"utm_term\"]     || \"\";\nconst utm_content  = body[\"utm_content\"]  || \"\";\n\n// Form info (NOVO PAYLOAD)\nconst form_id   = body[\"form_id\"]   || \"\";\nconst form_name = body[\"form_name\"] || \"\";\n\n// Funções auxiliares já existentes\nfunction capitalizeName(fullName) {\n  if (!fullName) return { fname: '', lname: '', fullname: '' };\n\n  const lowerCaseWords = ['da', 'de', 'do', 'di', 'du'];\n  let words = fullName.toLowerCase().split(' ').map((word, index) => {\n    if (lowerCaseWords.includes(word) && index !== 0) return word;\n    return word.charAt(0).toUpperCase() + word.slice(1);\n  });\n\n  let fname = words.shift();\n  let lname = words.join(' ');\n\n  return { fname, lname, fullname: lname ? `${fname} ${lname}` : fname };\n}\n\nfunction formatEmail(email) {\n  return String(email || \"\").toLowerCase().trim();\n}\n\n// Tratamento avançado do telefone\nfunction formatTelefone(telefone) {\n  const telefoneLimpo = String(telefone || \"\").replace(/\\D/g, \"\");\n\n  // Se vier com DDI (ex: 5511955...), mantém e tenta ajustar a parte nacional\n  if (telefoneLimpo.length === 13 && telefoneLimpo.startsWith(\"55\")) {\n    const DDI = \"55\";\n    const DDD = telefoneLimpo.slice(2, 4);\n    let numero = telefoneLimpo.slice(4);\n\n    if (Number(DDD) > 28 && numero.length === 9 && numero.startsWith(\"9\")) {\n      numero = numero.slice(1);\n    } else if (Number(DDD) <= 28 && numero.length === 8) {\n      numero = `9${numero}`;\n    }\n\n    return `${DDI}${DDD}${numero}`;\n  }\n\n  // Se vier sem DDI (10 ou 11 dígitos)\n  if (telefoneLimpo.length === 11 || telefoneLimpo.length === 10) {\n    const DDI = \"55\";\n    const DDD = telefoneLimpo.slice(0, 2);\n    let numero = telefoneLimpo.slice(2);\n\n    if (Number(DDD) > 28 && numero.length === 9 && numero.startsWith(\"9\")) {\n      numero = numero.slice(1);\n    } else if (Number(DDD) <= 28 && numero.length === 8) {\n      numero = `9${numero}`;\n    }\n\n    return `${DDI}${DDD}${numero}`;\n  }\n\n  return telefoneLimpo;\n}\n\n// Formatação final\nconst formattedNames = capitalizeName(fullNameAnswer);\nconst formattedEmail = formatEmail(emailAnswer);\nconst telefoneFinal = formatTelefone(telefoneClienteOriginal);\n\n// Resultado\nconst result = {\n  ...formattedNames,\n  email: formattedEmail,\n  whatsapp: telefoneFinal,\n  instagram: \"\",\n  cpf: \"\",\n  cnpj: \"\",\n  utm_source,\n  utm_campaign,\n  utm_term,\n  utm_medium,\n  utm_content,\n  form_id,\n  form_name\n};\n\nreturn [{ json: result }];"
+          "jsCode": "// Detecta automaticamente de onde vem o body\nconst body =\n  items[0].json?.content?.body ||\n  items[0].json?.body ||\n  {};\n\n// =========================\n// Captura segura dos dados\n// =========================\n\nconst fullNameAnswer =\n  body[\"Nome\"] ||\n  body[\"name\"] ||\n  body[\"nome\"] ||\n  body[\"nome_completo\"] ||\n  body?.names?.first_name ||\n  \"\";\n\nconst emailAnswer =\n  body[\"E-mail\"] ||\n  body[\"email\"] ||\n  body[\"E-mail \"] ||\n  \"\";\n\nconst telefoneClienteOriginal =\n  body[\"Telefone\"] ||\n  body[\"phonenumber\"] ||\n  body[\"phone\"] ||\n  body[\"telefone\"] ||\n  \"\";\n\n// UTMs\nconst utm_source   = body[\"utm_source\"]   || \"\";\nconst utm_campaign = body[\"utm_campaign\"] || \"\";\nconst utm_medium   = body[\"utm_medium\"]   || \"\";\nconst utm_term     = body[\"utm_term\"]     || \"\";\nconst utm_content  = body[\"utm_content\"]  || \"\";\n\n// Form info\nconst form_id =\n  body[\"id_formulario\"] ||\n  body[\"form_id\"] ||\n  body?.__submission?.form_id ||\n  \"\";\n\nconst form_name =\n  body[\"form_name\"] ||\n  body?.__submission?.source_url ||\n  \"\";\n\n// Extras do payload\nconst data_formulario =\n  body[\"Data\"] ||\n  \"\";\n\nconst horario_formulario =\n  body[\"Horário\"] ||\n  body[\"Horario\"] ||\n  \"\";\n\nconst page_url =\n  body[\"URL da página\"] ||\n  body[\"URL da pagina\"] ||\n  body[\"page_url\"] ||\n  \"\";\n\nconst user_agent =\n  body[\"Agente de usuário\"] ||\n  body[\"Agente de usuario\"] ||\n  body[\"user_agent\"] ||\n  \"\";\n\nconst ip_remoto =\n  body[\"IP remoto\"] ||\n  body[\"ip\"] ||\n  body[\"remote_ip\"] ||\n  \"\";\n\nconst desenvolvido_por =\n  body[\"Desenvolvido por\"] ||\n  \"\";\n\n// =========================\n// Funções auxiliares\n// =========================\n\nfunction capitalizeName(fullName) {\n  if (!fullName) return { fname: \"\", lname: \"\", fullname: \"\" };\n\n  const lowerCaseWords = [\"da\", \"de\", \"do\", \"dos\", \"das\", \"di\", \"du\"];\n\n  const words = String(fullName)\n    .trim()\n    .toLowerCase()\n    .split(/\\s+/)\n    .map((word, index) => {\n      if (lowerCaseWords.includes(word) && index !== 0) return word;\n      return word.charAt(0).toUpperCase() + word.slice(1);\n    });\n\n  const fname = words.shift() || \"\";\n  const lname = words.join(\" \");\n\n  return {\n    fname,\n    lname,\n    fullname: lname ? `${fname} ${lname}` : fname\n  };\n}\n\nfunction formatEmail(email) {\n  return String(email || \"\").toLowerCase().trim();\n}\n\n// =========================\n// Tratamento de telefone\n// =========================\n\nfunction formatTelefone(telefone) {\n  const telefoneLimpo = String(telefone || \"\").replace(/\\D/g, \"\");\n\n  if (!telefoneLimpo) return \"\";\n\n  // Caso já venha com DDI 55\n  if (telefoneLimpo.startsWith(\"55\")) {\n    const DDI = \"55\";\n    const DDD = telefoneLimpo.slice(2, 4);\n    let numero = telefoneLimpo.slice(4);\n\n    if (Number(DDD) > 28 && numero.length === 9 && numero.startsWith(\"9\")) {\n      numero = numero.slice(1);\n    }\n\n    if (Number(DDD) <= 28 && numero.length === 8) {\n      numero = `9${numero}`;\n    }\n\n    return `${DDI}${DDD}${numero}`;\n  }\n\n  // Caso venha sem DDI\n  if (telefoneLimpo.length === 10 || telefoneLimpo.length === 11) {\n    const DDI = \"55\";\n    const DDD = telefoneLimpo.slice(0, 2);\n    let numero = telefoneLimpo.slice(2);\n\n    if (Number(DDD) > 28 && numero.length === 9 && numero.startsWith(\"9\")) {\n      numero = numero.slice(1);\n    }\n\n    if (Number(DDD) <= 28 && numero.length === 8) {\n      numero = `9${numero}`;\n    }\n\n    return `${DDI}${DDD}${numero}`;\n  }\n\n  return telefoneLimpo;\n}\n\n// =========================\n// Formatação final\n// =========================\n\nconst formattedNames = capitalizeName(fullNameAnswer);\nconst formattedEmail = formatEmail(emailAnswer);\nconst telefoneFinal = formatTelefone(telefoneClienteOriginal);\n\n// Resultado final\nconst result = {\n  ...formattedNames,\n  email: formattedEmail,\n  whatsapp: telefoneFinal,\n  instagram: \"\",\n  cpf: \"\",\n  cnpj: \"\",\n\n  utm_source,\n  utm_campaign,\n  utm_term,\n  utm_medium,\n  utm_content,\n\n  form_id,\n  form_name,\n\n  data_formulario,\n  horario_formulario,\n  page_url,\n  user_agent,\n  ip_remoto,\n  desenvolvido_por\n};\n\nreturn [{ json: result }];"
         },
         "id": "3e3545c6-969e-4aa2-abef-6d946e84cd25",
         "name": "formata_dados",
@@ -99,12 +99,6 @@
                 "id": "45655fc0-b71d-4f90-a243-6e1f04e25a95",
                 "name": "tipo_forms",
                 "value": "={{ $node[\"busca_funil\"].json[\"tipo_forms\"] }}",
-                "type": "string"
-              },
-              {
-                "id": "18560feb-62d4-45da-a9e3-937ab2b28636",
-                "name": "chip_atribuido",
-                "value": "={{ $node[\"consulta_chip_api_oficial\"].json[\"telefone\"] || \"\" }}",
                 "type": "string"
               },
               {
@@ -219,8 +213,7 @@
             "id": "eKnFCoTy5bVlhIj3",
             "name": "[RabbitMQ] - Fabio Soares"
           }
-        },
-        "disabled": true
+        }
       },
       {
         "parameters": {
@@ -323,7 +316,7 @@
       },
       {
         "parameters": {
-          "queue": "[fabio soares] - Trata Dados 7CDR",
+          "queue": "[fabio soares] - Trata Dados CDR",
           "options": {
             "arguments": {
               "argument": [
@@ -353,7 +346,7 @@
       },
       {
         "parameters": {
-          "queue": "[fabio soares] - Trata Dados 7CDR",
+          "queue": "[fabio soares] - Trata Dados CDR",
           "options": {
             "arguments": {
               "argument": [
@@ -382,6 +375,42 @@
             "name": "[RabbitMQ] - Fabio Soares"
           }
         }
+      },
+      {
+        "parameters": {
+          "url": "https://services.leadconnectorhq.com/locations/GrB2kAoc7ZO681juhPJ1/customFields",
+          "sendQuery": true,
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Accept",
+                "value": "application/json"
+              },
+              {
+                "name": "Version",
+                "value": "2021-07-28"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer pit-83a40492-d9f7-4059-92e4-2a0967d043ac"
+              }
+            ]
+          },
+          "options": {
+            "redirect": {
+              "redirect": {}
+            }
+          }
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          -1344,
+          768
+        ],
+        "id": "bbb6396a-2dee-40ff-b3d0-2974c27d733f",
+        "name": "HTTP Request"
       }
     ],
     "connections": {
@@ -475,11 +504,11 @@
       }
     },
     "authors": "Automagic Bots",
-    "name": "Version 0143969a",
+    "name": "Version cad3ac66",
     "description": "",
     "autosaved": true
   },
-  "activeVersionId": "0143969a-8f51-4dc4-bdb8-9a9c1b9a0c9f",
+  "activeVersionId": "cad3ac66-459e-46ea-b857-d6a312c44c9e",
   "connections": {
     "formata_dados": {
       "main": [
@@ -580,7 +609,7 @@
   "nodes": [
     {
       "parameters": {
-        "jsCode": "const body = $node[\"chega_da_fila\"].json[\"content\"][\"body\"] || {};\n\n// Captura segura dos dados (NOVO PAYLOAD)\nconst fullNameAnswer = body[\"name\"] || body[\"nome\"] || body[\"nome_completo\"] || \"\"; // (provavelmente vazio nesse caso)\nconst emailAnswer = body[\"email\"] || \"\";\nconst telefoneClienteOriginal = body[\"phonenumber\"] || body[\"phone\"] || body[\"telefone\"] || \"\";\n\n// UTM (NOVO PAYLOAD)\nconst utm_source   = body[\"utm_source\"]   || \"\";\nconst utm_campaign = body[\"utm_campaign\"] || \"\";\nconst utm_medium   = body[\"utm_medium\"]   || \"\";\nconst utm_term     = body[\"utm_term\"]     || \"\";\nconst utm_content  = body[\"utm_content\"]  || \"\";\n\n// Form info (NOVO PAYLOAD)\nconst form_id   = body[\"form_id\"]   || \"\";\nconst form_name = body[\"form_name\"] || \"\";\n\n// Funções auxiliares já existentes\nfunction capitalizeName(fullName) {\n  if (!fullName) return { fname: '', lname: '', fullname: '' };\n\n  const lowerCaseWords = ['da', 'de', 'do', 'di', 'du'];\n  let words = fullName.toLowerCase().split(' ').map((word, index) => {\n    if (lowerCaseWords.includes(word) && index !== 0) return word;\n    return word.charAt(0).toUpperCase() + word.slice(1);\n  });\n\n  let fname = words.shift();\n  let lname = words.join(' ');\n\n  return { fname, lname, fullname: lname ? `${fname} ${lname}` : fname };\n}\n\nfunction formatEmail(email) {\n  return String(email || \"\").toLowerCase().trim();\n}\n\n// Tratamento avançado do telefone\nfunction formatTelefone(telefone) {\n  const telefoneLimpo = String(telefone || \"\").replace(/\\D/g, \"\");\n\n  // Se vier com DDI (ex: 5511955...), mantém e tenta ajustar a parte nacional\n  if (telefoneLimpo.length === 13 && telefoneLimpo.startsWith(\"55\")) {\n    const DDI = \"55\";\n    const DDD = telefoneLimpo.slice(2, 4);\n    let numero = telefoneLimpo.slice(4);\n\n    if (Number(DDD) > 28 && numero.length === 9 && numero.startsWith(\"9\")) {\n      numero = numero.slice(1);\n    } else if (Number(DDD) <= 28 && numero.length === 8) {\n      numero = `9${numero}`;\n    }\n\n    return `${DDI}${DDD}${numero}`;\n  }\n\n  // Se vier sem DDI (10 ou 11 dígitos)\n  if (telefoneLimpo.length === 11 || telefoneLimpo.length === 10) {\n    const DDI = \"55\";\n    const DDD = telefoneLimpo.slice(0, 2);\n    let numero = telefoneLimpo.slice(2);\n\n    if (Number(DDD) > 28 && numero.length === 9 && numero.startsWith(\"9\")) {\n      numero = numero.slice(1);\n    } else if (Number(DDD) <= 28 && numero.length === 8) {\n      numero = `9${numero}`;\n    }\n\n    return `${DDI}${DDD}${numero}`;\n  }\n\n  return telefoneLimpo;\n}\n\n// Formatação final\nconst formattedNames = capitalizeName(fullNameAnswer);\nconst formattedEmail = formatEmail(emailAnswer);\nconst telefoneFinal = formatTelefone(telefoneClienteOriginal);\n\n// Resultado\nconst result = {\n  ...formattedNames,\n  email: formattedEmail,\n  whatsapp: telefoneFinal,\n  instagram: \"\",\n  cpf: \"\",\n  cnpj: \"\",\n  utm_source,\n  utm_campaign,\n  utm_term,\n  utm_medium,\n  utm_content,\n  form_id,\n  form_name\n};\n\nreturn [{ json: result }];"
+        "jsCode": "// Detecta automaticamente de onde vem o body\nconst body =\n  items[0].json?.content?.body ||\n  items[0].json?.body ||\n  {};\n\n// =========================\n// Captura segura dos dados\n// =========================\n\nconst fullNameAnswer =\n  body[\"Nome\"] ||\n  body[\"name\"] ||\n  body[\"nome\"] ||\n  body[\"nome_completo\"] ||\n  body?.names?.first_name ||\n  \"\";\n\nconst emailAnswer =\n  body[\"E-mail\"] ||\n  body[\"email\"] ||\n  body[\"E-mail \"] ||\n  \"\";\n\nconst telefoneClienteOriginal =\n  body[\"Telefone\"] ||\n  body[\"phonenumber\"] ||\n  body[\"phone\"] ||\n  body[\"telefone\"] ||\n  \"\";\n\n// UTMs\nconst utm_source   = body[\"utm_source\"]   || \"\";\nconst utm_campaign = body[\"utm_campaign\"] || \"\";\nconst utm_medium   = body[\"utm_medium\"]   || \"\";\nconst utm_term     = body[\"utm_term\"]     || \"\";\nconst utm_content  = body[\"utm_content\"]  || \"\";\n\n// Form info\nconst form_id =\n  body[\"id_formulario\"] ||\n  body[\"form_id\"] ||\n  body?.__submission?.form_id ||\n  \"\";\n\nconst form_name =\n  body[\"form_name\"] ||\n  body?.__submission?.source_url ||\n  \"\";\n\n// Extras do payload\nconst data_formulario =\n  body[\"Data\"] ||\n  \"\";\n\nconst horario_formulario =\n  body[\"Horário\"] ||\n  body[\"Horario\"] ||\n  \"\";\n\nconst page_url =\n  body[\"URL da página\"] ||\n  body[\"URL da pagina\"] ||\n  body[\"page_url\"] ||\n  \"\";\n\nconst user_agent =\n  body[\"Agente de usuário\"] ||\n  body[\"Agente de usuario\"] ||\n  body[\"user_agent\"] ||\n  \"\";\n\nconst ip_remoto =\n  body[\"IP remoto\"] ||\n  body[\"ip\"] ||\n  body[\"remote_ip\"] ||\n  \"\";\n\nconst desenvolvido_por =\n  body[\"Desenvolvido por\"] ||\n  \"\";\n\n// =========================\n// Funções auxiliares\n// =========================\n\nfunction capitalizeName(fullName) {\n  if (!fullName) return { fname: \"\", lname: \"\", fullname: \"\" };\n\n  const lowerCaseWords = [\"da\", \"de\", \"do\", \"dos\", \"das\", \"di\", \"du\"];\n\n  const words = String(fullName)\n    .trim()\n    .toLowerCase()\n    .split(/\\s+/)\n    .map((word, index) => {\n      if (lowerCaseWords.includes(word) && index !== 0) return word;\n      return word.charAt(0).toUpperCase() + word.slice(1);\n    });\n\n  const fname = words.shift() || \"\";\n  const lname = words.join(\" \");\n\n  return {\n    fname,\n    lname,\n    fullname: lname ? `${fname} ${lname}` : fname\n  };\n}\n\nfunction formatEmail(email) {\n  return String(email || \"\").toLowerCase().trim();\n}\n\n// =========================\n// Tratamento de telefone\n// =========================\n\nfunction formatTelefone(telefone) {\n  const telefoneLimpo = String(telefone || \"\").replace(/\\D/g, \"\");\n\n  if (!telefoneLimpo) return \"\";\n\n  // Caso já venha com DDI 55\n  if (telefoneLimpo.startsWith(\"55\")) {\n    const DDI = \"55\";\n    const DDD = telefoneLimpo.slice(2, 4);\n    let numero = telefoneLimpo.slice(4);\n\n    if (Number(DDD) > 28 && numero.length === 9 && numero.startsWith(\"9\")) {\n      numero = numero.slice(1);\n    }\n\n    if (Number(DDD) <= 28 && numero.length === 8) {\n      numero = `9${numero}`;\n    }\n\n    return `${DDI}${DDD}${numero}`;\n  }\n\n  // Caso venha sem DDI\n  if (telefoneLimpo.length === 10 || telefoneLimpo.length === 11) {\n    const DDI = \"55\";\n    const DDD = telefoneLimpo.slice(0, 2);\n    let numero = telefoneLimpo.slice(2);\n\n    if (Number(DDD) > 28 && numero.length === 9 && numero.startsWith(\"9\")) {\n      numero = numero.slice(1);\n    }\n\n    if (Number(DDD) <= 28 && numero.length === 8) {\n      numero = `9${numero}`;\n    }\n\n    return `${DDI}${DDD}${numero}`;\n  }\n\n  return telefoneLimpo;\n}\n\n// =========================\n// Formatação final\n// =========================\n\nconst formattedNames = capitalizeName(fullNameAnswer);\nconst formattedEmail = formatEmail(emailAnswer);\nconst telefoneFinal = formatTelefone(telefoneClienteOriginal);\n\n// Resultado final\nconst result = {\n  ...formattedNames,\n  email: formattedEmail,\n  whatsapp: telefoneFinal,\n  instagram: \"\",\n  cpf: \"\",\n  cnpj: \"\",\n\n  utm_source,\n  utm_campaign,\n  utm_term,\n  utm_medium,\n  utm_content,\n\n  form_id,\n  form_name,\n\n  data_formulario,\n  horario_formulario,\n  page_url,\n  user_agent,\n  ip_remoto,\n  desenvolvido_por\n};\n\nreturn [{ json: result }];"
       },
       "id": "3e3545c6-969e-4aa2-abef-6d946e84cd25",
       "name": "formata_dados",
@@ -671,12 +700,6 @@
               "id": "45655fc0-b71d-4f90-a243-6e1f04e25a95",
               "name": "tipo_forms",
               "value": "={{ $node[\"busca_funil\"].json[\"tipo_forms\"] }}",
-              "type": "string"
-            },
-            {
-              "id": "18560feb-62d4-45da-a9e3-937ab2b28636",
-              "name": "chip_atribuido",
-              "value": "={{ $node[\"consulta_chip_api_oficial\"].json[\"telefone\"] || \"\" }}",
               "type": "string"
             },
             {
@@ -791,8 +814,7 @@
           "id": "eKnFCoTy5bVlhIj3",
           "name": "[RabbitMQ] - Fabio Soares"
         }
-      },
-      "disabled": true
+      }
     },
     {
       "parameters": {
@@ -895,7 +917,7 @@
     },
     {
       "parameters": {
-        "queue": "[fabio soares] - Trata Dados 7CDR",
+        "queue": "[fabio soares] - Trata Dados CDR",
         "options": {
           "arguments": {
             "argument": [
@@ -925,7 +947,7 @@
     },
     {
       "parameters": {
-        "queue": "[fabio soares] - Trata Dados 7CDR",
+        "queue": "[fabio soares] - Trata Dados CDR",
         "options": {
           "arguments": {
             "argument": [
@@ -954,6 +976,42 @@
           "name": "[RabbitMQ] - Fabio Soares"
         }
       }
+    },
+    {
+      "parameters": {
+        "url": "https://services.leadconnectorhq.com/locations/GrB2kAoc7ZO681juhPJ1/customFields",
+        "sendQuery": true,
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Version",
+              "value": "2021-07-28"
+            },
+            {
+              "name": "Authorization",
+              "value": "Bearer pit-83a40492-d9f7-4059-92e4-2a0967d043ac"
+            }
+          ]
+        },
+        "options": {
+          "redirect": {
+            "redirect": {}
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -1344,
+        768
+      ],
+      "id": "bbb6396a-2dee-40ff-b3d0-2974c27d733f",
+      "name": "HTTP Request"
     }
   ],
   "pinData": {
@@ -961,42 +1019,41 @@
       {
         "json": {
           "headers": {
-            "host": "n8n-n8n.zkgge2.easypanel.host",
-            "user-agent": "GuzzleHttp/7",
-            "content-length": "885",
+            "host": "n8n-n8n.yqd7ni.easypanel.host",
+            "user-agent": "WordPress/6.9.4; https://as7chavesdariqueza.com",
+            "content-length": "537",
+            "accept": "*/*",
+            "accept-encoding": "deflate, gzip",
             "content-type": "application/x-www-form-urlencoded",
-            "x-forwarded-for": "23.22.14.42",
-            "x-forwarded-host": "n8n-n8n.zkgge2.easypanel.host",
+            "x-forwarded-for": "203.159.80.234",
+            "x-forwarded-host": "n8n-n8n.yqd7ni.easypanel.host",
             "x-forwarded-port": "443",
             "x-forwarded-proto": "https",
-            "x-forwarded-server": "5ccb6035c033",
-            "x-real-ip": "23.22.14.42",
-            "accept-encoding": "gzip"
+            "x-forwarded-server": "95876c3beb17",
+            "x-real-ip": "203.159.80.234"
           },
           "params": {},
           "query": {},
           "body": {
-            "contact[id]": "1180043",
-            "contact[email]": "teste@automagicbots.com.br",
-            "contact[first_name]": "Gabriel",
-            "contact[last_name]": "Amaral",
-            "contact[phone]": "(11) 95583-5870",
-            "contact[orgname]": "",
-            "contact[customer_acct_name]": "",
-            "contact[tags]": "[WIP13 FEV26] - Cadastrou",
-            "contact[ip4]": "186.208.222.2",
-            "contact[fields][cidade]": "",
-            "contact[fields][estado]": "",
-            "contact[fields][dispositivo]": "Mobile",
-            "contact[fields][wip13_pagina]": "lp1",
-            "contact[fields][wip13_utmcampaign_1]": "[LANCAMENTO][WIP13][CAPTACAO][FRIO][ABO][TESTE-CRIATIVO][ENVOL_180D-ADV][ESTADOS]",
-            "contact[fields][wip13_utmsource_1]": "facebookads",
-            "contact[fields][wip13_utmterm_1]": "Instagram_Stories",
-            "contact[fields][wip13_utmmedium_1]": "[F]00-ENVOLVIMENTO_180D-ADV-SC",
-            "contact[fields][wip13_utmcontent_1]": "[FB]WIP13-RAD_12_sc",
-            "seriesid": "1117"
+            "Nome": "Mateus Porto",
+            "Telefone": "+5531992796934",
+            "E-mail": "contato.mportob@gmail.com",
+            "utm_campaign": "",
+            "utm_term": "",
+            "utm_medium": "",
+            "utm_source": "",
+            "utm_content": "",
+            "id_formulario": "9d13775_vip",
+            "Data": "março 12, 2026",
+            "Horário": "5:28 pm",
+            "URL da página": "https://as7chavesdariqueza.com/optin-a/?#inscricao",
+            "Agente de usuário": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+            "IP remoto": "187.20.21.142",
+            "Desenvolvido por": "Elementor",
+            "form_id": "9d13775",
+            "form_name": "VIP"
           },
-          "webhookUrl": "https://n8n-n8n.zkgge2.easypanel.host/webhook/wip13-cadastrou-active",
+          "webhookUrl": "https://n8n-n8n.yqd7ni.easypanel.host/webhook/cdr-trata-dados-ca",
           "executionMode": "production"
         }
       }
@@ -1005,50 +1062,54 @@
       {
         "json": {
           "fields": {
-            "consumerTag": "amq.ctag-6MjiiCClGJzgarD73XujYw",
-            "deliveryTag": 36,
-            "redelivered": false,
+            "consumerTag": "amq.ctag-OpjMEIyWyPKBTsI62mIGgg",
+            "deliveryTag": 3,
+            "redelivered": true,
             "exchange": "",
-            "routingKey": "[C5L MAR26] - Trata Dados"
+            "routingKey": "[fabio soares] - Trata Dados CDR"
           },
           "properties": {
-            "headers": {}
+            "headers": {
+              "x-delivery-count": 2
+            }
           },
           "content": {
             "headers": {
-              "host": "c5l-mar26-n8n.pktqwb.easypanel.host",
-              "user-agent": "WordPress/6.9.1; https://mfr.wendellcarvalho.com.br",
-              "content-length": "251",
+              "host": "n8n-n8n.yqd7ni.easypanel.host",
+              "user-agent": "WordPress/6.9.4; https://as7chavesdariqueza.com",
+              "content-length": "545",
               "accept": "*/*",
-              "accept-encoding": "deflate, gzip, br",
+              "accept-encoding": "deflate, gzip",
               "content-type": "application/x-www-form-urlencoded",
-              "x-forwarded-for": "187.108.199.160",
-              "x-forwarded-host": "c5l-mar26-n8n.pktqwb.easypanel.host",
+              "x-forwarded-for": "203.159.80.234",
+              "x-forwarded-host": "n8n-n8n.yqd7ni.easypanel.host",
               "x-forwarded-port": "443",
               "x-forwarded-proto": "https",
-              "x-forwarded-server": "d138e98f8a05",
-              "x-real-ip": "187.108.199.160"
+              "x-forwarded-server": "95876c3beb17",
+              "x-real-ip": "203.159.80.234"
             },
             "params": {},
             "query": {},
             "body": {
-              "email": "teste@automagicbots.com.br",
-              "phonenumber": "+5511955835870",
-              "xcod": "",
-              "sck": "",
-              "adid": "",
-              "utm_medium": "medium",
-              "utm_term": "term",
-              "utm_campaign": "campaign",
-              "utm_content": "content",
-              "utm_source": "source",
-              "pageurl": "",
-              "vk_source": "",
-              "vk_ad_id": "",
-              "form_id": "31f6c6b",
-              "form_name": "FORM_CAPTURA_METEORICO"
+              "Nome": "Mateus Porto",
+              "Telefone": "+5531992796934",
+              "E-mail": "contato.mportob@gmail.com",
+              "utm_campaign": "",
+              "utm_term": "",
+              "utm_medium": "",
+              "utm_source": "",
+              "utm_content": "",
+              "id_formulario": "9d13775_silver",
+              "Data": "março 12, 2026",
+              "Horário": "5:50 pm",
+              "URL da página": "https://as7chavesdariqueza.com/optin-e/#stack",
+              "Agente de usuário": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+              "IP remoto": "187.20.21.142",
+              "Desenvolvido por": "Elementor",
+              "form_id": "9d13775",
+              "form_name": "Ingresso Silver"
             },
-            "webhookUrl": "https://c5l-mar26-n8n.pktqwb.easypanel.host/webhook/c5l-mar26-cadastrou",
+            "webhookUrl": "https://n8n-n8n.yqd7ni.easypanel.host/webhook/cdr-trata-dados-ca",
             "executionMode": "production"
           }
         }
@@ -1058,7 +1119,14 @@
   "settings": {
     "executionOrder": "v1",
     "callerPolicy": "workflowsFromSameOwner",
-    "errorWorkflow": "JC1jRbnEV3QDh2TT"
+    "errorWorkflow": "JC1jRbnEV3QDh2TT",
+    "timeSavedMode": "fixed",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "binaryMode": "separate",
+    "availableInMCP": false
   },
   "shared": [
     {
@@ -1072,6 +1140,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 2,
-  "updatedAt": "2026-03-12T15:14:18.307Z",
-  "versionId": "0143969a-8f51-4dc4-bdb8-9a9c1b9a0c9f"
+  "updatedAt": "2026-03-12T22:29:28.919Z",
+  "versionId": "cad3ac66-459e-46ea-b857-d6a312c44c9e"
 }
