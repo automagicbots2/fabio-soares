@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-03-12T14:51:39.412Z",
-    "createdAt": "2026-03-12T14:51:39.412Z",
-    "versionId": "85b6f361-1800-48ed-b6e6-1cdd2b19f5bc",
+    "updatedAt": "2026-03-12T22:42:33.000Z",
+    "createdAt": "2026-03-12T21:18:38.156Z",
+    "versionId": "602a23f2-3d95-45e0-a6fe-9d6767731086",
     "workflowId": "WLDMvH0zERsGkGBc",
     "nodes": [
       {
@@ -3838,12 +3838,12 @@
         ]
       }
     },
-    "authors": "system migration",
-    "name": null,
-    "description": null,
-    "autosaved": false
+    "authors": "Automagic Bots",
+    "name": "Version 602a23f2",
+    "description": "",
+    "autosaved": true
   },
-  "activeVersionId": "85b6f361-1800-48ed-b6e6-1cdd2b19f5bc",
+  "activeVersionId": "602a23f2-3d95-45e0-a6fe-9d6767731086",
   "connections": {
     "pesquisa_variavel_n8n_fluxo_users": {
       "main": [
@@ -7777,6 +7777,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-03-10T02:01:31.000Z",
-  "versionId": "85b6f361-1800-48ed-b6e6-1cdd2b19f5bc"
+  "updatedAt": "2026-03-12T21:18:38.151Z",
+  "versionId": "602a23f2-3d95-45e0-a6fe-9d6767731086"
 }
