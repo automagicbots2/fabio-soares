@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-03-12T22:42:33.000Z",
-    "createdAt": "2026-03-12T21:18:38.156Z",
-    "versionId": "602a23f2-3d95-45e0-a6fe-9d6767731086",
+    "updatedAt": "2026-03-14T00:19:43.000Z",
+    "createdAt": "2026-03-14T00:19:42.471Z",
+    "versionId": "66468b4a-c57f-4d5f-8cee-3c8d6196e7ea",
     "workflowId": "WLDMvH0zERsGkGBc",
     "nodes": [
       {
@@ -3839,11 +3839,11 @@
       }
     },
     "authors": "Automagic Bots",
-    "name": "Version 602a23f2",
+    "name": "Version 66468b4a",
     "description": "",
     "autosaved": true
   },
-  "activeVersionId": "602a23f2-3d95-45e0-a6fe-9d6767731086",
+  "activeVersionId": "66468b4a-c57f-4d5f-8cee-3c8d6196e7ea",
   "connections": {
     "pesquisa_variavel_n8n_fluxo_users": {
       "main": [
@@ -7777,6 +7777,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-03-12T21:18:38.151Z",
-  "versionId": "602a23f2-3d95-45e0-a6fe-9d6767731086"
+  "updatedAt": "2026-03-14T00:19:42.470Z",
+  "versionId": "66468b4a-c57f-4d5f-8cee-3c8d6196e7ea"
 }
