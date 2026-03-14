@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-03-12T14:51:39.412Z",
-    "createdAt": "2026-03-12T14:51:39.412Z",
-    "versionId": "e4994570-4748-4ccc-a954-f6b68fdc429c",
+    "updatedAt": "2026-03-14T00:19:20.000Z",
+    "createdAt": "2026-03-14T00:16:36.763Z",
+    "versionId": "8a86c1b1-f34d-4574-80e0-66c1dd5365f6",
     "workflowId": "fD0qAgNM6ackkDpv",
     "nodes": [
       {
@@ -15,7 +15,7 @@
         "type": "n8n-nodes-base.webhook",
         "typeVersion": 2,
         "position": [
-          -5584,
+          -5024,
           320
         ],
         "id": "cf12c0b0-71ef-403e-a37f-7d7482850db6",
@@ -135,7 +135,7 @@
       },
       {
         "parameters": {
-          "jsCode": "// Obter o template do banco de dados\nlet template = $node[\"pesquisa_json_fields_contact3\"].json[\"payload_fields\"];\n\n// Verifique se o template é uma string JSON ou já um objeto\nif (typeof template === \"string\") {\n  template = JSON.parse(template);\n}\n\n// Obter os dados diretamente do \"body.payload\" do webhook\nconst payload = $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"];\n\n// Função para substituir os placeholders no template\nconst replacePlaceholders = (template, data) => {\n  const stringified = JSON.stringify(template);\n  const replaced = stringified.replace(/{{\\s*(\\w+)\\s*}}/g, (_, key) => {\n    const valor = data[key];\n    if (valor !== undefined && valor !== null) {\n      return valor;\n    } else {\n      console.warn(`Placeholder {{ ${key} }} não encontrado no payload.`);\n      return '';\n    }\n  });\n  return JSON.parse(replaced);\n};\n\n// Substituir os placeholders no template com os dados do webhook\nlet result = replacePlaceholders(template, payload);\n\n// Remover campos com valores inválidos (vazio, apenas \"+\", null ou undefined)\nresult = result.filter(field => {\n  const value = field.field_value;\n  if (value === '' || value === '+' || value === undefined || value === null) {\n    console.warn(`Removendo o campo vazio ou inválido: ${field.key}`);\n    return false;\n  }\n  return true;\n});\n\n// Retornar resultado dentro de custom_fields_values\nreturn {\n  custom_fields_values: result\n};\n"
+          "jsCode": "// Pega todos os itens de entrada do node pesquisa_json_fields_contact3\nconst items = $items(\"pesquisa_json_fields_contact3\");\n\n// Junta todos os payload_fields de todos os itens\nlet template = items.flatMap(item => item.json.payload_fields || []);\n\n// Se por algum motivo vier string JSON, converte\nif (typeof template === \"string\") {\n  template = JSON.parse(template);\n}\n\n// Obter os dados do payload\nconst payload =\n  $node[\"fluxo_chamado\"].json?.body?.payload ||\n  $node[\"fluxo_chamado\"].json?.body ||\n  $node[\"fluxo_chamado\"].json ||\n  {};\n\n// Função para substituir placeholders no template\nconst replacePlaceholders = (template, data) => {\n  const stringified = JSON.stringify(template);\n  const replaced = stringified.replace(/{{\\s*(\\w+)\\s*}}/g, (_, key) => {\n    const valor = data[key];\n    if (valor !== undefined && valor !== null) {\n      return String(valor);\n    } else {\n      console.warn(`Placeholder {{ ${key} }} não encontrado no payload.`);\n      return '';\n    }\n  });\n  return JSON.parse(replaced);\n};\n\n// Substituir os placeholders\nlet result = replacePlaceholders(template, payload);\n\n// Remover campos inválidos\nresult = result.filter(field => {\n  const value = field.field_value;\n  if (\n    value === '' ||\n    value === '+' ||\n    value === undefined ||\n    value === null\n  ) {\n    console.warn(`Removendo o campo vazio ou inválido: ${field.key}`);\n    return false;\n  }\n  return true;\n});\n\n// Retornar no formato esperado\nreturn [\n  {\n    json: {\n      custom_fields_values: result\n    }\n  }\n];"
         },
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
@@ -292,7 +292,7 @@
             "values": [
               {
                 "column": "nome_variavel",
-                "value": "API Key 2 do GoHighLevel"
+                "value": "API Key do GoHighLevel"
               }
             ]
           },
@@ -328,7 +328,7 @@
             "values": [
               {
                 "column": "nome_variavel",
-                "value": "Location 2 do GoHighLevel"
+                "value": "Location do GoHighLevel"
               }
             ]
           },
@@ -1016,8 +1016,8 @@
         "type": "n8n-nodes-base.httpRequest",
         "typeVersion": 4.1,
         "position": [
-          -4688,
-          320
+          -4752,
+          752
         ]
       },
       {
@@ -1045,8 +1045,8 @@
         "type": "n8n-nodes-base.mySql",
         "typeVersion": 2.4,
         "position": [
-          -4928,
-          320
+          -4992,
+          752
         ],
         "alwaysOutputData": true,
         "credentials": {
@@ -1063,7 +1063,7 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          -5168,
+          -4608,
           320
         ],
         "id": "022d4b37-01db-4c51-9e07-537a6965349d",
@@ -1074,9 +1074,9 @@
           "operation": "select",
           "table": {
             "__rl": true,
-            "value": "situacao_pipeline_stage",
+            "value": "fields_crm_etapas_funil",
             "mode": "list",
-            "cachedResultName": "situacao_pipeline_stage"
+            "cachedResultName": "fields_crm_etapas_funil"
           },
           "where": {
             "values": [
@@ -1093,7 +1093,7 @@
         "type": "n8n-nodes-base.mySql",
         "typeVersion": 2.4,
         "position": [
-          -5376,
+          -4816,
           320
         ],
         "alwaysOutputData": true,
@@ -1457,7 +1457,7 @@
         "main": [
           [
             {
-              "node": "pesquisa_url_rotacionamento_colaboradores2",
+              "node": "pesquisa_url_base_crm1",
               "type": "main",
               "index": 0
             }
@@ -1476,12 +1476,12 @@
         ]
       }
     },
-    "authors": "system migration",
-    "name": null,
-    "description": null,
-    "autosaved": false
+    "authors": "Automagic Bots",
+    "name": "Version 8a86c1b1",
+    "description": "",
+    "autosaved": true
   },
-  "activeVersionId": "e4994570-4748-4ccc-a954-f6b68fdc429c",
+  "activeVersionId": "8a86c1b1-f34d-4574-80e0-66c1dd5365f6",
   "connections": {
     "fluxo_chamado": {
       "main": [
@@ -1834,7 +1834,7 @@
       "main": [
         [
           {
-            "node": "pesquisa_url_rotacionamento_colaboradores2",
+            "node": "pesquisa_url_base_crm1",
             "type": "main",
             "index": 0
           }
@@ -1870,7 +1870,7 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
       "position": [
-        -5584,
+        -5024,
         320
       ],
       "id": "cf12c0b0-71ef-403e-a37f-7d7482850db6",
@@ -1990,7 +1990,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Obter o template do banco de dados\nlet template = $node[\"pesquisa_json_fields_contact3\"].json[\"payload_fields\"];\n\n// Verifique se o template é uma string JSON ou já um objeto\nif (typeof template === \"string\") {\n  template = JSON.parse(template);\n}\n\n// Obter os dados diretamente do \"body.payload\" do webhook\nconst payload = $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"];\n\n// Função para substituir os placeholders no template\nconst replacePlaceholders = (template, data) => {\n  const stringified = JSON.stringify(template);\n  const replaced = stringified.replace(/{{\\s*(\\w+)\\s*}}/g, (_, key) => {\n    const valor = data[key];\n    if (valor !== undefined && valor !== null) {\n      return valor;\n    } else {\n      console.warn(`Placeholder {{ ${key} }} não encontrado no payload.`);\n      return '';\n    }\n  });\n  return JSON.parse(replaced);\n};\n\n// Substituir os placeholders no template com os dados do webhook\nlet result = replacePlaceholders(template, payload);\n\n// Remover campos com valores inválidos (vazio, apenas \"+\", null ou undefined)\nresult = result.filter(field => {\n  const value = field.field_value;\n  if (value === '' || value === '+' || value === undefined || value === null) {\n    console.warn(`Removendo o campo vazio ou inválido: ${field.key}`);\n    return false;\n  }\n  return true;\n});\n\n// Retornar resultado dentro de custom_fields_values\nreturn {\n  custom_fields_values: result\n};\n"
+        "jsCode": "// Pega todos os itens de entrada do node pesquisa_json_fields_contact3\nconst items = $items(\"pesquisa_json_fields_contact3\");\n\n// Junta todos os payload_fields de todos os itens\nlet template = items.flatMap(item => item.json.payload_fields || []);\n\n// Se por algum motivo vier string JSON, converte\nif (typeof template === \"string\") {\n  template = JSON.parse(template);\n}\n\n// Obter os dados do payload\nconst payload =\n  $node[\"fluxo_chamado\"].json?.body?.payload ||\n  $node[\"fluxo_chamado\"].json?.body ||\n  $node[\"fluxo_chamado\"].json ||\n  {};\n\n// Função para substituir placeholders no template\nconst replacePlaceholders = (template, data) => {\n  const stringified = JSON.stringify(template);\n  const replaced = stringified.replace(/{{\\s*(\\w+)\\s*}}/g, (_, key) => {\n    const valor = data[key];\n    if (valor !== undefined && valor !== null) {\n      return String(valor);\n    } else {\n      console.warn(`Placeholder {{ ${key} }} não encontrado no payload.`);\n      return '';\n    }\n  });\n  return JSON.parse(replaced);\n};\n\n// Substituir os placeholders\nlet result = replacePlaceholders(template, payload);\n\n// Remover campos inválidos\nresult = result.filter(field => {\n  const value = field.field_value;\n  if (\n    value === '' ||\n    value === '+' ||\n    value === undefined ||\n    value === null\n  ) {\n    console.warn(`Removendo o campo vazio ou inválido: ${field.key}`);\n    return false;\n  }\n  return true;\n});\n\n// Retornar no formato esperado\nreturn [\n  {\n    json: {\n      custom_fields_values: result\n    }\n  }\n];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -2147,7 +2147,7 @@
           "values": [
             {
               "column": "nome_variavel",
-              "value": "API Key 2 do GoHighLevel"
+              "value": "API Key do GoHighLevel"
             }
           ]
         },
@@ -2183,7 +2183,7 @@
           "values": [
             {
               "column": "nome_variavel",
-              "value": "Location 2 do GoHighLevel"
+              "value": "Location do GoHighLevel"
             }
           ]
         },
@@ -2871,8 +2871,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -4688,
-        320
+        -4752,
+        752
       ]
     },
     {
@@ -2900,8 +2900,8 @@
       "type": "n8n-nodes-base.mySql",
       "typeVersion": 2.4,
       "position": [
-        -4928,
-        320
+        -4992,
+        752
       ],
       "alwaysOutputData": true,
       "credentials": {
@@ -2918,7 +2918,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -5168,
+        -4608,
         320
       ],
       "id": "022d4b37-01db-4c51-9e07-537a6965349d",
@@ -2929,9 +2929,9 @@
         "operation": "select",
         "table": {
           "__rl": true,
-          "value": "situacao_pipeline_stage",
+          "value": "fields_crm_etapas_funil",
           "mode": "list",
-          "cachedResultName": "situacao_pipeline_stage"
+          "cachedResultName": "fields_crm_etapas_funil"
         },
         "where": {
           "values": [
@@ -2948,7 +2948,7 @@
       "type": "n8n-nodes-base.mySql",
       "typeVersion": 2.4,
       "position": [
-        -5376,
+        -4816,
         320
       ],
       "alwaysOutputData": true,
@@ -2960,96 +2960,7 @@
       }
     }
   ],
-  "pinData": {
-    "fluxo_chamado": [
-      {
-        "json": {
-          "headers": {
-            "host": "n8n-n8n.yqd7ni.easypanel.host",
-            "user-agent": "axios/1.8.3",
-            "content-length": "1398",
-            "accept": "application/json,text/html,application/xhtml+xml,application/xml,text/*;q=0.9, image/*;q=0.8, */*;q=0.7",
-            "accept-encoding": "gzip, compress, deflate, br",
-            "content-type": "application/json",
-            "x-forwarded-for": "172.18.0.1",
-            "x-forwarded-host": "n8n-n8n.yqd7ni.easypanel.host",
-            "x-forwarded-port": "443",
-            "x-forwarded-proto": "https",
-            "x-forwarded-server": "95876c3beb17",
-            "x-real-ip": "172.18.0.1"
-          },
-          "params": {},
-          "query": {},
-          "body": {
-            "id_etapa_funil": 1,
-            "id_funil": "1",
-            "id_user": 1,
-            "payload": {
-              "nome": "Otavio",
-              "sobrenome": "Baptista da Costa",
-              "nome_completo": "Otavio Baptista da Costa",
-              "email": "obcosta@gmail.com",
-              "telefone": "5511991272357",
-              "cpf": "144.244.378-25",
-              "utm_source": "ig",
-              "utm_campaign": "social",
-              "utm_term": "instagram",
-              "utm_medium": "link_in_bio",
-              "utm_content": "bio",
-              "form_id": "ogl1dc1y",
-              "form_name": "",
-              "value": 37.9,
-              "transaction_id": "HP1912030247",
-              "net_value": 37.04,
-              "trans_status": "Compra Aprovada",
-              "payment_method": "Cartão de Crédito",
-              "refund_date": "",
-              "event_date": "2026-03-08 16:50:41",
-              "payment_date": "2026-03-08 16:50:30",
-              "product_type": "Cobrança única",
-              "product_id": 6238670,
-              "product_name": "Ingresso Silver – Desafio As 7 Chaves da Riqueza",
-              "warranty_date": "2026-03-14",
-              "offer_code": "ogl1dc1y",
-              "discount_coupon": "",
-              "street": "",
-              "address_number": "",
-              "country": "",
-              "district": "",
-              "address_complement": "",
-              "city": "",
-              "address_state": "",
-              "zipcode": "",
-              "affiliate_value": "",
-              "gateway_comission": 0.86,
-              "billet_barcode": "",
-              "currency": "BRL",
-              "bankslip": "",
-              "recurrenceExpirationDate": "",
-              "cancelledDate": "",
-              "cnpj": "",
-              "installments": 1,
-              "billetExpirationDate": "",
-              "recurrenceNumber": "",
-              "src": "",
-              "sck": "ig|social|instagram|link_in_bio|bio|/optin-a/",
-              "refusalReason": "",
-              "subscriberCode": "",
-              "planName": "",
-              "planId": "",
-              "eventId": "7ebb8555-efd2-47cf-8782-06df29f0fe4f",
-              "tipo_forms": "Cadastro",
-              "id_funil": "1",
-              "id_forms": "1"
-            },
-            "tipo_forms": "Cadastro"
-          },
-          "webhookUrl": "https://n8n-n8n.yqd7ni.easypanel.host/webhook/cria-contato-ghl",
-          "executionMode": "production"
-        }
-      }
-    ]
-  },
+  "pinData": {},
   "settings": {
     "executionOrder": "v1",
     "callerPolicy": "workflowsFromSameOwner",
@@ -3067,6 +2978,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-03-10T02:01:37.000Z",
-  "versionId": "e4994570-4748-4ccc-a954-f6b68fdc429c"
+  "updatedAt": "2026-03-14T00:16:36.763Z",
+  "versionId": "8a86c1b1-f34d-4574-80e0-66c1dd5365f6"
 }
