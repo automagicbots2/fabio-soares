@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-03-12T14:51:39.412Z",
-    "createdAt": "2026-03-12T14:51:39.412Z",
-    "versionId": "0cb40df5-248d-4c95-9ff7-b6aae674f52a",
+    "updatedAt": "2026-03-13T18:25:26.000Z",
+    "createdAt": "2026-03-13T18:25:13.995Z",
+    "versionId": "84febb47-8626-4325-a648-3841f6035177",
     "workflowId": "A3NcxMRBnblA4326",
     "nodes": [
       {
@@ -45,7 +45,7 @@
       {
         "parameters": {
           "operation": "executeQuery",
-          "query": "SELECT \n    t.*\nFROM \n    tags_crm t\nINNER JOIN \n    tag_funil_crm2 tfc\nON \n    t.id = tfc.id_tag\nWHERE \n    tfc.id_etapa_funil = {{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_etapa_funil\"] }}\n    AND t.entidade = 'contact';\n",
+          "query": "SELECT \n    t.*\nFROM \n    tags_crm t\nINNER JOIN \n    tag_funil_crm tfc\nON \n    t.id = tfc.id_tag\nWHERE \n    tfc.id_etapa_funil = {{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_etapa_funil\"] }}\n    AND t.entidade = 'contact';\n",
           "options": {}
         },
         "id": "f8dc1b3d-32a7-44ba-b686-d35f617501fb",
@@ -184,7 +184,7 @@
       {
         "parameters": {
           "operation": "executeQuery",
-          "query": "SELECT \n    t.*\nFROM \n    tags_crm t\nINNER JOIN \n    tag_funil_crm2 tfc\nON \n    t.id = tfc.id_tag\nWHERE \n    tfc.id_situacao_agendamento = {{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_situacao_agendamento\"] }}\n    AND t.entidade = 'contact';",
+          "query": "SELECT \n    t.*\nFROM \n    tags_crm t\nINNER JOIN \n    tag_funil_crm tfc\nON \n    t.id = tfc.id_tag\nWHERE \n    tfc.id_situacao_agendamento = {{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_situacao_agendamento\"] }}\n    AND t.entidade = 'contact';",
           "options": {}
         },
         "id": "0fc2d663-292c-433d-b089-dc69fcb04d47",
@@ -372,7 +372,7 @@
       {
         "parameters": {
           "method": "POST",
-          "url": "={{ $node[\"pesquisa_url_base_crm\"].json[\"valor_variavel\"] }}contacts/{{ $node[\"chama_fluxo_create_update_contact_crm\"].runIndex >= 0      ?  $node[\"chama_fluxo_create_update_contact_crm\"].json[\"id_contact_crm\"] : $node[\"pesquisa_user\"].json[\"id_contact_crm\"] }}/tags",
+          "url": "={{ $node[\"pesquisa_url_base_crm\"].json[\"valor_variavel\"] }}contacts/{{ $node[\"pesquisa_user\"].json[\"id_contact_crm\"] }}/tags",
           "sendHeaders": true,
           "headerParameters": {
             "parameters": [
@@ -519,7 +519,7 @@
       {
         "parameters": {
           "operation": "executeQuery",
-          "query": "SELECT \n    t.*\nFROM \n    tags_crm t\nINNER JOIN \n    tag_funil_crm2 tfc\nON \n    t.id = tfc.id_tag\nWHERE \n    tfc.id_etapa_funil = {{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_etapa_funil\"] }}\n    AND t.entidade = 'contact';\n",
+          "query": "SELECT \n    t.*\nFROM \n    tags_crm t\nINNER JOIN \n    tag_funil_crm tfc\nON \n    t.id = tfc.id_tag\nWHERE \n    tfc.id_etapa_funil = {{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_etapa_funil\"] }}\n    AND t.entidade = 'contact';\n",
           "options": {}
         },
         "id": "5b4cd283-3c9b-43c0-bfff-fe09d67698ba",
@@ -658,7 +658,7 @@
       {
         "parameters": {
           "operation": "executeQuery",
-          "query": "SELECT \n    t.*\nFROM \n    tags_crm t\nINNER JOIN \n    tag_funil_crm2 tfc\nON \n    t.id = tfc.id_tag\nWHERE \n    tfc.id_situacao_agendamento = {{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_situacao_agendamento\"] }}\n    AND t.entidade = 'contact';",
+          "query": "SELECT \n    t.*\nFROM \n    tags_crm t\nINNER JOIN \n    tag_funil_crm tfc\nON \n    t.id = tfc.id_tag\nWHERE \n    tfc.id_situacao_agendamento = {{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_situacao_agendamento\"] }}\n    AND t.entidade = 'contact';",
           "options": {}
         },
         "id": "dfd2c968-894d-4e31-aefe-5b3be90f3eb9",
@@ -830,7 +830,7 @@
       {
         "parameters": {
           "method": "POST",
-          "url": "={{ $node[\"pesquisa_url_base_crm1\"].json[\"valor_variavel\"] }}contacts/{{ $node[\"chama_fluxo_create_update_contact_crm1\"].runIndex >= 0      ?  $node[\"chama_fluxo_create_update_contact_crm1\"].json[\"id_contact_crm\"] : $node[\"pesquisa_user1\"].json[\"id_contact_crm\"] }}/tags",
+          "url": "={{ $node[\"pesquisa_url_base_crm1\"].json[\"valor_variavel\"] }}contacts/{{ $node[\"chama_fluxo_create_update_contact_crm1\"].runIndex >= 0      ?  $node[\"chama_fluxo_create_update_contact_crm1\"].json[\"id_contact_crm\"] : $node[\"pesquisa_user1\"].json[\"id_contact_crm\"] }}tags",
           "sendHeaders": true,
           "headerParameters": {
             "parameters": [
@@ -1087,7 +1087,7 @@
       {
         "parameters": {
           "operation": "executeQuery",
-          "query": "SELECT \n    t.*\nFROM \n    tags_crm t\nINNER JOIN \n    tag_funil_crm2 tfc\nON \n    t.id = tfc.id_tag\nWHERE \n    tfc.id_etapa_funil = {{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_etapa_funil\"] }}\n    AND t.entidade = 'contact';\n",
+          "query": "SELECT \n    t.*\nFROM \n    tags_crm t\nINNER JOIN \n    tag_funil_crm tfc\nON \n    t.id = tfc.id_tag\nWHERE \n    tfc.id_etapa_funil = {{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_etapa_funil\"] }}\n    AND t.entidade = 'contact';\n",
           "options": {}
         },
         "id": "2af19e73-b331-4972-8e29-7beb02c18d7f",
@@ -1226,7 +1226,7 @@
       {
         "parameters": {
           "operation": "executeQuery",
-          "query": "SELECT \n    t.*\nFROM \n    tags_crm t\nINNER JOIN \n    tag_funil_crm2 tfc\nON \n    t.id = tfc.id_tag\nWHERE \n    tfc.id_situacao_agendamento = {{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_situacao_agendamento\"] }}\n    AND t.entidade = 'contact';",
+          "query": "SELECT \n    t.*\nFROM \n    tags_crm t\nINNER JOIN \n    tag_funil_crm tfc\nON \n    t.id = tfc.id_tag\nWHERE \n    tfc.id_situacao_agendamento = {{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_situacao_agendamento\"] }}\n    AND t.entidade = 'contact';",
           "options": {}
         },
         "id": "1d8e9353-3c46-428a-b090-b86b8ab27620",
@@ -1398,7 +1398,7 @@
       {
         "parameters": {
           "method": "POST",
-          "url": "={{ $node[\"pesquisa_url_base_crm2\"].json[\"valor_variavel\"] }}contacts/{{ $node[\"chama_fluxo_create_update_contact_crm2\"].runIndex >= 0      ?  $node[\"chama_fluxo_create_update_contact_crm2\"].json[\"id_contact_crm\"] : $node[\"pesquisa_user2\"].json[\"id_contact_crm\"] }}/tags",
+          "url": "={{ $node[\"pesquisa_url_base_crm2\"].json[\"valor_variavel\"] }}contacts/{{ $node[\"chama_fluxo_create_update_contact_crm2\"].runIndex >= 0      ?  $node[\"chama_fluxo_create_update_contact_crm2\"].json[\"id_contact_crm\"] : $node[\"pesquisa_user2\"].json[\"id_contact_crm\"] }}tags",
           "sendHeaders": true,
           "headerParameters": {
             "parameters": [
@@ -2165,12 +2165,12 @@
         ]
       }
     },
-    "authors": "system migration",
-    "name": null,
-    "description": null,
-    "autosaved": false
+    "authors": "Automagic Bots",
+    "name": "Version 84febb47",
+    "description": "",
+    "autosaved": true
   },
-  "activeVersionId": "0cb40df5-248d-4c95-9ff7-b6aae674f52a",
+  "activeVersionId": "84febb47-8626-4325-a648-3841f6035177",
   "connections": {
     "pesquisa_location_crm1": {
       "main": [
@@ -2831,7 +2831,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT \n    t.*\nFROM \n    tags_crm t\nINNER JOIN \n    tag_funil_crm2 tfc\nON \n    t.id = tfc.id_tag\nWHERE \n    tfc.id_etapa_funil = {{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_etapa_funil\"] }}\n    AND t.entidade = 'contact';\n",
+        "query": "SELECT \n    t.*\nFROM \n    tags_crm t\nINNER JOIN \n    tag_funil_crm tfc\nON \n    t.id = tfc.id_tag\nWHERE \n    tfc.id_etapa_funil = {{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_etapa_funil\"] }}\n    AND t.entidade = 'contact';\n",
         "options": {}
       },
       "id": "f8dc1b3d-32a7-44ba-b686-d35f617501fb",
@@ -2970,7 +2970,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT \n    t.*\nFROM \n    tags_crm t\nINNER JOIN \n    tag_funil_crm2 tfc\nON \n    t.id = tfc.id_tag\nWHERE \n    tfc.id_situacao_agendamento = {{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_situacao_agendamento\"] }}\n    AND t.entidade = 'contact';",
+        "query": "SELECT \n    t.*\nFROM \n    tags_crm t\nINNER JOIN \n    tag_funil_crm tfc\nON \n    t.id = tfc.id_tag\nWHERE \n    tfc.id_situacao_agendamento = {{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_situacao_agendamento\"] }}\n    AND t.entidade = 'contact';",
         "options": {}
       },
       "id": "0fc2d663-292c-433d-b089-dc69fcb04d47",
@@ -3158,7 +3158,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "={{ $node[\"pesquisa_url_base_crm\"].json[\"valor_variavel\"] }}contacts/{{ $node[\"chama_fluxo_create_update_contact_crm\"].runIndex >= 0      ?  $node[\"chama_fluxo_create_update_contact_crm\"].json[\"id_contact_crm\"] : $node[\"pesquisa_user\"].json[\"id_contact_crm\"] }}/tags",
+        "url": "={{ $node[\"pesquisa_url_base_crm\"].json[\"valor_variavel\"] }}contacts/{{ $node[\"pesquisa_user\"].json[\"id_contact_crm\"] }}/tags",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -3305,7 +3305,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT \n    t.*\nFROM \n    tags_crm t\nINNER JOIN \n    tag_funil_crm2 tfc\nON \n    t.id = tfc.id_tag\nWHERE \n    tfc.id_etapa_funil = {{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_etapa_funil\"] }}\n    AND t.entidade = 'contact';\n",
+        "query": "SELECT \n    t.*\nFROM \n    tags_crm t\nINNER JOIN \n    tag_funil_crm tfc\nON \n    t.id = tfc.id_tag\nWHERE \n    tfc.id_etapa_funil = {{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_etapa_funil\"] }}\n    AND t.entidade = 'contact';\n",
         "options": {}
       },
       "id": "5b4cd283-3c9b-43c0-bfff-fe09d67698ba",
@@ -3444,7 +3444,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT \n    t.*\nFROM \n    tags_crm t\nINNER JOIN \n    tag_funil_crm2 tfc\nON \n    t.id = tfc.id_tag\nWHERE \n    tfc.id_situacao_agendamento = {{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_situacao_agendamento\"] }}\n    AND t.entidade = 'contact';",
+        "query": "SELECT \n    t.*\nFROM \n    tags_crm t\nINNER JOIN \n    tag_funil_crm tfc\nON \n    t.id = tfc.id_tag\nWHERE \n    tfc.id_situacao_agendamento = {{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_situacao_agendamento\"] }}\n    AND t.entidade = 'contact';",
         "options": {}
       },
       "id": "dfd2c968-894d-4e31-aefe-5b3be90f3eb9",
@@ -3616,7 +3616,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "={{ $node[\"pesquisa_url_base_crm1\"].json[\"valor_variavel\"] }}contacts/{{ $node[\"chama_fluxo_create_update_contact_crm1\"].runIndex >= 0      ?  $node[\"chama_fluxo_create_update_contact_crm1\"].json[\"id_contact_crm\"] : $node[\"pesquisa_user1\"].json[\"id_contact_crm\"] }}/tags",
+        "url": "={{ $node[\"pesquisa_url_base_crm1\"].json[\"valor_variavel\"] }}contacts/{{ $node[\"chama_fluxo_create_update_contact_crm1\"].runIndex >= 0      ?  $node[\"chama_fluxo_create_update_contact_crm1\"].json[\"id_contact_crm\"] : $node[\"pesquisa_user1\"].json[\"id_contact_crm\"] }}tags",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -3873,7 +3873,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT \n    t.*\nFROM \n    tags_crm t\nINNER JOIN \n    tag_funil_crm2 tfc\nON \n    t.id = tfc.id_tag\nWHERE \n    tfc.id_etapa_funil = {{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_etapa_funil\"] }}\n    AND t.entidade = 'contact';\n",
+        "query": "SELECT \n    t.*\nFROM \n    tags_crm t\nINNER JOIN \n    tag_funil_crm tfc\nON \n    t.id = tfc.id_tag\nWHERE \n    tfc.id_etapa_funil = {{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_etapa_funil\"] }}\n    AND t.entidade = 'contact';\n",
         "options": {}
       },
       "id": "2af19e73-b331-4972-8e29-7beb02c18d7f",
@@ -4012,7 +4012,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT \n    t.*\nFROM \n    tags_crm t\nINNER JOIN \n    tag_funil_crm2 tfc\nON \n    t.id = tfc.id_tag\nWHERE \n    tfc.id_situacao_agendamento = {{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_situacao_agendamento\"] }}\n    AND t.entidade = 'contact';",
+        "query": "SELECT \n    t.*\nFROM \n    tags_crm t\nINNER JOIN \n    tag_funil_crm tfc\nON \n    t.id = tfc.id_tag\nWHERE \n    tfc.id_situacao_agendamento = {{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_situacao_agendamento\"] }}\n    AND t.entidade = 'contact';",
         "options": {}
       },
       "id": "1d8e9353-3c46-428a-b090-b86b8ab27620",
@@ -4184,7 +4184,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "={{ $node[\"pesquisa_url_base_crm2\"].json[\"valor_variavel\"] }}contacts/{{ $node[\"chama_fluxo_create_update_contact_crm2\"].runIndex >= 0      ?  $node[\"chama_fluxo_create_update_contact_crm2\"].json[\"id_contact_crm\"] : $node[\"pesquisa_user2\"].json[\"id_contact_crm\"] }}/tags",
+        "url": "={{ $node[\"pesquisa_url_base_crm2\"].json[\"valor_variavel\"] }}contacts/{{ $node[\"chama_fluxo_create_update_contact_crm2\"].runIndex >= 0      ?  $node[\"chama_fluxo_create_update_contact_crm2\"].json[\"id_contact_crm\"] : $node[\"pesquisa_user2\"].json[\"id_contact_crm\"] }}tags",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -4385,6 +4385,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-03-06T21:46:59.000Z",
-  "versionId": "0cb40df5-248d-4c95-9ff7-b6aae674f52a"
+  "updatedAt": "2026-03-13T18:25:13.994Z",
+  "versionId": "84febb47-8626-4325-a648-3841f6035177"
 }
