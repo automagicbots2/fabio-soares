@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-03-14T00:19:20.000Z",
-    "createdAt": "2026-03-14T00:16:36.763Z",
-    "versionId": "8a86c1b1-f34d-4574-80e0-66c1dd5365f6",
+    "updatedAt": "2026-03-14T20:56:21.000Z",
+    "createdAt": "2026-03-14T20:29:23.968Z",
+    "versionId": "2231f719-6ebe-47ee-b79b-d0bc7613c27a",
     "workflowId": "fD0qAgNM6ackkDpv",
     "nodes": [
       {
@@ -867,197 +867,6 @@
       },
       {
         "parameters": {
-          "method": "POST",
-          "url": "={{ $node[\"pesquisa_json_fields_contact6\"].json[\"webhook\"] }}",
-          "sendBody": true,
-          "bodyParameters": {
-            "parameters": [
-              {
-                "name": "nome_completo",
-                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"nome_completo\"] || \"\"}}"
-              },
-              {
-                "name": "email",
-                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"email\"] || \"\" }}"
-              },
-              {
-                "name": "telefone",
-                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"telefone\"] || \"\" }}"
-              },
-              {
-                "name": "instagram",
-                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"instagram\"] || \"\" }}"
-              },
-              {
-                "name": "utm_source",
-                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"utm_source\"] || \"\" }}"
-              },
-              {
-                "name": "utm_campaign",
-                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"utm_campaign\"] || \"\" }}"
-              },
-              {
-                "name": "utm_term",
-                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"utm_term\"] || \"\" }}"
-              },
-              {
-                "name": "utm_medium",
-                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"utm_medium\"] || \"\"}}"
-              },
-              {
-                "name": "utm_content",
-                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"utm_content\"] || \"\"}}"
-              },
-              {
-                "name": "tempo_importacao",
-                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"tempo_importacao\"] || \"\" }}"
-              },
-              {
-                "name": "modalidade",
-                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"modalidade\"] || \"\" }}"
-              },
-              {
-                "name": "qtd_importacoes",
-                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"qtd_importacoes\"] ||\"\" }}"
-              },
-              {
-                "name": "faturamento",
-                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"faturamento\"] ||\"\" }}"
-              },
-              {
-                "name": "capital_disponivel",
-                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"capital_disponivel\"] ||\"\" }}"
-              },
-              {
-                "name": "tem_equipe",
-                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"tem_equipe\"] || \"\" }}"
-              },
-              {
-                "name": "onde_vende",
-                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"onde_vende\"] || \"\" }}"
-              },
-              {
-                "name": "fluxo_de_caixa",
-                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"fluxo_de_caixa\"] || \"\" }}"
-              },
-              {
-                "name": "objetivo_12m",
-                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"objetivo_12m\"] || \"\" }}"
-              },
-              {
-                "name": "tempo_disponivel",
-                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"tempo_disponivel\"] || \"\"}}"
-              },
-              {
-                "name": "perfil",
-                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"perfil\"] ||\"\" }}"
-              },
-              {
-                "name": "estagio_atual",
-                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"estagio_atual\"] ||\"\" }}"
-              },
-              {
-                "name": "qtd_importacoes",
-                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"qtd_importacoes\"] || \"\" }}"
-              },
-              {
-                "name": "onde_vende",
-                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"onde_vende\"] || \"\" }}"
-              },
-              {
-                "name": "estado_atual",
-                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"estado_atual\"] || \"\" }}"
-              },
-              {
-                "name": "tem_cnpj",
-                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"tem_cnpj\"] || \"\" }}"
-              },
-              {
-                "name": "capital_disponivel",
-                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"capital_disponivel\"] || \"\" }}"
-              },
-              {
-                "name": "tempo_disponivel",
-                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"tempo_disponivel\"] || \"\" }}"
-              },
-              {
-                "name": "maior_desafio",
-                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"maior_desafio\"] || \"\" }}"
-              },
-              {
-                "name": "motivo_de_buscar_ajuda",
-                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"motivo_de_buscar_ajuda\"] || \"\" }}"
-              },
-              {
-                "name": "objetivo",
-                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"objetivo\"] || \"\" }}"
-              },
-              {
-                "name": "objetivo_financeiro",
-                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"objetivo_financeiro\"] || \"\" }}"
-              },
-              {
-                "name": "comprometimento",
-                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"comprometimento\"] ||\"\" }}"
-              },
-              {
-                "name": "inicio_imediato",
-                "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"inicio_imediato\"] || \"\" }}"
-              },
-              {
-                "name": "aluno"
-              }
-            ]
-          },
-          "options": {}
-        },
-        "id": "2168c2e8-b467-4cb5-b606-0ddaf2d098e2",
-        "name": "cria_ou_atualiza_contact_na_clint1",
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4.1,
-        "position": [
-          -4752,
-          752
-        ]
-      },
-      {
-        "parameters": {
-          "operation": "select",
-          "table": {
-            "__rl": true,
-            "value": "variaveis_globais_n8n",
-            "mode": "list",
-            "cachedResultName": "variaveis_globais_n8n"
-          },
-          "where": {
-            "values": [
-              {
-                "column": "nome_variavel",
-                "value": "URL do Fluxo de Rotacionamento de Colaboradores"
-              }
-            ]
-          },
-          "combineConditions": "OR",
-          "options": {}
-        },
-        "id": "93c434df-8f70-43ce-aa80-8fbfdc827d4b",
-        "name": "pesquisa_url_rotacionamento_colaboradores2",
-        "type": "n8n-nodes-base.mySql",
-        "typeVersion": 2.4,
-        "position": [
-          -4992,
-          752
-        ],
-        "alwaysOutputData": true,
-        "credentials": {
-          "mySql": {
-            "id": "SMjhjBLFctIENkHc",
-            "name": "[MySQL] - Fabio Soares"
-          }
-        }
-      },
-      {
-        "parameters": {
           "jsCode": "// Obter o template do banco de dados\nlet template = $node[\"pesquisa_json_fields_contact6\"].json[\"payload_fields\"];\n\n// Verifique se o template é válido (precisa ser um objeto)\nif (typeof template !== \"object\" || template === null) {\n    throw new Error(\"O template payload_fields não é um objeto válido.\");\n}\n\n// Obter os dados diretamente do \"body\" do webhook\nconst payload = $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"];\n\n// Criar uma cópia do payload e adicionar o campo \"nome\" concatenado com \"sobrenome\"\nconst payloadAtualizado = { \n    ...payload, \n    nome: `${payload.nome || ''} ${payload.sobrenome || ''}`.trim() \n};\n\n// Função para substituir os placeholders\nconst replacePlaceholders = (template, data) => {\n    return Object.keys(template).map(key => {\n        let fieldValue = template[key];\n\n        if (typeof fieldValue === \"string\") {\n            // Substituir placeholders no formato {{ chave }}\n            fieldValue = fieldValue.replace(/{{\\s*(\\w+)\\s*}}/g, (_, key) => {\n                return data[key] !== undefined ? data[key] : ''; // Substitui ou deixa vazio se não encontrado\n            });\n        }\n\n        return { field: key, value: fieldValue };\n    });\n};\n\n// Substituir os placeholders no template com os dados do webhook atualizado\nlet result = replacePlaceholders(template, payloadAtualizado);\n\n// Retornar o resultado no formato esperado\nreturn {\n    custom_fields_values: result\n};\n"
         },
         "type": "n8n-nodes-base.code",
@@ -1448,11 +1257,6 @@
           ]
         ]
       },
-      "pesquisa_url_rotacionamento_colaboradores2": {
-        "main": [
-          []
-        ]
-      },
       "formata_campos_contact6": {
         "main": [
           [
@@ -1477,11 +1281,11 @@
       }
     },
     "authors": "Automagic Bots",
-    "name": "Version 8a86c1b1",
+    "name": "Version 2231f719",
     "description": "",
     "autosaved": true
   },
-  "activeVersionId": "8a86c1b1-f34d-4574-80e0-66c1dd5365f6",
+  "activeVersionId": "2231f719-6ebe-47ee-b79b-d0bc7613c27a",
   "connections": {
     "fluxo_chamado": {
       "main": [
@@ -1823,11 +1627,6 @@
             "index": 0
           }
         ]
-      ]
-    },
-    "pesquisa_url_rotacionamento_colaboradores2": {
-      "main": [
-        []
       ]
     },
     "formata_campos_contact6": {
@@ -2722,197 +2521,6 @@
     },
     {
       "parameters": {
-        "method": "POST",
-        "url": "={{ $node[\"pesquisa_json_fields_contact6\"].json[\"webhook\"] }}",
-        "sendBody": true,
-        "bodyParameters": {
-          "parameters": [
-            {
-              "name": "nome_completo",
-              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"nome_completo\"] || \"\"}}"
-            },
-            {
-              "name": "email",
-              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"email\"] || \"\" }}"
-            },
-            {
-              "name": "telefone",
-              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"telefone\"] || \"\" }}"
-            },
-            {
-              "name": "instagram",
-              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"instagram\"] || \"\" }}"
-            },
-            {
-              "name": "utm_source",
-              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"utm_source\"] || \"\" }}"
-            },
-            {
-              "name": "utm_campaign",
-              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"utm_campaign\"] || \"\" }}"
-            },
-            {
-              "name": "utm_term",
-              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"utm_term\"] || \"\" }}"
-            },
-            {
-              "name": "utm_medium",
-              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"utm_medium\"] || \"\"}}"
-            },
-            {
-              "name": "utm_content",
-              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"utm_content\"] || \"\"}}"
-            },
-            {
-              "name": "tempo_importacao",
-              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"tempo_importacao\"] || \"\" }}"
-            },
-            {
-              "name": "modalidade",
-              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"modalidade\"] || \"\" }}"
-            },
-            {
-              "name": "qtd_importacoes",
-              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"qtd_importacoes\"] ||\"\" }}"
-            },
-            {
-              "name": "faturamento",
-              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"faturamento\"] ||\"\" }}"
-            },
-            {
-              "name": "capital_disponivel",
-              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"capital_disponivel\"] ||\"\" }}"
-            },
-            {
-              "name": "tem_equipe",
-              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"tem_equipe\"] || \"\" }}"
-            },
-            {
-              "name": "onde_vende",
-              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"onde_vende\"] || \"\" }}"
-            },
-            {
-              "name": "fluxo_de_caixa",
-              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"fluxo_de_caixa\"] || \"\" }}"
-            },
-            {
-              "name": "objetivo_12m",
-              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"objetivo_12m\"] || \"\" }}"
-            },
-            {
-              "name": "tempo_disponivel",
-              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"tempo_disponivel\"] || \"\"}}"
-            },
-            {
-              "name": "perfil",
-              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"perfil\"] ||\"\" }}"
-            },
-            {
-              "name": "estagio_atual",
-              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"estagio_atual\"] ||\"\" }}"
-            },
-            {
-              "name": "qtd_importacoes",
-              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"qtd_importacoes\"] || \"\" }}"
-            },
-            {
-              "name": "onde_vende",
-              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"onde_vende\"] || \"\" }}"
-            },
-            {
-              "name": "estado_atual",
-              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"estado_atual\"] || \"\" }}"
-            },
-            {
-              "name": "tem_cnpj",
-              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"tem_cnpj\"] || \"\" }}"
-            },
-            {
-              "name": "capital_disponivel",
-              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"capital_disponivel\"] || \"\" }}"
-            },
-            {
-              "name": "tempo_disponivel",
-              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"tempo_disponivel\"] || \"\" }}"
-            },
-            {
-              "name": "maior_desafio",
-              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"maior_desafio\"] || \"\" }}"
-            },
-            {
-              "name": "motivo_de_buscar_ajuda",
-              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"motivo_de_buscar_ajuda\"] || \"\" }}"
-            },
-            {
-              "name": "objetivo",
-              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"objetivo\"] || \"\" }}"
-            },
-            {
-              "name": "objetivo_financeiro",
-              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"objetivo_financeiro\"] || \"\" }}"
-            },
-            {
-              "name": "comprometimento",
-              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"comprometimento\"] ||\"\" }}"
-            },
-            {
-              "name": "inicio_imediato",
-              "value": "={{ $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"][\"inicio_imediato\"] || \"\" }}"
-            },
-            {
-              "name": "aluno"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "2168c2e8-b467-4cb5-b606-0ddaf2d098e2",
-      "name": "cria_ou_atualiza_contact_na_clint1",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.1,
-      "position": [
-        -4752,
-        752
-      ]
-    },
-    {
-      "parameters": {
-        "operation": "select",
-        "table": {
-          "__rl": true,
-          "value": "variaveis_globais_n8n",
-          "mode": "list",
-          "cachedResultName": "variaveis_globais_n8n"
-        },
-        "where": {
-          "values": [
-            {
-              "column": "nome_variavel",
-              "value": "URL do Fluxo de Rotacionamento de Colaboradores"
-            }
-          ]
-        },
-        "combineConditions": "OR",
-        "options": {}
-      },
-      "id": "93c434df-8f70-43ce-aa80-8fbfdc827d4b",
-      "name": "pesquisa_url_rotacionamento_colaboradores2",
-      "type": "n8n-nodes-base.mySql",
-      "typeVersion": 2.4,
-      "position": [
-        -4992,
-        752
-      ],
-      "alwaysOutputData": true,
-      "credentials": {
-        "mySql": {
-          "id": "SMjhjBLFctIENkHc",
-          "name": "[MySQL] - Fabio Soares"
-        }
-      }
-    },
-    {
-      "parameters": {
         "jsCode": "// Obter o template do banco de dados\nlet template = $node[\"pesquisa_json_fields_contact6\"].json[\"payload_fields\"];\n\n// Verifique se o template é válido (precisa ser um objeto)\nif (typeof template !== \"object\" || template === null) {\n    throw new Error(\"O template payload_fields não é um objeto válido.\");\n}\n\n// Obter os dados diretamente do \"body\" do webhook\nconst payload = $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"];\n\n// Criar uma cópia do payload e adicionar o campo \"nome\" concatenado com \"sobrenome\"\nconst payloadAtualizado = { \n    ...payload, \n    nome: `${payload.nome || ''} ${payload.sobrenome || ''}`.trim() \n};\n\n// Função para substituir os placeholders\nconst replacePlaceholders = (template, data) => {\n    return Object.keys(template).map(key => {\n        let fieldValue = template[key];\n\n        if (typeof fieldValue === \"string\") {\n            // Substituir placeholders no formato {{ chave }}\n            fieldValue = fieldValue.replace(/{{\\s*(\\w+)\\s*}}/g, (_, key) => {\n                return data[key] !== undefined ? data[key] : ''; // Substitui ou deixa vazio se não encontrado\n            });\n        }\n\n        return { field: key, value: fieldValue };\n    });\n};\n\n// Substituir os placeholders no template com os dados do webhook atualizado\nlet result = replacePlaceholders(template, payloadAtualizado);\n\n// Retornar o resultado no formato esperado\nreturn {\n    custom_fields_values: result\n};\n"
       },
       "type": "n8n-nodes-base.code",
@@ -2978,6 +2586,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-03-14T00:16:36.763Z",
-  "versionId": "8a86c1b1-f34d-4574-80e0-66c1dd5365f6"
+  "updatedAt": "2026-03-14T20:29:23.967Z",
+  "versionId": "2231f719-6ebe-47ee-b79b-d0bc7613c27a"
 }
