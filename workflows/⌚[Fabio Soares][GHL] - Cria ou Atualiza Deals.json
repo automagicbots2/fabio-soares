@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-03-12T14:51:39.412Z",
-    "createdAt": "2026-03-12T14:51:39.412Z",
-    "versionId": "83f5914d-e125-4bcf-a737-00711bbb4a53",
+    "updatedAt": "2026-03-14T23:34:56.000Z",
+    "createdAt": "2026-03-14T23:26:40.066Z",
+    "versionId": "97f912ea-479c-437e-90ca-7a99b4077f6f",
     "workflowId": "GipwLV2Oi93sRdr8",
     "nodes": [
       {
@@ -669,7 +669,7 @@
             "values": [
               {
                 "column": "nome_variavel",
-                "value": "Location 2 do GoHighLevel"
+                "value": "Location do GoHighLevel"
               }
             ]
           },
@@ -705,7 +705,7 @@
             "values": [
               {
                 "column": "nome_variavel",
-                "value": "API Key 2 do GoHighLevel"
+                "value": "API Key do GoHighLevel"
               }
             ]
           },
@@ -741,7 +741,7 @@
             "values": [
               {
                 "column": "nome_variavel",
-                "value": "URL Base do CRM 2"
+                "value": "URL Base do CRM"
               }
             ]
           },
@@ -1437,7 +1437,7 @@
       {
         "parameters": {
           "operation": "executeQuery",
-          "query": "UPDATE users\nSET \n    id_deal_crm = '{{ $node[\"cria_deal\"].runIndex >= 0      ? $node[\"cria_deal\"].json[\"opportunity\"][\"id\"] :  $node[\"update_deal\"].runIndex >= 0      ? $node[\"update_deal\"].json[\"opportunity\"][\"id\"] : $node[\"update_deal2\"].runIndex >= 0      ?  $node[\"update_deal2\"].json[\"opportunity\"][\"id\"] : null }}',\n      data_atualizacao = CURRENT_TIMESTAMP -- Define a data/hora atual no formato TIMESTAMP\nWHERE \n    id = {{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_user\"] }};",
+          "query": "UPDATE users\nSET \n    id_deal_crm = '{{ $node[\"cria_deal1\"].runIndex >= 0      ? $node[\"cria_deal1\"].json[\"opportunity\"][\"id\"] :  $node[\"update_deal1\"].runIndex >= 0      ? $node[\"update_deal1\"].json[\"opportunity\"][\"id\"] : $node[\"update_deal3\"].runIndex >= 0      ?  $node[\"update_deal3\"].json[\"opportunity\"][\"id\"] : null }}',\n      data_atualizacao = CURRENT_TIMESTAMP -- Define a data/hora atual no formato TIMESTAMP\nWHERE \n    id = {{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_user\"] }};",
           "options": {}
         },
         "id": "48195c4a-b425-43bf-9bfd-c5a4031e8491",
@@ -1507,6 +1507,86 @@
         "id": "114210d2-7c0a-4ac2-a3cc-e155835bb213",
         "name": "fluxo_chamado",
         "webhookId": "ce9e0c49-3b01-40d1-a43e-0275d34030ce"
+      },
+      {
+        "parameters": {
+          "url": "=https://services.leadconnectorhq.com/opportunities/ErlTuew2rfpRefD8HdOa",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Accept",
+                "value": "application/json"
+              },
+              {
+                "name": "Version",
+                "value": "2021-07-28"
+              },
+              {
+                "name": "Authorization",
+                "value": "=Bearer pit-dd07df97-ae92-49ac-86c6-eb4cea373b37"
+              },
+              {
+                "name": "Accept",
+                "value": "application/json"
+              }
+            ]
+          },
+          "options": {
+            "redirect": {
+              "redirect": {}
+            }
+          }
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          -1360,
+          128
+        ],
+        "id": "a6fee7c6-b5e4-445a-a440-6992b00f9667",
+        "name": "get_deal",
+        "onError": "continueErrorOutput"
+      },
+      {
+        "parameters": {
+          "url": "=https://services.leadconnectorhq.com/locations/GrB2kAoc7ZO681juhPJ1/tags",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Accept",
+                "value": "application/json"
+              },
+              {
+                "name": "Version",
+                "value": "2021-07-28"
+              },
+              {
+                "name": "Authorization",
+                "value": "=Bearer pit-dd07df97-ae92-49ac-86c6-eb4cea373b37"
+              },
+              {
+                "name": "Accept",
+                "value": "application/json"
+              }
+            ]
+          },
+          "options": {
+            "redirect": {
+              "redirect": {}
+            }
+          }
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          -1360,
+          320
+        ],
+        "id": "1d23654a-6c24-460b-9fcd-65b10ddc0e17",
+        "name": "get_tags",
+        "onError": "continueErrorOutput"
       }
     ],
     "connections": {
@@ -2068,12 +2148,12 @@
         ]
       }
     },
-    "authors": "system migration",
-    "name": null,
-    "description": null,
-    "autosaved": false
+    "authors": "Automagic Bots",
+    "name": "Version 97f912ea",
+    "description": "",
+    "autosaved": true
   },
-  "activeVersionId": "83f5914d-e125-4bcf-a737-00711bbb4a53",
+  "activeVersionId": "97f912ea-479c-437e-90ca-7a99b4077f6f",
   "connections": {
     "pesquisa_stage_pipeline4": {
       "main": [
@@ -3304,7 +3384,7 @@
           "values": [
             {
               "column": "nome_variavel",
-              "value": "Location 2 do GoHighLevel"
+              "value": "Location do GoHighLevel"
             }
           ]
         },
@@ -3340,7 +3420,7 @@
           "values": [
             {
               "column": "nome_variavel",
-              "value": "API Key 2 do GoHighLevel"
+              "value": "API Key do GoHighLevel"
             }
           ]
         },
@@ -3376,7 +3456,7 @@
           "values": [
             {
               "column": "nome_variavel",
-              "value": "URL Base do CRM 2"
+              "value": "URL Base do CRM"
             }
           ]
         },
@@ -4072,7 +4152,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "UPDATE users\nSET \n    id_deal_crm = '{{ $node[\"cria_deal\"].runIndex >= 0      ? $node[\"cria_deal\"].json[\"opportunity\"][\"id\"] :  $node[\"update_deal\"].runIndex >= 0      ? $node[\"update_deal\"].json[\"opportunity\"][\"id\"] : $node[\"update_deal2\"].runIndex >= 0      ?  $node[\"update_deal2\"].json[\"opportunity\"][\"id\"] : null }}',\n      data_atualizacao = CURRENT_TIMESTAMP -- Define a data/hora atual no formato TIMESTAMP\nWHERE \n    id = {{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_user\"] }};",
+        "query": "UPDATE users\nSET \n    id_deal_crm = '{{ $node[\"cria_deal1\"].runIndex >= 0      ? $node[\"cria_deal1\"].json[\"opportunity\"][\"id\"] :  $node[\"update_deal1\"].runIndex >= 0      ? $node[\"update_deal1\"].json[\"opportunity\"][\"id\"] : $node[\"update_deal3\"].runIndex >= 0      ?  $node[\"update_deal3\"].json[\"opportunity\"][\"id\"] : null }}',\n      data_atualizacao = CURRENT_TIMESTAMP -- Define a data/hora atual no formato TIMESTAMP\nWHERE \n    id = {{ $node[\"fluxo_chamado\"].json[\"body\"][\"id_user\"] }};",
         "options": {}
       },
       "id": "48195c4a-b425-43bf-9bfd-c5a4031e8491",
@@ -4142,6 +4222,86 @@
       "id": "114210d2-7c0a-4ac2-a3cc-e155835bb213",
       "name": "fluxo_chamado",
       "webhookId": "ce9e0c49-3b01-40d1-a43e-0275d34030ce"
+    },
+    {
+      "parameters": {
+        "url": "=https://services.leadconnectorhq.com/opportunities/ErlTuew2rfpRefD8HdOa",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Version",
+              "value": "2021-07-28"
+            },
+            {
+              "name": "Authorization",
+              "value": "=Bearer pit-dd07df97-ae92-49ac-86c6-eb4cea373b37"
+            },
+            {
+              "name": "Accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {
+          "redirect": {
+            "redirect": {}
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1360,
+        128
+      ],
+      "id": "a6fee7c6-b5e4-445a-a440-6992b00f9667",
+      "name": "get_deal",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "url": "=https://services.leadconnectorhq.com/locations/GrB2kAoc7ZO681juhPJ1/tags",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Version",
+              "value": "2021-07-28"
+            },
+            {
+              "name": "Authorization",
+              "value": "=Bearer pit-dd07df97-ae92-49ac-86c6-eb4cea373b37"
+            },
+            {
+              "name": "Accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {
+          "redirect": {
+            "redirect": {}
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1616,
+        128
+      ],
+      "id": "1d23654a-6c24-460b-9fcd-65b10ddc0e17",
+      "name": "get_tags",
+      "onError": "continueErrorOutput"
     }
   ],
   "pinData": {
@@ -4149,46 +4309,4470 @@
       {
         "json": {
           "headers": {
-            "host": "n8n-n8n.zkgge2.easypanel.host",
-            "user-agent": "axios/1.12.0",
-            "content-length": "451",
+            "host": "n8n-n8n.yqd7ni.easypanel.host",
+            "user-agent": "axios/1.13.5",
+            "content-length": "1755",
             "accept": "application/json,text/html,application/xhtml+xml,application/xml,text/*;q=0.9, image/*;q=0.8, */*;q=0.7",
             "accept-encoding": "gzip, compress, deflate, br",
             "content-type": "application/json",
             "x-forwarded-for": "172.18.0.1",
-            "x-forwarded-host": "n8n-n8n.zkgge2.easypanel.host",
+            "x-forwarded-host": "n8n-n8n.yqd7ni.easypanel.host",
             "x-forwarded-port": "443",
             "x-forwarded-proto": "https",
-            "x-forwarded-server": "d8060f799e06",
+            "x-forwarded-server": "95876c3beb17",
             "x-real-ip": "172.18.0.1"
           },
           "params": {},
           "query": {},
           "body": {
-            "id_etapa_funil": 56,
-            "id_funil": "16",
-            "id_user": 958835,
+            "id_etapa_funil": 6,
+            "id_funil": "1",
+            "id_user": 1033,
             "payload": {
-              "nome": "Gabriel",
-              "sobrenome": "Amaral Mota",
-              "email": "teste@automagicbots.com.br",
-              "telefone": "5511955835870",
-              "utm_source": "source",
-              "utm_campaign": "campaign",
-              "utm_term": "term",
-              "utm_medium": "medium",
-              "utm_content": "content",
-              "id_funil": "16",
-              "instagram": "",
-              "id_forms": "103",
-              "tipo_forms": "Lista de Espera",
-              "nome_completo": "Gabriel Amaral Mota"
+              "nome": "Robert",
+              "sobrenome": "Augusto",
+              "nome_completo": "Robert Augusto",
+              "email": "robertaugustocontato@gmail.com",
+              "telefone": "5511971509703",
+              "cpf": "228.099.318-01",
+              "utm_source": "facebook",
+              "utm_campaign": "cpc",
+              "utm_term": "[A7CDR] VENDAS ",
+              "utm_medium": " ESCALA ",
+              "utm_content": " CBO ",
+              "form_id": "ogl1dc1y",
+              "form_name": "",
+              "value": 37.9,
+              "transaction_id": "HP0494647887",
+              "net_value": 37.05,
+              "trans_status": "Compra Aprovada",
+              "payment_method": "PIX",
+              "refund_date": "",
+              "event_date": "2026-03-14 16:46:27",
+              "payment_date": "2026-03-14 16:46:16",
+              "product_type": "Cobrança única",
+              "product_id": 6238670,
+              "product_name": "Ingresso Silver – Desafio As 7 Chaves da Riqueza",
+              "warranty_date": "2026-03-20",
+              "offer_code": "ogl1dc1y",
+              "discount_coupon": "",
+              "street": "",
+              "address_number": "",
+              "country": "",
+              "district": "",
+              "address_complement": "",
+              "city": "",
+              "address_state": "",
+              "zipcode": "",
+              "affiliate_value": "",
+              "gateway_comission": 0.85,
+              "billet_barcode": "00020101021226740014br.gov.bcb.pix2552pix.ebanx.com/qr/v2/917BB6062EA4795D9ECC8642288BE0715204000053039865802BR5911Ebanx LTDA.6008CURITIBA62070503***63047D7E",
+              "currency": "BRL",
+              "bankslip": "https://customer.ebanx.com/pix/checkout?hash=69b5bacbb1d3740c7a5209e16aed08bff20f76627c32bcaf",
+              "recurrenceExpirationDate": "",
+              "cancelledDate": "",
+              "cnpj": "",
+              "installments": 1,
+              "billetExpirationDate": "2026-03-16",
+              "recurrenceNumber": "",
+              "src": "",
+              "sck": "facebook|cpc|[A7CDR] VENDAS | ESCALA | CBO | PAG-B | VID | PIXEL DE FABIO | ADV+ 180D - 14/03/26|120244497487330672|ig_Instagram_Feed|/",
+              "refusalReason": "",
+              "subscriberCode": "",
+              "planName": "",
+              "planId": "",
+              "eventId": "f674e899-764c-4f91-a73d-65203a7184be",
+              "tipo_forms": "Checkout",
+              "id_funil": "1",
+              "id_forms": "1"
             },
-            "qualificacao": "",
-            "tipo_forms": "Lista de Espera"
+            "id_situacao_checkout": 1,
+            "qualificacao": ""
           },
-          "webhookUrl": "https://n8n-n8n.zkgge2.easypanel.host/webhook/cria-atualiza-deal-crm",
+          "webhookUrl": "https://n8n-n8n.yqd7ni.easypanel.host/webhook/cria-atualiza-deal-crm",
           "executionMode": "production"
+        }
+      }
+    ],
+    "get_tags": [
+      {
+        "json": {
+          "tags": [
+            {
+              "id": "Tiw2Q0xYQpTKaoWeovsh",
+              "name": "#alunosfv",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "vDY5SP2E4n8PAnyrtdyc",
+              "name": "25_pct-275-definir-quem-o-cliente-comprador-compulsivo-desse-mercado-1701474627003",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "2NQWrZc65XPJM4sKP4bW",
+              "name": "50_pct-275-definir-quem-o-cliente-comprador-compulsivo-desse-mercado-1701474627003",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "8SxbmyaVbU0L3AeAXr8G",
+              "name": "75_pct-275-definir-quem-o-cliente-comprador-compulsivo-desse-mercado-1701474627003",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "5r0H7Xk93nagL4d62SK2",
+              "name": "[7cdr",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "qTvYi1qTToVn843ZEbTu",
+              "name": "[7cdr mar26] - comprou silver",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Hof9uPkrWspqN7L0i6Zc",
+              "name": "[7cdr mar26] - comprou vip",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "UeuOTL44XeW0R2GSiskD",
+              "name": "[7cdr mar26] - entrou checkout silver",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "CgbwdyVWrBlKyvncIW9x",
+              "name": "[7cdr mar26] - entrou checkout vip",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "vprKsnJFYvD6MdhA54EH",
+              "name": "[abriu email - cdr032026]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "gyAbZ5j7itJPkHga3KFJ",
+              "name": "[aluno] social selling",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "SfiVv0wmxl949s2rc1OG",
+              "name": "[aplicacao fast] [soft pitch]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "yCw5YF992sAuLJuztHZb",
+              "name": "[aquecimento - dominio]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "ETNYcDL0g7NDS2o9kHBX",
+              "name": "[base - convite webnario: 2026 o melhor ano da sua vida]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "XnPf68LLV3dhSTjoC5Xz",
+              "name": "[bave] aplicação",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "8rmTDl71i0aTDxbYzNBT",
+              "name": "[bave] no show first day",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "WBJmCiXxu5nHj0R1NxU1",
+              "name": "[bave] participantes first day",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "ahqriljgSAb8RJoGV0gL",
+              "name": "[bave] participants",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "kI9fBiuO0Uy3u6rswuxy",
+              "name": "[clicou email - cdr032026]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "NkJj0PVZST33pijNc88J",
+              "name": "[clicou] [disparo] [meteorico] [email 01]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "yzE4c7Ig8GLF2DkBCQo3",
+              "name": "[compra aprovada] - adamantium",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "jUdmd61wcEmOus743Bkl",
+              "name": "[compra aprovada] - formação closer de elite high ticket",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Mp62rwZFmHjep55CxdhT",
+              "name": "[compra aprovada] - imersão advanced marketing 2024",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "ZDzpFl3mOo8yVDVOiVEO",
+              "name": "[compra aprovada] - imersão closer de elite mastery (email)",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "6OYGeSGTdVl28PUGQYxi",
+              "name": "[compra aprovada] - social selling",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "gaze6qY7YG6O594KhsdU",
+              "name": "[compra aprovada] - venda por whatsapp",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "f6EvoPOBwH60FM6CubgE",
+              "name": "[compra aprovada] [bave] [7cdr]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "MZDs0fU49PgVq4nNnDtu",
+              "name": "[compra aprovada] [cdr] [com orderbump]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "vw6prhSMysUrEyXIoydm",
+              "name": "[compra aprovada] [cdrd] [com orderbump]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "vwgDnuc3mHOnTvM3wnV6",
+              "name": "[compra aprovada] [crd] [com orderbump]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "fQcdO70HNjfytKLZ1fmi",
+              "name": "[compra aprovada] [crd] [sem orderbump]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Rj1Z5e80N3C1b1RLU22p",
+              "name": "[compra aprovada] [crd] [tmb]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "SL4B6CJLGNpfaM532ODU",
+              "name": "[compra aprovada] [fast] [hotmart]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "yIGBDvGNoNZUtADkZiHG",
+              "name": "[compra aprovada] [fast] [tmb]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "OdeByhIgJ0llYItgGMML",
+              "name": "[compra aprovada] [gps] [com orderbump]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "RhklsecGikUepyNLNpqy",
+              "name": "[compra aprovada] [imersao intensiva]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "cSWXoy1TJOUxQ2I8PUsI",
+              "name": "[compra aprovada] [ingresso silver]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "VMsK9NRdPW8pPV3HRJ4W",
+              "name": "[compra aprovada] [ingresso silver] [com orderbump]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "aCmluG4UjsI09QmCTUbL",
+              "name": "[compra aprovada] [ingresso silver] [re-import]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "A9KrGVdtlAwLWuMlAE77",
+              "name": "[compra aprovada] [ingresso silver] [sem orderbump]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "xaCnzEtg73iIzmlN6sDG",
+              "name": "[compra aprovada] [ingresso vip] [com orderbump]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "xGp1JZAobgEK0f3VizLX",
+              "name": "[compra aprovada] [ingresso vip] [re-import]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "4sN9Jdi1HTJhFqicTUzU",
+              "name": "[compra aprovada] [ingresso vip] [sem orderbump]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "KGdZDHIZ61yZCHClh9bj",
+              "name": "[compra aprovada] adamantium",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "EFQT2zS7JEZSOFKjDqnD",
+              "name": "[compra aprovada] advanced marketing",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "bxljGeYFrEZl1cs4dwJN",
+              "name": "[compra aprovada] advanced marketing [abr/2023]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "qw5Ppce9MWfZl128b78u",
+              "name": "[compra aprovada] advanced marketing [dez/2022]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "EchXCNQyynkrCRdKA7sr",
+              "name": "[compra aprovada] cdr funil de desafio",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "H71Om64JbBfWkUh8uLwY",
+              "name": "[compra aprovada] closer de elite",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "otp8k44ojiXh0rgT8LC8",
+              "name": "[compra aprovada] codigo da riqueza online",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "RbHZPtxxaYwDBfykoTIO",
+              "name": "[compra aprovada] f",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "ijy7qotAQsG6fn8WWoVM",
+              "name": "[compra aprovada] f.a.s.t",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "IVYK6yK4CSofrK09rqNI",
+              "name": "[compra aprovada] fabrica de treinadores persuasivos",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "PUPeBQWdAlhhB1tBemY4",
+              "name": "[compra aprovada] fhl 2024",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Ab41ag7GkYzJI4qneSwj",
+              "name": "[compra aprovada] imersão closer de elite mastery",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "FDA1Pa3hPgrIj7ceqNXH",
+              "name": "[compra aprovada] sfl",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "ckNxgkwGQV41znXUad0c",
+              "name": "[compra aprovada] sfl 2024",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "kZGON2E7rA5stp0DJ78v",
+              "name": "[compra aprovada] sfl 2024 - gold",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "S3TcbDqrnG1609I5EVtU",
+              "name": "[compra aprovada] sfl 2024 - silver",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "t3H5EgtQGLskx93K1tQ1",
+              "name": "[compra aprovada] sfl online",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "B2cJcfDhHuuYXAk7TJat",
+              "name": "[compra aprovada] sfl_gold",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "zJXao9QUseUUpjZnBmFl",
+              "name": "[compra aprovada] sfl_meteorico",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "iR3a2rfmPdPouTweoazA",
+              "name": "[compra aprovada] sfl_meteorico_gold",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "EZx5YoaTeQr5YXb40MrO",
+              "name": "[compra aprovada] sfl_meteorico_silver",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "lC4WO5t7OjrWuC968hui",
+              "name": "[compra aprovada] sfl_platinum",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "5GYvugx6qnN4mUUF0Bwn",
+              "name": "[compra aprovada] sfl_silver",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "RnUZMSpjacV05jYk2x2k",
+              "name": "[compra aprovada] vendas por whatsapp",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "M3wTqXjEVOOkpkZkDETB",
+              "name": "[compra expirada] venda por whatsapp",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "uiytYZAjKQgP6PyRZLRX",
+              "name": "[compra reembolsada] f.a.s.t",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "doKwZbshhq0B2kKMDRWY",
+              "name": "[compra reembolsada] fhl 2024",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "ZO0aFwuUhVTWcb6S65lw",
+              "name": "[compra reembolsada] sfl",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "3hztAyjhcGJojgfSLaYw",
+              "name": "[compra] [checagem] fábrica de vendas",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "QGX9kfd3c8I8WWyPBtJx",
+              "name": "[compra] [checagem] mentoria black diamond",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "7dWQIdUr4290uzDNc0ws",
+              "name": "[compra] [checagem] treinamento closer de elite high ticket",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "1tquM3d6N8ek3lrmPPWe",
+              "name": "[compra] vender por whatsapp [checagem]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "zveGcjSPBR1jgoIiLLcL",
+              "name": "[compra][analise 02] como montar equipes de alta performance",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "LNfEm8ayLmaOLKRIXDOY",
+              "name": "[compra][analise 02] fábrica de treinadores persuasivos",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "gqXeazgQ7lMrkswicu8P",
+              "name": "[compra][analise 02] fábrica de vendas",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "ZhAhCFoUpS8C2VTsHUIo",
+              "name": "[compra][analise 02] treinamento closer de elite high ticket",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Z4FNXjrl9GarCiYCdCks",
+              "name": "[comprou] [1º programa de treinamento e implementação de funil de desafios do brasil - recorrência]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "U76rkTqNmPcyaTidvCnq",
+              "name": "[comprou] [bave - 2025]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "D6WVoKSoL8VeLscNfLNC",
+              "name": "[comprou] [bave - 2026]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "j8KfUGTqlJ691xBVIzd3",
+              "name": "[comprou] [bave]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "3L7c0wU3TYIGH4EIiE0Y",
+              "name": "[comprou] [combo - social selling + vender pelo whatsapp + como montar equipes comerciais]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "mQ26juSreGr3pn9oToYB",
+              "name": "[comprou] [como montar equipes comerciais de alta performance]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "UaOnPVR2SyIflU5rZoQR",
+              "name": "[comprou] [como vender por whatsapp]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "KJoN2m8oOsQIYqG9CUvU",
+              "name": "[comprou] [código da riqueza - challenge funnel (recorrência)]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Rj18BNHdpRZND41SV1yS",
+              "name": "[comprou] [código da riqueza - challenge funnel [entrada]]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "FSdD9k5z9nZ3sxeS0bWZ",
+              "name": "[comprou] [código da riqueza - challenge funnel]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "FjBrYTPq8JH7XISMpBEA",
+              "name": "[comprou] [código da riqueza - challenge&amp;nbsp;funnel]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "v99PYlQVQD6clIe41Njb",
+              "name": "[comprou] [desafio o código da riqueza online - silver]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "syDesMQus8KuiL3RsbpL",
+              "name": "[comprou] [entrada - f.a.s.t - funnel advanced | strategic trainning]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "KA1E4ig7pLieCYYTwvy1",
+              "name": "[comprou] [experiência vip - masterclass empilhamento - destrava-escala]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "REsepjHiV9vbnYX1XAq3",
+              "name": "[comprou] [f.a.s.t - funnel advanced | strategic trainning - recorrência]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "0vADR8zVZZpcE5Tj0yj6",
+              "name": "[comprou] [f.a.s.t - funnel advanced | strategic trainning]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "MG6MoKAZM54M41dwCVhW",
+              "name": "[comprou] [gps da riqueza digital]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "QE92525h4qlvzg5CAMzZ",
+              "name": "[comprou] [ingresso silver – desafio as 7 chaves da riqueza]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "GHPM5KVPZkZqFgOQyuGC",
+              "name": "[comprou] [ingresso vip – desafio as 7 chaves da riqueza]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "POWq7AmckzIqfoCTJXc2",
+              "name": "[comprou] [masterclass empilhamento - destrava-escala - silver]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "CVBpC6IdFjWDZeAMlAFy",
+              "name": "[comprou] [masterclass empilhamento destrava - escala]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "2cUcnNcclInvBhAKPztb",
+              "name": "[comprou] [mentoria closer de elite]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "tMfC66UIPz56hhl2gVcy",
+              "name": "[comprou] [seguro atualização cdr]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "egGMgNrn7C7y6SO4uH4b",
+              "name": "[comprou] [social selling]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "DFgbvKi2hY6zzJx5GxgC",
+              "name": "[comprou] [◾️ formação closer de elite]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "x4ofczRHp17zIHtlyGVI",
+              "name": "[des][7cdr-022026][aluno][compra aprovada][silver]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "eSgVXEMblV5et6NlziUH",
+              "name": "[des][7cdr-022026][aluno][compra aprovada][vip]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "y1tLF4OoLIW71bLCM791",
+              "name": "[des][7cdr-022026][aluno][preenchimento pesquisa]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "hrVnd93aq20cy9eBGaUV",
+              "name": "[des][7cdr-022026][leads][carrinho abandonado][silver]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "8fiaeH0IUcky1Fi0I0fz",
+              "name": "[des][7cdr-022026][leads][carrinho abandonado][vip]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "5T1yvePuGs1u0BKnEW14",
+              "name": "[des][7cdr-022026][leads][pop up pré checkout][silver]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Zw8hnZDhHijr0v6L1ZEv",
+              "name": "[des][7cdr-022026][leads][pop up pré checkout][vip]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "vRuEPFUtbZuNIypEoJAW",
+              "name": "[des][7cdr-032026][aluno][compra aprovada][silver]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "U3kGWJweTyqKAmugeFD0",
+              "name": "[des][7cdr-032026][aluno][compra aprovada][vip]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Bqg6H4ijSXn9imvhFXo5",
+              "name": "[des][7cdr-032026][leads][pop up pré checkout][silver]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "q8IfU1N9gDxywheHoYSQ",
+              "name": "[des][7cdr-032026][leads][pop up pré checkout][vip]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Y4VQZb5EuNobSC7UvXVk",
+              "name": "[disparo 29/09 18hrs api oficia]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "TCyAFmk7GpQObVjoJiCg",
+              "name": "[disparo api oficial 28] [dia 05/10] [compradores silver]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "CchB6wMd5KCpavV1zGYM",
+              "name": "[disparo api oficial 28] [dia 05/10] [compradores vip]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "SJPkiTEx1SamoIuilUmI",
+              "name": "[disparo api oficial] [dia 02/10] [nao compradores]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "P5mNxeJbOgzidfFYiw3J",
+              "name": "[disparo api oficial] [dia 02/10] [nao compradores] [cluster 02]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Mz7chPEKv3iNz4hWuCNk",
+              "name": "[disparo api oficial] [dia 02/10] [nao compradores] [cluster 03 manychat]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "IC0MV4W2iNhhUIf7FemL",
+              "name": "[disparo] [wpp] [captura] [meteorico]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "64g4TfYba5ixEBWRLXsN",
+              "name": "[disparo] [wpp] [captura] [meteorico] [00]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Z4i4gwPaznoeJNhj9FWP",
+              "name": "[disparo] [wpp] [captura] [meteorico] [01]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "83PeG8v2ljmhcZI65lBD",
+              "name": "[ede] [clicked] [link]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "uNPSLQBPiG6S11WU9T33",
+              "name": "[entrou no ao vivo] [dia 02/10]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "BCDvOjQpuKME3csQMyUY",
+              "name": "[f.a.s.t] compradores",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "WYnq77tKu4PT3BPusq1y",
+              "name": "[fab][apl][fast-1225][leads][pesquisa preenchida] [desqualificado]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "lj0VDNBBD0axgchpE6zD",
+              "name": "[fab][apl][fast-1225][leads][pesquisa preenchida] [qualificado]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "E3HSShQrCQr42ANU9vd9",
+              "name": "[fab][apl][fast-1225][leads][pop up - [fab][apl][fast-1225][leads][pop up - lead cadastrado] [n",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "PM64v6YDbSUS3NDytiLi",
+              "name": "[fab][apl][fast-1225][leads][pop up - lead cadastrado]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "fzH8eA6q2yIeidgvHbJY",
+              "name": "[fab][apl][fast-1225][leads][pop up - lead cadastrado] [nao preencheu pesquisa]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "wtdClzxChUxda3tM7vHG",
+              "name": "[fab][apl][fast-1225][leads][reunião agendada]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "vutwzMiyMqiONUncTUl7",
+              "name": "[fab][des][cdr-e003-0525] [preenchimento pesquisa]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "b7x2KdiiMFWNNsJjfj3N",
+              "name": "[fab][des][cdr-e003-0525][alunos ativos][compra aprovada][hotmart][silver]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "yeXfeVQeSEDSkzUiyAP8",
+              "name": "[fab][des][cdr-e003-0525][alunos ativos][compra aprovada][hotmart][vip]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "QKWP3GvJD7QfePS8veWr",
+              "name": "[fab][des][cdr-e003-0525][leads][carrinho abandonado][hotmart][vip]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "rLTNn7G0k0u2ABgmTilx",
+              "name": "[fab][des][cdr-e003-0525][leads][compra cancelada][hotmart][silver]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "LBQOGRBim9x4BCsjEQJl",
+              "name": "[fab][des][cdr-e003-0525][leads][compra cancelada][hotmart][vip]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "KcmZbdwDWt7wQ290Tqw2",
+              "name": "[fab][des][cdr-e003-0525][leads][compra expirada][hotmart][silver]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "0giCse1faDaH0J8L1lrN",
+              "name": "[fab][des][cdr-e003-0525][leads][compra expirada][hotmart][vip]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "nmhwYMCUFrBhbe2euNiX",
+              "name": "[fab][des][cdr-e003-0525][leads][compra reclamada][hotmart][silver]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "IB5UpqwRgLg4R3ykfzVt",
+              "name": "[fab][des][cdr-e003-0525][leads][compra reclamada][hotmart][vip]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "o0kc60LK4slC3JiNjO3p",
+              "name": "[fab][des][cdr-e003-0525][leads][compra reembolsada][hotmart][silver]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "3DDl0Kl9u0ezp2vpp1uk",
+              "name": "[fab][des][cdr-e003-0525][leads][compra reembolsada][hotmart][vip]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "hXbGCo1V6w4Ua28EFIIC",
+              "name": "[fab][des][cdr-e003-0525][leads][pop up pré checkout][hotmart][silver]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "R8tGJoQ7sdtNbenqz7bo",
+              "name": "[fab][des][ifd-e001-0525][alunos ativos][compra aprovada][hotmart]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "HJ5VdCuTgw8qXsjpwBc5",
+              "name": "[fab][des][ifd-e001-0525][leads][compra cancelada][hotmart]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "nVLU7LIRDflCBnHqiWcy",
+              "name": "[fab][des][ifd-e001-0525][leads][compra expirada][hotmart]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "apj5X3ehxKapPmXzhzy5",
+              "name": "[fab][des][ifd-e001-0525][leads][compra reclamada][hotmart]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "YzwPGbdP3SRW19JIkie3",
+              "name": "[fab][des][ifd-e004-0525][alunos ativos][checkout][hotmart]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "RNSWcBOvT2HCIhMIqYJ3",
+              "name": "[fab][des][ifd-e004-0525][alunos ativos][compra aprovada][hotmart][]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "u2dNwKkjmd7etqWURtvu",
+              "name": "[fab][des][ifd-e004-0525][alunos ativos][pedido de reembolso][hotmart]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "zEPpBdQi7UFIQuaxHyPR",
+              "name": "[fab][des][ifd-e004-0525][alunos ativos][pop up pré checkout][hotmart]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "yR7Hr78BryJ3EzQYtjwq",
+              "name": "[fab][des][ifd-e004-0525][alunos inativos][compra reembolsada][hotmart]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "PSRHOjaQeNYnN7Pw0c44",
+              "name": "[fab][des][ifd-e004-0525][leads][compra cancelada][hotmart]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "clWTglx69XJlnkdbEGi7",
+              "name": "[fab][des][ifd-e004-0525][leads][compra expirada][hotmart]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "mJyxjc0sFg6lMKlajgIL",
+              "name": "[fab][des][ifd-e004-0525][leads][compra reclamada][hotmart]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "k7pDOIfKIAYk9YsjwJV4",
+              "name": "[fab][van][alunos ativos][basegeral]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "baAiCtOMKHdJiabWbC7h",
+              "name": "[fab][van][alunosativos][basegeral]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "o3sp43Oq5bVGMHjAOUWU",
+              "name": "[fast] [ lead cadastrado]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Rf7phZLwUD01i6nbyS2P",
+              "name": "[fast] compra aprovada",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "ez8yrcZSoGyEOEX3B1z4",
+              "name": "[fceht] compra aprovada",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "5I968mdFajBzxN8xlatQ",
+              "name": "[fceht] compra cancelada",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "LkT8EeaQdvkJuv4LVAvM",
+              "name": "[fceht] compra reclamada",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "RRuJI3xwta094rxcgzDG",
+              "name": "[fceht] compra reembolsada",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "MUFxJlAElhzlaqA6WyZK",
+              "name": "[fábrica de vendas] compra aprovada",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "bvrqMu0d0iEhgbVCeDPt",
+              "name": "[fábrica de vendas] compra aprovada (lista manual)",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "2VavKOHFNX5EBknomjyW",
+              "name": "[hard bounced]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "JaOFV8AGlbzOAMQHYod0",
+              "name": "[icem] contatos para x1 - alunos ft",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "8UDpuNCswrOnudt0WjHu",
+              "name": "[import] [compradores cdr]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "c7ArUE4lEF3xYMemXMJu",
+              "name": "[import] [disparo leads boston]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "lczhtYl76VCuVnv6Dv22",
+              "name": "[lead capturado] [acesso resumo] [7cdr]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "HUqP6ZO7ENrqZLI2I1pl",
+              "name": "[lead capturado] [aquisicao] [7cdr]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "HBuahcHKe31u4VUdCbjr",
+              "name": "[lead capturado] [aquisicao] [7cdr] [silver]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "cVoqsXNJQEy706xhT8nZ",
+              "name": "[lead capturado] [aquisicao] [7cdr] [vip]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "qDRbC9SP4z8wUk7b558d",
+              "name": "[lead capturado] [bave] [7cdr]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "ycfmxo18J1dfBia78QHK",
+              "name": "[lead capturado] [convite live] [7cdr]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "GnfxB2QE2AAlTUbTMLiv",
+              "name": "[lead capturado] [crd] [7cdr]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "VWDZMRaPtuNCHvhzisH0",
+              "name": "[lead capturado] [lista de espera] [7cdr]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "1uctt4Nomy1jk98uEtXB",
+              "name": "[lead capturado] [masterclass] [7cdr]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "u5Y4POt7hVDLe8oeGNCk",
+              "name": "[lead capturado] [meteorico] [7cdr]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "sw8E0Pm6OorAuLvGrcmT",
+              "name": "[lead capturado] [palestra boston] [7cdr]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "kkgna6PpEik2pZ7PER16",
+              "name": "[lead capturado] [replay] [7cdr]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "gDL29ScnjK7f05n72j3z",
+              "name": "[lead capturado] [webinar 25/10] [7cdr]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "KxVvPzPKNF58Mp6kag9D",
+              "name": "[mst][destrava-escala - 012025][leads][carrinho abandonado][silver]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "FUPRqfPDbBjbaWBjjV52",
+              "name": "[mst][destrava-escala - 012025][leads][carrinho abandonado][vip[mst][destrava-escala - 012025][leads][carrinho abandonado][vip]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "EcTaNdle8wkKGmkZ3aO6",
+              "name": "[mst][destrava-escala - 012025][leads][carrinho abandonado][vip]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "B0k5natY9rJw5kAo1ve6",
+              "name": "[mst][destrava-escala - 012025][leads][chargeback][silver]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "DmrD6dLKYjxV9dFyn9o7",
+              "name": "[mst][destrava-escala - 012025][leads][chargeback][vip]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Q1bBOxL691r8cLfMmpEI",
+              "name": "[mst][destrava-escala - 012025][leads][compra cancelada][silver]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "HLcsbxdcog1BtvQFUaNj",
+              "name": "[mst][destrava-escala - 012025][leads][compra cancelada][vip]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "FN0Le5VOSypoB4BO0Apn",
+              "name": "[mst][destrava-escala - 012025][leads][compra recusada][silver]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "xywCZH7pMGPeKkXJxfUb",
+              "name": "[mst][destrava-escala - 012025][leads][compra recusada][silver][mst][destrava-escala - 012025][leads][compra recusada][silver]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "4Urkt7fFRkHuXH1yFGHD",
+              "name": "[mst][destrava-escala - 012025][leads][compra recusada][vip]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "hSLt2XTazNWHulQUHgVX",
+              "name": "[mst][destrava-escala - 012025][leads][null][silver]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "yvcfc7IqTHShKKZAZGRI",
+              "name": "[mst][destrava-escala - 012025][leads][null][vip]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "ccPSMtYCHZ01cKCixirL",
+              "name": "[mst][destrava-escala - 012025][leads][pix gerado][silver]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "FCOkB8vIpVSzpY9J17Pq",
+              "name": "[mst][destrava-escala - 012025][leads][pix gerado][vip]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "sTXR1kO4CbMPqjQYY1Yj",
+              "name": "[mst][destrava-escala - 012025][leads][reembolso solicitado][silver]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "fzqzvGiI5Elxb8Kt2cvf",
+              "name": "[mst][destrava-escala - 012025][leads][reembolso solicitado][vip]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "8LYvpVqD8rWndpGlYjKe",
+              "name": "[mst][destrava-escala - 012025][leads][reembolso][silver]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "P1Zq5YZeviPfguxDiY8U",
+              "name": "[mst][destrava-escala - 012025][leads][reembolso][vip]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "nZTSxIUuAnYEfDcunbe4",
+              "name": "[mst][destrava-escala - 012026][alunos ativos][compra aprovada][silver]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "JIlqFBTrxFdJ3cAQtFLy",
+              "name": "[mst][destrava-escala - 012026][alunos ativos][compra aprovada][vip]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "9tATV3fjjr2yCdKWx82u",
+              "name": "[mst][destrava-escala - 022026][leads]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "MxDxDkujgbiWxtbbeHRq",
+              "name": "[mst][oferta-de-ouro - 012025][leads]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "GWpxZlx77BJgcJddczvt",
+              "name": "[pesquisa preenchida] [7cdr]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "89qivaYUyCDvz3lgt86M",
+              "name": "[pesquisa preenchida] [7cdr] [live]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "aCZrOMFXdT9YXdN3lFOg",
+              "name": "[pesquisa preenchida] [7cdr] [pesquisa silver]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "4052fiuZ4FW6iKZb2Wv1",
+              "name": "[pesquisa preenchida] [7cdr] [pesquisa vip]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "KWxw40LyhdU5IcvNVDsh",
+              "name": "[pesquisa preenchida] [7cdr] [webinario 25/10]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "s4NmEs5R4zE0lDouXkAh",
+              "name": "[pesquisa qualitativa] [silver]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "kwX9ANOZ7e8H4GVDVBPV",
+              "name": "[pesquisa qualitativa] [vip]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Ncfmm4VIF6fzsQHkD5g5",
+              "name": "[reuniao agendada] [fast]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "iFEv1lNK8EikYV8DXbeB",
+              "name": "[reuniao agendada] [qr code imersao]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "s92E8rrZflNewAGOAWNh",
+              "name": "[social selling bf2022] compra aprovada",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "vAeH09mxeIE2FdGZIdsO",
+              "name": "[soft bounced]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "s8vr35SCxDD9d1uM20j8",
+              "name": "[testing] [workflow]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "WwKAuBzXMvzRXr9Yz6M5",
+              "name": "[van] [des] [dvm-e001-0325] [alunos ativos] [abandono de carrinho] [hotmart] [silver]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "rFUfH4i92MJNFxLKTr8a",
+              "name": "[van] [des] [dvm-e001-0325] [alunos ativos] [abandono de carrinho] [hotmart] [vip]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "sN39bOuIAodefOSiORu7",
+              "name": "[van] [des] [dvm-e001-0325] [alunos ativos] [aguardando pagamento] [hotmart] [silver]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "O7RoXo8xeyXXa6OZ4Mlb",
+              "name": "[van] [des] [dvm-e001-0325] [alunos ativos] [aguardando pagamento] [hotmart] [vip]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "ItbEgTVzkZE9KGcOXKPK",
+              "name": "[van] [des] [dvm-e001-0325] [alunos ativos] [compra aprovada] [hotmart] [vip]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "NWgmJREtlXGdaH0DlL6R",
+              "name": "[van] [des] [dvm-e001-0325] [alunos ativos] [compra cancelada] [hotmart] [silver]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "tFE12BTqVTeD4UHBwRbq",
+              "name": "[van] [des] [dvm-e001-0325] [alunos ativos] [compra cancelada] [hotmart] [vip]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "JlFZUEMveUFdJaaNZWRt",
+              "name": "[van] [des] [dvm-e001-0325] [alunos ativos] [compra expirada] [hotmart] [silver]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "WJG7gAlLHgYD4677qug9",
+              "name": "[van] [des] [dvm-e001-0325] [alunos ativos] [compra expirada] [hotmart] [vip]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "4MPqITxs2laJLrBuQ3O3",
+              "name": "[van] [des] dvm - ed001 - 032025 - compra aprovada - go explosion - silver",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "9RjtQLRmialsctNelgMp",
+              "name": "[van] [des] dvm - ed001 - 032025 - compra aprovada - go explosion - vip",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "BQvCebjWUw8UK6Azrp6L",
+              "name": "[van][des][dvm-e001-0325][alunos ativos][compra aprovada][hotmart][silver]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "NN2hM7v932nvZOMkQ2of",
+              "name": "[wsoo] [join] [groups] [opt-in]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "z9s05lY5JK1qBvgZ4ajy",
+              "name": "abandono_desafio_jan25",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "ywD2YbGZINhdwfGYwV1m",
+              "name": "alunos [closer de elite] - hotmart",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "sSSytMbdEPptyM3rTHBM",
+              "name": "alunos [fábrica de treinadores persuasivos]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "hcxHz2eNXpz1WiTLeixU",
+              "name": "alunos [treinamento closer de elite]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "vd2ZkLo7ye7fzVwZkWyA",
+              "name": "alunos fv1",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "uLbBB1mV672QEZOHAF7B",
+              "name": "alunos-antigos-como-vender-por-wpp-2h",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "7wgG7Wd7rfLpskHH8h29",
+              "name": "alunos-closer-de-elite-geral",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "64xtxlqsClyQN8KoUH9E",
+              "name": "alunos-fabrica-de-treinadores",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "icyUgv9RRK78JfX57ms6",
+              "name": "alunos-fabrica-de-treinadores-t4",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "cnADH5RxbayWPNZkDYdk",
+              "name": "alunos-fabrica-de-treinadores-t5",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "nN8eLRxq5cVEr7UHn6NF",
+              "name": "alunos-fv-brasília",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "R0TbkH88zRqZd4tqsKEF",
+              "name": "alunos-fv-total",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "ARrowoaMi6ZFIMgMm4yi",
+              "name": "alunos-fábrica-de-treinadores-t1",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "h5SlDHPALeJwdX0qkYey",
+              "name": "alunos-fábrica-de-treinadores-t3",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "1HPS6eeoagpXtoxX9sNZ",
+              "name": "alunos-masterclass10x-fevereiro",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "eB6ZaJQvpV1FaP36DL36",
+              "name": "alunos-mentoria-black-diamond",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "hTkBcVuVusYANVb9v5F0",
+              "name": "alunos-treinamento-closer-de-elite",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "CWzUitFJUSi18Ccj3wAW",
+              "name": "alunos-treinamento-closer-de-elite-t1",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "S71gBPCzYvxtTev7ItcE",
+              "name": "alunosfv1",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Gti5sciEqSdKvw9UIcrX",
+              "name": "aplicacao-fast",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "D4MkbvExmMekyyj9SGr4",
+              "name": "aryela-closer",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "lmOvRx94YIVy17XTxt1t",
+              "name": "atividade-recente",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Dhdlt1Nu0dBCD1Ymz6aV",
+              "name": "avw-compra-aprovada",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Rtg1DucRp29TWA8JHVdH",
+              "name": "avw-compra-cancelada-naoaprovada",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "8u8bWhxTXxojIn4HOFjN",
+              "name": "avw-compra-reembolsada",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "LBwgBhNZ0irCB4sxcF03",
+              "name": "bave - no show",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "ueUWtflbygzp7wtJC2S5",
+              "name": "bave - second day",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "IS3fuOOKpEk1kYm5wMfE",
+              "name": "bave - todos",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "pIth3M4cxErqe90jCm9Z",
+              "name": "certificate-275-definir-quem-o-cliente-comprador-compulsivo-desse-mercado-1701474627003",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "5kjOSs8VRqmPXOGpb63a",
+              "name": "compra geral - dvm 03/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "yqIUMzrzjSK82m8c2B4G",
+              "name": "compra-aprovada-closer-de-elite-webinário",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "j0Q0KEnGhitJMF4Rlnjz",
+              "name": "compra-aprovada-como-vender-por-wpp",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "qSi8inJAO6LO03tMENLN",
+              "name": "compra-aprovada-evento-fvm",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "ZKHRr3hrTnsV9bXBOxIU",
+              "name": "compra-aprovada-fábrica-de-treinadores",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "gtTiXWq7zQjpH9efRw9s",
+              "name": "compra-cancelada-closer-de-elite-webinário",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "UicHEUpiZkawPKufXP4T",
+              "name": "compra-cancelada-como-vender-por-wpp",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "NcRtLVoVTMobEyhREL6N",
+              "name": "compra-cancelada-fábrica-de-treinadores",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Gx3Lp1243q0HHfty8R7J",
+              "name": "compradores fast geral",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "d6b1x1z4G67t7xg7DQuv",
+              "name": "compradores fast gral",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "VK2nsq5Kfit9ScL8fiuk",
+              "name": "compradores totais - desafio",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "jKkXM50GNHg15HQheVbM",
+              "name": "compradores-vip: 7-12-24",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "OT1qYXIDQoxdgR5Ip5Pt",
+              "name": "comprou desafio venda mais",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "vRrtm2vlAmQEXHPfglHB",
+              "name": "comprou produto (17/10)",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "hAlqyYXuWcbjyIQRhFeT",
+              "name": "comprou--februaryevelyn cdr",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "WtR1mXkw0xhh6e6sXpEo",
+              "name": "comprou-1º programa de implementação de funil de desafio",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "D7pYqKQmL5MN8tok9hbp",
+              "name": "comprou-1º programa de implementação de funil de desafio-7/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "ehN1x3w5Nx3HrLFLg40T",
+              "name": "comprou-1º programa de implementação de funil de desafio-8/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "EnJs5Ro5lz8oQ6BenAQ3",
+              "name": "comprou-1º programa de implementação de funil de desafio-may",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "gJHvnC64UY0ZffwW3v5G",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "EmONqV3dB0rQcxdHDHvC",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil - recorrência",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "YUyQu1anKarOHyM1wuSe",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil - recorrência-1/9/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "jONFM1t4vC6tI0iMgTnd",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil - recorrência-12/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "YNUNxDMF8rpvplO0TfQv",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil - recorrência-13/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "eqnclqo7rykKVIdv6RXV",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil - recorrência-13/7/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "ged5hfBIyh6i8QUDUqD3",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil - recorrência-14/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "jSH2ztIZgYzBAxwyMQ1S",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil - recorrência-14/7/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "s1wTAwloCYrePCAA0vx8",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil - recorrência-19/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "yUuH9JgjNj0eYABdc3rY",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil - recorrência-19/8/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "2MIyYMotzgI5BeYP52Tf",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil - recorrência-2/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "ff2BGOYc1cZ9vHB03Y9d",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil - recorrência-22/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "rEVR2w2kdBedFKX5eQKp",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil - recorrência-25/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "ElWo4lAYOfBt1rOuijSM",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil - recorrência-25/7/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "rgrXvWlSPnTJh3SNkplJ",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil - recorrência-27/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "bhDxnDACHKhJ7BLlWZ3n",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil - recorrência-28/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "JW2ufI4vtpUmIHIGYq7n",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil - recorrência-28/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "XHONFwfgOA8UKbTgbijm",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil - recorrência-30/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "s6YF5LJW4XXA6S8cp0Ax",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil - recorrência-31/7/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "n3oaZvhjKIQz0A8ZoHSH",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil - recorrência-8/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "cXd8LX9Y1AL0SEuDKZ5R",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil - recorrência-8/7/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "XbVTMNNxAh6iw5CnHKW4",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil - recorrência-9/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "AakVDqn2phnKq9huFhzj",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil - recorrência-9/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "ddl31OHMKadPIX9bEXvQ",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil - recorrência-9/7/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "kIIr6dNp3PKd28yVWga2",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil - recorrência-9/8/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "mDozPhB2og4pvvU748pI",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil - recorrência-august",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "rewh3SwsjpGAw2IqLi8M",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil - recorrência-july",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "S1Y1BOFpQ2cAP3GpRpX3",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil - recorrência-june",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "hfLyNScbSG2NxB62e4oH",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil - recorrência-may",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "nXZz7DnyU5oA2hnYrZYB",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil - recorrência-september",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "rsCVubVFp9TPusqWhLCS",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil-10/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "IUcSivXdQGIZuZCla6Qy",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil-11/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "zEFTgP5FJEDO9IzWmzwr",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil-12/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "tfzDbE4kMq5oFCU6GQNY",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil-13/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "SRpZi0q6cxgBVn6dcDd6",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil-14/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "zxNKZxZBkbnetbb1zzJG",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil-15/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "7lrYNZWNEXwdMmZXtqqO",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil-16/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Xt0tSXWIzcHjqd28T7KH",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil-17/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "H2iaavn46tWt3qWmYnLE",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil-19/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "faBHSPa0nmxe4l9pJHKD",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil-25/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "NmNi3S6lVoXTD4u9LEw4",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil-26/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "PqM4cAHpXdXIZmgGH01L",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil-28/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "9FUPuYC4juzAQyltSfqX",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil-29/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "840jOGisQ3WZ2FQYJmAN",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil-8/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "DTuUJqb54iJxTcCcRfKe",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil-9/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "rGSOViKFzFkJnj4f6C8w",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil-june",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "44PJlmhm5wcp6zjNy1g7",
+              "name": "comprou-1º programa de treinamento e implementação de funil de desafios do brasil-may",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "8PVqv8tISrgJP8tpixnb",
+              "name": "comprou-27k em rec 7x",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "UTAzjs1SH3vo8gHZaqmI",
+              "name": "comprou-27k em rec 7x-20/2/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "2YdKTsh1Vh9Cq41SRlxi",
+              "name": "comprou-27k em rec 7x-february",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "1pc2R3VQs9SzIrUqnt8k",
+              "name": "comprou-bave",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "ozNd72VWv3d3YS2Ildy5",
+              "name": "comprou-bave-13/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "TQLWxWYDJKdgXSxn24bK",
+              "name": "comprou-bave-14/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "lnfTTtQ4nKD3Pe0FtBId",
+              "name": "comprou-bave-19/2/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "fyXjjjkIej8NSxfnaRx6",
+              "name": "comprou-bave-19/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "JLhZzOyLXV6Q9O2RqzuT",
+              "name": "comprou-bave-20/2/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "k3u0sRPaiRfKs52fFtcm",
+              "name": "comprou-bave-20/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "XDzVWSGlaJqAetFOdScf",
+              "name": "comprou-bave-21/2/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "rK8L08DJHDuKw1U4wY8V",
+              "name": "comprou-bave-21/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "eeBZ96J6divyVRTqkJY6",
+              "name": "comprou-bave-23/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Pik8JZWyNYATDk1CFXg6",
+              "name": "comprou-bave-24/2/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "cO9GKKmoQTCfT2OqUmt5",
+              "name": "comprou-bave-25/2/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "PdaR42hY1SByXNFcsDPn",
+              "name": "comprou-bave-28/2/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "MubgMLFG0z7YZGvfXyge",
+              "name": "comprou-bave-5/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "HORM5qiMXagIiCvouARH",
+              "name": "comprou-bave-february",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "beSNuaNDeUS8cJZae9Qq",
+              "name": "comprou-bave-march",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "LIkj9Z4e8ukGA86MY1kA",
+              "name": "comprou-cdr - funil de desafio",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "OYzOOur2yLRJFAPxygB6",
+              "name": "comprou-cdr - funil de desafio recorrência",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "FkDS1b3mM8aT4OylnxUl",
+              "name": "comprou-cdr - funil de desafio recorrência-18/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "w19r1xYi2cxpqT9F0fs1",
+              "name": "comprou-cdr - funil de desafio recorrência-19/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "FXJ3akMLnXutnc0hFSQ2",
+              "name": "comprou-cdr - funil de desafio recorrência-21/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Ea0iBsvb6qSn1T98kXkm",
+              "name": "comprou-cdr - funil de desafio recorrência-24/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "a5aw0tVKKqhcP5n3F9W2",
+              "name": "comprou-cdr - funil de desafio recorrência-24/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "TeqAn4cJ9J9cWe0v8aHl",
+              "name": "comprou-cdr - funil de desafio recorrência-25/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "TyWXc8HS7W4l6nkvPTBL",
+              "name": "comprou-cdr - funil de desafio recorrência-30/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "NUnZfZeoAZiSUH90sX9A",
+              "name": "comprou-cdr - funil de desafio recorrência-31/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Qbq4pWkFADyowszgZWVg",
+              "name": "comprou-cdr - funil de desafio recorrência-8/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "rwpwjYqyX1RYqW3j586V",
+              "name": "comprou-cdr - funil de desafio recorrência-april",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "SFUIjKyzCxNP6WuTckB0",
+              "name": "comprou-cdr - funil de desafio recorrência-march",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "OGQSSDLkS4tLPQ0On3AV",
+              "name": "comprou-cdr - funil de desafio recorrência-may",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "HMg5iuSfRcNFlmQMUDiz",
+              "name": "comprou-cdr - funil de desafio-1/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "C7gERqYTbGWNxKuxK8Lr",
+              "name": "comprou-cdr - funil de desafio-11/2/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "gcXb4FrttafaLhHyhNWv",
+              "name": "comprou-cdr - funil de desafio-14/2/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "qJnU7pu1XmiyXMPXyxfG",
+              "name": "comprou-cdr - funil de desafio-18/2/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "SLB9RlM7FkPtyySGn0Pl",
+              "name": "comprou-cdr - funil de desafio-2/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "46zhav7GpmGQ1DEXDOcW",
+              "name": "comprou-cdr - funil de desafio-27/2/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "1Pb03QhBb1QRXVNjJmda",
+              "name": "comprou-cdr - funil de desafio-28/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "ovN9rS8cTsacr2rsc3S1",
+              "name": "comprou-cdr - funil de desafio-6/2/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "263dCK92NNI2hBA2SQY7",
+              "name": "comprou-cdr - funil de desafio-7/2/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "LGs85azqdG99zIxbjd9g",
+              "name": "comprou-cdr - funil de desafio-7/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "h0PpLgYqrzBVRFPK9vr4",
+              "name": "comprou-cdr - funil de desafio-february",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Rlxbsn5tP2JJaXIZMu84",
+              "name": "comprou-cdr - funil de desafio-march",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "t8nwLSr56NRa812Xag62",
+              "name": "comprou-cdr-jan25",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "PpH6Svm40jFE5iNtocRY",
+              "name": "comprou-como montar equipes comerciais de alta performance",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "dwvVB7k1A3BjH7xYTnPD",
+              "name": "comprou-como montar equipes comerciais de alta performance-1/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "BicJCb49RWaV4yUC82zX",
+              "name": "comprou-como montar equipes comerciais de alta performance-1/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "KhyGz4VWkdwIGUyek3bI",
+              "name": "comprou-como montar equipes comerciais de alta performance-10/7/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "AKoJqicVuhgkA9v2ctR6",
+              "name": "comprou-como montar equipes comerciais de alta performance-2/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "6aJLKdFFHr01LhPIVpem",
+              "name": "comprou-como montar equipes comerciais de alta performance-23/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "XN0rvAR7bvMhJ6eIrneq",
+              "name": "comprou-como montar equipes comerciais de alta performance-24/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "tj4TRt7oug5TRxmxXTFx",
+              "name": "comprou-como montar equipes comerciais de alta performance-25/2/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "cBvazprBn0w4AhuNddba",
+              "name": "comprou-como montar equipes comerciais de alta performance-25/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "P4XqEyBTgnQU4FV9JIGJ",
+              "name": "comprou-como montar equipes comerciais de alta performance-26/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "DwZyqydHkZ6WgCESDW7x",
+              "name": "comprou-como montar equipes comerciais de alta performance-28/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "qiQR79eoLLqnRb8aRCIv",
+              "name": "comprou-como montar equipes comerciais de alta performance-29/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "GYSFNsDicQJyvVLS144E",
+              "name": "comprou-como montar equipes comerciais de alta performance-29/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "xKYNmX9r3ZwnhiHCRndd",
+              "name": "comprou-como montar equipes comerciais de alta performance-3/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "7IpO2ajWYAci8p8zQuHB",
+              "name": "comprou-como montar equipes comerciais de alta performance-30/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "rdSfLLx8GCkOPTUHv8hg",
+              "name": "comprou-como montar equipes comerciais de alta performance-4/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "lNEardF0pkeMUjnQv80X",
+              "name": "comprou-como montar equipes comerciais de alta performance-5/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "dWNS9nwEhMfqdcjIFilj",
+              "name": "comprou-como montar equipes comerciais de alta performance-6/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "lqdVkzyzeUX9KCjpKRPG",
+              "name": "comprou-como montar equipes comerciais de alta performance-april",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "bmMaucW1Mjwmkv4jlsiW",
+              "name": "comprou-como montar equipes comerciais de alta performance-february",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "T2NfP2a5fg0Y0Lbcoxd1",
+              "name": "comprou-como montar equipes comerciais de alta performance-july",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "29jjOG3kiVDOjeeYZjtl",
+              "name": "comprou-como montar equipes comerciais de alta performance-may",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "zGN8hVtjwvf0TBiiRdaz",
+              "name": "comprou-como vender por whatsapp",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "zcBFUzoLpz9FhlGTIivY",
+              "name": "comprou-como vender por whatsapp-1/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "KWheK5POhxY35KNUSxCa",
+              "name": "comprou-como vender por whatsapp-10/7/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "EQie1ConNf3EyIVYlCHh",
+              "name": "comprou-como vender por whatsapp-12/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "mx8iPEarxqHwZoBtDu3O",
+              "name": "comprou-como vender por whatsapp-13/2/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "BCIs3jbMQK0cFnDaiY8g",
+              "name": "comprou-como vender por whatsapp-15/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "8QUbFIDXPmJyYDYsWKtg",
+              "name": "comprou-como vender por whatsapp-15/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Ck4PkdkDOsCE2N98Gefr",
+              "name": "comprou-como vender por whatsapp-16/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "hfDnB0aVCroSfwnGGNUp",
+              "name": "comprou-como vender por whatsapp-16/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "7OrhneH6CLPFmS56y2eB",
+              "name": "comprou-como vender por whatsapp-17/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "rAkajWTswsktpOeyc1tf",
+              "name": "comprou-como vender por whatsapp-19/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "A9Bw1Tkho8arCzgU75gL",
+              "name": "comprou-como vender por whatsapp-2/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "NvkI3617LExok8T0ClHe",
+              "name": "comprou-como vender por whatsapp-2/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "fQAYYRoUAKzdPStPfQpg",
+              "name": "comprou-como vender por whatsapp-21/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "RyzPy8cFGgHRHD2gpb4n",
+              "name": "comprou-como vender por whatsapp-23/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "RQZCcwsH324yVTI186Xa",
+              "name": "comprou-como vender por whatsapp-23/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Ua8VNYAoRG5ij2bDC2la",
+              "name": "comprou-como vender por whatsapp-24/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "8cftp74Wqps8mwyPgmHl",
+              "name": "comprou-como vender por whatsapp-25/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "XnmhIVAiOLg1b9KHHK2u",
+              "name": "comprou-como vender por whatsapp-26/2/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "dEHEa9fzaNmbk2Xl7PiD",
+              "name": "comprou-como vender por whatsapp-26/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Anmd6fm9oYYavw33ORmx",
+              "name": "comprou-como vender por whatsapp-27/2/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "MBxgBjo2WwhpDVp6rF6t",
+              "name": "comprou-como vender por whatsapp-27/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "6ePpesR1v5RP4yJkRbMM",
+              "name": "comprou-como vender por whatsapp-28/2/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "PTxQmBPaT3yolWz1FGCb",
+              "name": "comprou-como vender por whatsapp-28/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "IIZjHZXa9Oe2Rc458jRu",
+              "name": "comprou-como vender por whatsapp-28/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "166YqPJ76qd60FwWp3Qf",
+              "name": "comprou-como vender por whatsapp-29/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "J8bR5PH4UILymJVXPzGi",
+              "name": "comprou-como vender por whatsapp-3/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "1hJjdneZuo9ZS3ZEbcmx",
+              "name": "comprou-como vender por whatsapp-30/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "vFEA9N1zR3gvvGrbYdFZ",
+              "name": "comprou-como vender por whatsapp-4/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "UK3ssxI9qqIHC2nKFOS6",
+              "name": "comprou-como vender por whatsapp-5/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "zKnf4b5yOfQCWHTu3ryN",
+              "name": "comprou-como vender por whatsapp-5/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "rLkGTI7j5jUn0hkS6pld",
+              "name": "comprou-como vender por whatsapp-6/2/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "rHhfSZQREsvh6eXxCBqX",
+              "name": "comprou-como vender por whatsapp-6/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "pJjM3gOs8s4S8vjY71lS",
+              "name": "comprou-como vender por whatsapp-6/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "sUAHbpHkseuUKKjwkBHP",
+              "name": "comprou-como vender por whatsapp-7/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "yBHyvf0NPe4bPq9UZ9Qs",
+              "name": "comprou-como vender por whatsapp-7/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Zh6LhxasikfBbbF8YxxD",
+              "name": "comprou-como vender por whatsapp-8/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "jYR3dlQ80DhX0XrX9uE9",
+              "name": "comprou-como vender por whatsapp-april",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Ac9IU0AQCtg7X8GMNDex",
+              "name": "comprou-como vender por whatsapp-february",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "3jGx7ixKPm8KQZd11aGR",
+              "name": "comprou-como vender por whatsapp-july",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "iUsqcc57Jpt5xB6Llp17",
+              "name": "comprou-como vender por whatsapp-june",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "MKU5UE1VYUqkqA8rYt1H",
+              "name": "comprou-como vender por whatsapp-march",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "FJKnAsxgW6mPtg9WGmlR",
+              "name": "comprou-como vender por whatsapp-may",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "UMGp9PAm9waSnUSgLwQi",
+              "name": "comprou-desafio o código da riqueza online - silver",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "PRydacGNKA29o1iVeGM3",
+              "name": "comprou-desafio o código da riqueza online - silver-1/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "u1PLfZVDEKqeu6tFsyi4",
+              "name": "comprou-desafio o código da riqueza online - silver-10/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "kWMrP0jY07tcqKfA4Jr9",
+              "name": "comprou-desafio o código da riqueza online - silver-10/7/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "r44iqf0T7YoO22iM0jaS",
+              "name": "comprou-desafio o código da riqueza online - silver-16/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "8K5WgBata5DUgOad4aFf",
+              "name": "comprou-desafio o código da riqueza online - silver-17/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "caGIN6FEg9xXu9iEJ15G",
+              "name": "comprou-desafio o código da riqueza online - silver-18/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "s516e6yfXXojYMUwHCPk",
+              "name": "comprou-desafio o código da riqueza online - silver-19/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "MlYBwIiUTsOICmbjderj",
+              "name": "comprou-desafio o código da riqueza online - silver-2/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "kDPtvYnHA2B6pYEFbMKU",
+              "name": "comprou-desafio o código da riqueza online - silver-20/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "kAQ0aYoqwRnKicZnxL3e",
+              "name": "comprou-desafio o código da riqueza online - silver-21/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "QysZb0Er1rzej1lSofHs",
+              "name": "comprou-desafio o código da riqueza online - silver-22/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "sYxY2pqvSF1eCDk2FED6",
+              "name": "comprou-desafio o código da riqueza online - silver-23/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "1F4Bbn9LKou9Nf0Cnz9m",
+              "name": "comprou-desafio o código da riqueza online - silver-24/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "kAbHtU7338wjl2Y0hFtp",
+              "name": "comprou-desafio o código da riqueza online - silver-25/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "XRYsZsRzWvITgf94iy7u",
+              "name": "comprou-desafio o código da riqueza online - silver-26/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "7FSTYNJQJSUzYKxHiYO2",
+              "name": "comprou-desafio o código da riqueza online - silver-27/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "AcWVnfnSn9fttmzzF0pP",
+              "name": "comprou-desafio o código da riqueza online - silver-28/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "XPLAeAl2AD8Zqd42AyKC",
+              "name": "comprou-desafio o código da riqueza online - silver-29/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "d5OcFvOEWtLWacHZCD4v",
+              "name": "comprou-desafio o código da riqueza online - silver-3/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "NJRaSlcjgz4jSFx752if",
+              "name": "comprou-desafio o código da riqueza online - silver-30/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Hd4vWT8U9uQQcWTGnp1O",
+              "name": "comprou-desafio o código da riqueza online - silver-4/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "C1ZprcrbloZMLwB3ybKr",
+              "name": "comprou-desafio o código da riqueza online - silver-5/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "BW5739mD2wteb6YVAPWR",
+              "name": "comprou-desafio o código da riqueza online - silver-6/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "kuZOt0mARmUphJUrdQoG",
+              "name": "comprou-desafio o código da riqueza online - silver-april",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "FhLegSjA7HkFkJgfIcK5",
+              "name": "comprou-desafio o código da riqueza online - silver-july",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "diqdcH92HdNic395Kwuf",
+              "name": "comprou-desafio o código da riqueza online - silver-may",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "bsPohfdVwhBoux6DXumi",
+              "name": "comprou-desafio venda mais - silver",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "cL6eyuB0QO9x2MNMuzeX",
+              "name": "comprou-desafio venda mais - silver-1/7/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "pYBrNQ9jVUe81930welm",
+              "name": "comprou-desafio venda mais - silver-10/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "tQkiFuwlaJi0hBuJZcC2",
+              "name": "comprou-desafio venda mais - silver-10/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "5UlzYMFZpG6z7hoWVj3f",
+              "name": "comprou-desafio venda mais - silver-11/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "ZjfbcNapdM08YFImDCPa",
+              "name": "comprou-desafio venda mais - silver-11/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "V5LO3PGx7pElyg68amLw",
+              "name": "comprou-desafio venda mais - silver-12/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "bgJH1mxfKt0dWhweDwpe",
+              "name": "comprou-desafio venda mais - silver-12/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "MPy22mRWMOdSew7gSVJM",
+              "name": "comprou-desafio venda mais - silver-13/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "tZMbz7Wemyzyxx3tH6wt",
+              "name": "comprou-desafio venda mais - silver-13/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "AHaRY4gbSTy7FSIMEEha",
+              "name": "comprou-desafio venda mais - silver-14/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "ihBx9AS6vdCcBRhwRUDp",
+              "name": "comprou-desafio venda mais - silver-14/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "F2omcIbkHihXhrA3WhBx",
+              "name": "comprou-desafio venda mais - silver-15/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "7C5cYZVGF2X06XJpWhTz",
+              "name": "comprou-desafio venda mais - silver-15/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "d2bV94SprnJsomHUoSPY",
+              "name": "comprou-desafio venda mais - silver-16/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Cmiz0eVEY9kT6dlv7pih",
+              "name": "comprou-desafio venda mais - silver-16/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "CAPgi75N6ZMps0MK8C7e",
+              "name": "comprou-desafio venda mais - silver-17/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "BCx4EpRKSrHTJNUtCRig",
+              "name": "comprou-desafio venda mais - silver-17/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "B5BKaW0FKuoXoAkAE5UE",
+              "name": "comprou-desafio venda mais - silver-18/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "S5qTkVxwGfScb22UXUNP",
+              "name": "comprou-desafio venda mais - silver-18/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "1SmcwsQLcwjcP3cVPiAq",
+              "name": "comprou-desafio venda mais - silver-19/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "ChgiSFgxfxwT9KFqcoZ5",
+              "name": "comprou-desafio venda mais - silver-19/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "3iCfC56elw0BrsNVniNB",
+              "name": "comprou-desafio venda mais - silver-2/7/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "69MlsBWIX2HXs8PHO4gI",
+              "name": "comprou-desafio venda mais - silver-20/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "aO7ygzo8kEL85OaNz1bc",
+              "name": "comprou-desafio venda mais - silver-20/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "2fWls9x0de5hXLJHDPDF",
+              "name": "comprou-desafio venda mais - silver-21/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "KOAMVIi4ffGf77CdCSWG",
+              "name": "comprou-desafio venda mais - silver-21/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "kfyPfmWwpqsSMBTBWY1H",
+              "name": "comprou-desafio venda mais - silver-22/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "jUUt7mRpcjkAJKseUlg4",
+              "name": "comprou-desafio venda mais - silver-22/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "uF6OEWQIaw8nbp5k5t8w",
+              "name": "comprou-desafio venda mais - silver-23/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "cvA7XDlaj5gxmJyMZkcY",
+              "name": "comprou-desafio venda mais - silver-23/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "9xAUe1Jw8iEMIgzrJtg1",
+              "name": "comprou-desafio venda mais - silver-24/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "kDluC9z03n5EWH5y3o13",
+              "name": "comprou-desafio venda mais - silver-24/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "pOFqQblcsc1cd922BlcW",
+              "name": "comprou-desafio venda mais - silver-25/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "vmeSE5xIxlE5L6FYqAm1",
+              "name": "comprou-desafio venda mais - silver-25/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "fnWv6lreKCRdXr6vqpcy",
+              "name": "comprou-desafio venda mais - silver-26/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Cb145KGH9cx8gz2h3OKD",
+              "name": "comprou-desafio venda mais - silver-26/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "L3DIpAw6cVBXrUKKQ8vq",
+              "name": "comprou-desafio venda mais - silver-27/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "JG5LaLrCaTBAj6WzgWI4",
+              "name": "comprou-desafio venda mais - silver-27/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "HXPtcLDHqDpGQf0ZYSvc",
+              "name": "comprou-desafio venda mais - silver-28/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "QY6q1Z1XGV2v3sWmKkV8",
+              "name": "comprou-desafio venda mais - silver-29/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "h31D2jU0kkkQ6AYokdiB",
+              "name": "comprou-desafio venda mais - silver-3/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "59ZAWk9cuz3dfl82JcO5",
+              "name": "comprou-desafio venda mais - silver-30/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "pD9UKOsTBUZwF0icXYkt",
+              "name": "comprou-desafio venda mais - silver-4/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "haAR9fTXzIBaPkNIdS47",
+              "name": "comprou-desafio venda mais - silver-4/7/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "KyySVAubJKMgWYAhUmbe",
+              "name": "comprou-desafio venda mais - silver-5/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "reNRKQscnBwsy5aFnJ6w",
+              "name": "comprou-desafio venda mais - silver-7/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "RBCNhyHjnwSIHQ9u1Ivr",
+              "name": "comprou-desafio venda mais - silver-7/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "rJu2kSpXlPwKZIfepRoW",
+              "name": "comprou-desafio venda mais - silver-8/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "03heMi9PNAaI8pxcy6kz",
+              "name": "comprou-desafio venda mais - silver-8/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "IVU4NRCylbl3QEa5fkWl",
+              "name": "comprou-desafio venda mais - silver-9/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "6kFUOkgxuKzYZxKvFK9M",
+              "name": "comprou-desafio venda mais - silver-july",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Sq27PylMElfCWBcKEvqf",
+              "name": "comprou-desafio venda mais - silver-june",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Bc7kCBMEU8ygHVHGqxAN",
+              "name": "comprou-desafio venda mais - silver-march",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "W6UupoSo0yqtocpjk3lC",
+              "name": "comprou-evelyn cdr",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "FSyqcMHDtDURazo6qdyr",
+              "name": "comprou-evelyn cdr-6/2/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Z81ImKUppEONqPCFQV4l",
+              "name": "comprou-experiência vip - desafio venda mais",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "bSqZA0wrkG7x9qa3amY0",
+              "name": "comprou-experiência vip - desafio venda mais-1/7/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "xBm7so3d9hpEaT1FLvQa",
+              "name": "comprou-experiência vip - desafio venda mais-10/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "OqF4aqXjFreBajfWbgWa",
+              "name": "comprou-experiência vip - desafio venda mais-10/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "cuKb2gYKuoPuTQtBbxKJ",
+              "name": "comprou-experiência vip - desafio venda mais-11/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "uDCPPG5xRrTNERMIc65x",
+              "name": "comprou-experiência vip - desafio venda mais-11/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "3eM4xb2Bx4dSpYeMoGPU",
+              "name": "comprou-experiência vip - desafio venda mais-12/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "76e6kCczt6b4s97rI9vg",
+              "name": "comprou-experiência vip - desafio venda mais-13/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "GEQJAps5MAQ2x9DD24Jv",
+              "name": "comprou-experiência vip - desafio venda mais-13/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "0beVfwVgrrpR5Cw0J8ws",
+              "name": "comprou-experiência vip - desafio venda mais-14/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "gsVYmctBFOt3BLpm3Edn",
+              "name": "comprou-experiência vip - desafio venda mais-15/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "JWm5qjzkZBchqGZHaD7q",
+              "name": "comprou-experiência vip - desafio venda mais-15/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "d9uwQP61QN7mTirFGgHM",
+              "name": "comprou-experiência vip - desafio venda mais-16/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "poAo9AcHNLwVwRZg522t",
+              "name": "comprou-experiência vip - desafio venda mais-16/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Hz8pgN2yWClYhUtRULvt",
+              "name": "comprou-experiência vip - desafio venda mais-17/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "itHrUrfCdMsXAUO2wgLY",
+              "name": "comprou-experiência vip - desafio venda mais-18/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "sKWc0dHD93yzMAhoocCs",
+              "name": "comprou-experiência vip - desafio venda mais-19/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "55PElph1pGF8pFOsG5ml",
+              "name": "comprou-experiência vip - desafio venda mais-19/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "KMIhtc5V6rpgqRd8NWl3",
+              "name": "comprou-experiência vip - desafio venda mais-2/7/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "hJZjAqaM0jdoRcPG0vSQ",
+              "name": "comprou-experiência vip - desafio venda mais-20/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "occA25AgUWgQGEbdK7qR",
+              "name": "comprou-experiência vip - desafio venda mais-20/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "nQDDve5CZeY3ACaAHlEv",
+              "name": "comprou-experiência vip - desafio venda mais-21/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "pspB3j8FqVq6DMQgaOMK",
+              "name": "comprou-experiência vip - desafio venda mais-21/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "S3PcVWHGHbE2ZyCgNJ4b",
+              "name": "comprou-experiência vip - desafio venda mais-22/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "P4L702yB0xlEiwH25vRS",
+              "name": "comprou-experiência vip - desafio venda mais-22/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "pjPiAANL5oc8T4I9tpw3",
+              "name": "comprou-experiência vip - desafio venda mais-23/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "1de4FzvtdsK6mH32ZwMF",
+              "name": "comprou-experiência vip - desafio venda mais-23/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "xz0DEnpRjGf7lXpdjlUM",
+              "name": "comprou-experiência vip - desafio venda mais-24/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "NrG7MzOKwiR1QyMUPivw",
+              "name": "comprou-experiência vip - desafio venda mais-24/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "kY4U5T06IOUzJLvuaic2",
+              "name": "comprou-experiência vip - desafio venda mais-25/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "nCA0rzg08CTMy0pfpND3",
+              "name": "comprou-experiência vip - desafio venda mais-25/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "GMJvGuIjVSaVtObxMcv1",
+              "name": "comprou-experiência vip - desafio venda mais-26/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "MzEMNO2RKGEO1JOKcLrn",
+              "name": "comprou-experiência vip - desafio venda mais-26/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "cDY6iatoO7fvkJH7JWdj",
+              "name": "comprou-experiência vip - desafio venda mais-27/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "xZDx2LPbGoYQz2UqBKPt",
+              "name": "comprou-experiência vip - desafio venda mais-27/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "MxqcdNnKpvhADSVibz3w",
+              "name": "comprou-experiência vip - desafio venda mais-28/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "WOx5oiKbOIuGlIasJ6NM",
+              "name": "comprou-experiência vip - desafio venda mais-29/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Jf7Z6PFoQKRudclbrE3h",
+              "name": "comprou-experiência vip - desafio venda mais-3/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Z2Y7yC8vzGCz0aB5ndt8",
+              "name": "comprou-experiência vip - desafio venda mais-30/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "eW1Q9XV26i9wvyNhBTmX",
+              "name": "comprou-experiência vip - desafio venda mais-4/7/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Iwobx5egtD05kyS1qXpI",
+              "name": "comprou-experiência vip - desafio venda mais-7/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "4AWyUkABDQVC4UNF7WZ0",
+              "name": "comprou-experiência vip - desafio venda mais-7/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "RvdJQrFAUVBomQ7zglkk",
+              "name": "comprou-experiência vip - desafio venda mais-8/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Ld8vT8rlZUi86F2bbJ0f",
+              "name": "comprou-experiência vip - desafio venda mais-9/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "RpnSDZeVmNc3D7YJNgzW",
+              "name": "comprou-experiência vip - desafio venda mais-april",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "pP5lG74RmiRHOiBYvHKO",
+              "name": "comprou-experiência vip - desafio venda mais-july",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "2eT0ig6vMWHFLrUFyZy1",
+              "name": "comprou-experiência vip - desafio venda mais-june",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "3KqyjxcmLgnI0ZbatjCz",
+              "name": "comprou-experiência vip - desafio venda mais-march",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Yao6VMxFzFKRmW11j42W",
+              "name": "comprou-experiência vip: desafio o código da riqueza online",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "5rD6DWntL9BkJksIqSk5",
+              "name": "comprou-experiência vip: desafio o código da riqueza online-1/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "4R3L8yEaeFhgx3SShnlV",
+              "name": "comprou-experiência vip: desafio o código da riqueza online-10/7/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Et1zqIaAlhRwXWmJ2hzU",
+              "name": "comprou-experiência vip: desafio o código da riqueza online-11/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "zssH9R5eSXhN6Sld5uX4",
+              "name": "comprou-experiência vip: desafio o código da riqueza online-12/2/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Yb9HZib71i9mNbdCnISh",
+              "name": "comprou-experiência vip: desafio o código da riqueza online-12/8/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "ydlbcUvQuZAMCrghuzDj",
+              "name": "comprou-experiência vip: desafio o código da riqueza online-16/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "gAP2PE05vY8sIjkAmTh6",
+              "name": "comprou-experiência vip: desafio o código da riqueza online-17/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Z7QfvpQEIFSGB84tiUiI",
+              "name": "comprou-experiência vip: desafio o código da riqueza online-18/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "UDMeUpQvrIbqWv7zSirI",
+              "name": "comprou-experiência vip: desafio o código da riqueza online-19/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "S226HQBk4Feb3UKbDJXZ",
+              "name": "comprou-experiência vip: desafio o código da riqueza online-2/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "NjGSSkGsby48xMARMhEX",
+              "name": "comprou-experiência vip: desafio o código da riqueza online-20/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "h16bweg0uwpNkbXvBZDN",
+              "name": "comprou-experiência vip: desafio o código da riqueza online-21/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "zvrC6IhQnrYP7w0M4epE",
+              "name": "comprou-experiência vip: desafio o código da riqueza online-21/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "oNMrDuL6qeIRgp54H3cE",
+              "name": "comprou-experiência vip: desafio o código da riqueza online-22/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Ofg1VfZLeXKu4FUAE0b4",
+              "name": "comprou-experiência vip: desafio o código da riqueza online-23/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "3skF1I2fwVUlRtO31wCl",
+              "name": "comprou-experiência vip: desafio o código da riqueza online-23/7/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "yAb7BaFvgU057ajE1yFc",
+              "name": "comprou-experiência vip: desafio o código da riqueza online-24/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "eZ25h6Q4nIll2N40E0rZ",
+              "name": "comprou-experiência vip: desafio o código da riqueza online-25/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Wi7imfkW358LUvgtcgll",
+              "name": "comprou-experiência vip: desafio o código da riqueza online-26/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "jIgAQRRXmpx74u6xQPtG",
+              "name": "comprou-experiência vip: desafio o código da riqueza online-27/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "q00fqfwBY4qFcHTb9F9U",
+              "name": "comprou-experiência vip: desafio o código da riqueza online-28/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "CG8fMLlV7Fsdan4rG5An",
+              "name": "comprou-experiência vip: desafio o código da riqueza online-29/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "HuLc6nI8hWVKnmp3JDkQ",
+              "name": "comprou-experiência vip: desafio o código da riqueza online-29/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "O8CSCDpNtw1luXdKRGJU",
+              "name": "comprou-experiência vip: desafio o código da riqueza online-3/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "3dr2bKbk9ltnXuSrFGhu",
+              "name": "comprou-experiência vip: desafio o código da riqueza online-30/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "BJ0SXMEFa1EBOA9j8I8V",
+              "name": "comprou-experiência vip: desafio o código da riqueza online-4/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "mG47VaLBn32XXb7K5raH",
+              "name": "comprou-experiência vip: desafio o código da riqueza online-5/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "3gJBwNbYZnQevsS36ySi",
+              "name": "comprou-experiência vip: desafio o código da riqueza online-6/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "gCSvMYzLkioLrAf6YRKt",
+              "name": "comprou-experiência vip: desafio o código da riqueza online-7/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "cFAzYk8SZqyrNvWSo9kA",
+              "name": "comprou-experiência vip: desafio o código da riqueza online-8/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "yUwlUW3Racwec8bdvIqJ",
+              "name": "comprou-experiência vip: desafio o código da riqueza online-april",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "yRN9r1S50a1gCQTClb1g",
+              "name": "comprou-experiência vip: desafio o código da riqueza online-august",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "ibg3ZMkfH8u9bjwjjQ5q",
+              "name": "comprou-experiência vip: desafio o código da riqueza online-february",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Xx3QxCDsXjNkAWdMKG3Y",
+              "name": "comprou-experiência vip: desafio o código da riqueza online-july",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Ut2yvhUn8bUvZYKqd1hF",
+              "name": "comprou-experiência vip: desafio o código da riqueza online-june",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "bSqFpOc91pnNjtAMOZbf",
+              "name": "comprou-experiência vip: desafio o código da riqueza online-may",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "m0WpkJWZSuNXMKGw99IK",
+              "name": "comprou-f.a.s.t - funnel advanced | strategic trainning",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "xmknDJdYx9QjOZvniYDQ",
+              "name": "comprou-f.a.s.t - funnel advanced | strategic trainning - recorrência",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "urYMOIzjCTJfqnMkrphK",
+              "name": "comprou-f.a.s.t - funnel advanced | strategic trainning - recorrência-12/8/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "ZwVK0mFXUWJ2ekNXpdto",
+              "name": "comprou-f.a.s.t - funnel advanced | strategic trainning - recorrência-13/2/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "kkgkDQjYNBjqUoXH7DKd",
+              "name": "comprou-f.a.s.t - funnel advanced | strategic trainning - recorrência-13/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Pe9zsOyDibV51KLvbnkj",
+              "name": "comprou-f.a.s.t - funnel advanced | strategic trainning - recorrência-17/2/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "F9kNmtmQFs7qx8ma7CQD",
+              "name": "comprou-f.a.s.t - funnel advanced | strategic trainning - recorrência-18/2/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "VXWosAx3OKdD5VEKOpxf",
+              "name": "comprou-f.a.s.t - funnel advanced | strategic trainning - recorrência-19/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "utTzezEIIsoQnmsZDotA",
+              "name": "comprou-f.a.s.t - funnel advanced | strategic trainning - recorrência-19/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "m5By1CjRf9ETKadQ8E95",
+              "name": "comprou-f.a.s.t - funnel advanced | strategic trainning - recorrência-19/8/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "EkgvHtLdH19yqFsjYm9p",
+              "name": "comprou-f.a.s.t - funnel advanced | strategic trainning - recorrência-22/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "FoSzTEZypv2HtO3yEyk6",
+              "name": "comprou-f.a.s.t - funnel advanced | strategic trainning - recorrência-23/2/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Ja5YRhX14jEMITogS5JQ",
+              "name": "comprou-f.a.s.t - funnel advanced | strategic trainning - recorrência-23/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "1g8mdJQWmY0mz4jAG0k8",
+              "name": "comprou-f.a.s.t - funnel advanced | strategic trainning - recorrência-24/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "pXpfdwRJb7vZlC5Z4Yvu",
+              "name": "comprou-f.a.s.t - funnel advanced | strategic trainning - recorrência-24/7/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Vy2XbIWajkyNveRVJRqz",
+              "name": "comprou-f.a.s.t - funnel advanced | strategic trainning - recorrência-28/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "ytIN7l5MHL4oPousdyU4",
+              "name": "comprou-f.a.s.t - funnel advanced | strategic trainning - recorrência-30/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "jvy8sHonL9dFW89rM59s",
+              "name": "comprou-f.a.s.t - funnel advanced | strategic trainning - recorrência-4/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "UPG7QN0Vl3qmqwwCdU0x",
+              "name": "comprou-f.a.s.t - funnel advanced | strategic trainning - recorrência-4/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "tKrlGK80ONRY0XnAGvsU",
+              "name": "comprou-f.a.s.t - funnel advanced | strategic trainning - recorrência-4/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "lKt5UPpbdtGs0sQaWn2h",
+              "name": "comprou-f.a.s.t - funnel advanced | strategic trainning - recorrência-4/7/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "djTOmog13lpGU6gF2cNs",
+              "name": "comprou-f.a.s.t - funnel advanced | strategic trainning - recorrência-4/9/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "5Q9cJ2pTKpHifaijIjum",
+              "name": "comprou-f.a.s.t - funnel advanced | strategic trainning - recorrência-april",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "diuJqceXHpQpBy9CAmsw",
+              "name": "comprou-f.a.s.t - funnel advanced | strategic trainning - recorrência-august",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "oiFE4Qo7FSox5aSZ5AAw",
+              "name": "comprou-f.a.s.t - funnel advanced | strategic trainning - recorrência-february",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "m7S54qzyh9u1INsptmRa",
+              "name": "comprou-f.a.s.t - funnel advanced | strategic trainning - recorrência-july",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "9q69eLHlNxKQaBfoyjk2",
+              "name": "comprou-f.a.s.t - funnel advanced | strategic trainning - recorrência-june",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "SRpaEnspFFTzelVx3sWu",
+              "name": "comprou-f.a.s.t - funnel advanced | strategic trainning - recorrência-march",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "c6RWPaaVR1lVxxN2Dfbb",
+              "name": "comprou-f.a.s.t - funnel advanced | strategic trainning - recorrência-may",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "bQZzTmMzwaCts2VfifJj",
+              "name": "comprou-f.a.s.t - funnel advanced | strategic trainning - recorrência-september",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "fT3DQSzVRcuCI4z4CPKm",
+              "name": "comprou-f.a.s.t - funnel advanced | strategic trainning-22/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "7lGHYxgo7DQWoyYXhnIP",
+              "name": "comprou-f.a.s.t - funnel advanced | strategic trainning-23/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Iq43EaSnT8Xdwoytk64L",
+              "name": "comprou-f.a.s.t - funnel advanced | strategic trainning-25/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Od83rCGap0o5x2OG7k5c",
+              "name": "comprou-f.a.s.t - funnel advanced | strategic trainning-march",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "qidGSrJXpYhHP1perd02",
+              "name": "comprou-fast michelle",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "18g4zMYvhCFTY4sbWpN2",
+              "name": "comprou-fast michelle-19/2/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "YkN5BcikAWTNh6dfjyQu",
+              "name": "comprou-fast michelle-february",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "FxKJF0HBB0cPJv6WwwzS",
+              "name": "comprou-fast taima",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "MglpR4O3Sh6p2zTQfRdq",
+              "name": "comprou-fast taima-13/2/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "6HboFo1JgimjEJf1CGIS",
+              "name": "comprou-fast taima-february",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "ce4dycd0V4nAlI2lliwV",
+              "name": "comprou-fast taimã",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "MOC80q3kmqusUbkz3KUF",
+              "name": "comprou-fast taimã-13/2/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "MkEjuXS9WZgFo99Bh0r5",
+              "name": "comprou-fast taimã-february",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "V21POMOxjzdnXGD1jLNa",
+              "name": "comprou-fast-marcos oliveira",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "US0J7xgRO3cxULOGQk8b",
+              "name": "comprou-fast-marcos oliveira-20/2/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "BHvVAFSk1fyhehRfyvBR",
+              "name": "comprou-fast-marcos oliveira-february",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "SiiGqQ1j2iKju3t4ZtXx",
+              "name": "comprou-formação closer de elite",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "qWaXonT8WCJDqZDE4ff4",
+              "name": "comprou-formação closer de elite assinatura",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "n3Ck6wpMcAA0Kv369N0V",
+              "name": "comprou-formação closer de elite assinatura-2/8/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "NPaqOOKZPQfFTL3RnCyz",
+              "name": "comprou-formação closer de elite assinatura-3/7/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "BOseZRxAoAvPR1EU5JJp",
+              "name": "comprou-formação closer de elite assinatura-4/7/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "PrI8iR4hOUpvg5nof2rq",
+              "name": "comprou-formação closer de elite assinatura-august",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "oFDHpOK8qF6Wm0x6MsoL",
+              "name": "comprou-formação closer de elite assinatura-july",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "v5PNaPx4vOSckhR6MQCJ",
+              "name": "comprou-formação closer de elite high ticket",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "WtK4EEb9ZhisBX0PuE2l",
+              "name": "comprou-formação closer de elite high ticket-25/2/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "lfqvFDlZNOnf2IX1ZK3W",
+              "name": "comprou-formação closer de elite high ticket-february",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "hWMayXwz04keMiCZ1rTE",
+              "name": "comprou-formação closer de elite-1/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "FcRMPmc0qph1r4r3Vwa2",
+              "name": "comprou-formação closer de elite-11/8/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "jENQj687AlsJl74sFRkk",
+              "name": "comprou-formação closer de elite-12/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "fLO58uSz630YBCzhLYzg",
+              "name": "comprou-formação closer de elite-15/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "yyn300ojxp353C5VmaqY",
+              "name": "comprou-formação closer de elite-16/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "dcD7p7pi7pO7uO0IiE4n",
+              "name": "comprou-formação closer de elite-2/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Ba0NjihQl6FWziXvth7w",
+              "name": "comprou-formação closer de elite-20/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "0Pe7c1jqECcWNYIphFTH",
+              "name": "comprou-formação closer de elite-27/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "FseQoXMhuqclRG5TAuLW",
+              "name": "comprou-formação closer de elite-28/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "dj4iuOla0Dmfw2qzD8sp",
+              "name": "comprou-formação closer de elite-3/7/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "fJAPdmHDl0bloF9r2mYY",
+              "name": "comprou-formação closer de elite-4/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "UgbZWrvVGYsuFjcuo1OZ",
+              "name": "comprou-formação closer de elite-4/7/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Yq5pd1wd0WmdUS4luBCr",
+              "name": "comprou-formação closer de elite-april",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "jW6ZHn1JEX9Jb6Fs765P",
+              "name": "comprou-formação closer de elite-august",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "11KC0okNccM4QmWodNEo",
+              "name": "comprou-formação closer de elite-july",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "OJxMv8WzVFdE9o7qYijs",
+              "name": "comprou-formação closer de elite-march",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "LRDTVVBxvaTQ88PUNbRY",
+              "name": "comprou-formação closer de elite-may",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "8316FAusbjKLqWGX0TZf",
+              "name": "comprou-imersão advanced marketing - agosto de 2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Q30iiIQiDIPqcoXwXe1s",
+              "name": "comprou-imersão advanced marketing - agosto de 2025-5/8/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "sRqPLMuTsv339BjV72W1",
+              "name": "comprou-imersão advanced marketing - agosto de 2025-august",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "58uNskIS4CXiOHnSCRhF",
+              "name": "comprou-ingresso silver – desafio as 7 chaves da riqueza",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "CBXRgtXP7UQJiIjgJA5p",
+              "name": "comprou-pg veri cdr",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "SjD0BxLLxBEIIigmxLYI",
+              "name": "comprou-pg veri cdr-11/2/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "1s6M3XY59Ym0GxTnqOaT",
+              "name": "comprou-pg veri cdr-february",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "RX3AdF7TJVilJ9CjLj7Y",
+              "name": "comprou-produto test postback2",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "M3zI2nWsyyC0nOKgO2AW",
+              "name": "comprou-produto test postback2-6/2/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "c3gfE32LuwAohyybuMsn",
+              "name": "comprou-produto test postback2-february",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "6WyliMD3LG1z7L2IbFkH",
+              "name": "comprou-programa powerteam",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "6605SYMMtYDOwJrgzJrT",
+              "name": "comprou-programa powerteam-5/7/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "PAjl2ydANfL9fa10CjNS",
+              "name": "comprou-programa powerteam-july",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Kc7MhfQ6qBpBMl93TIcy",
+              "name": "comprou-seguro atualização cdr",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "3b8Qho8m7RtmcWvgZrjj",
+              "name": "comprou-seguro atualização cdr-10/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "nNS5Hnuf2SMiQCuX21vp",
+              "name": "comprou-seguro atualização cdr-17/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "NDX6jhtX9wfxekirSGpo",
+              "name": "comprou-seguro atualização cdr-17/7/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "XvbrFZwO7MK23cCAljBO",
+              "name": "comprou-seguro atualização cdr-17/8/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "eH9uRUTzuuGIbBiKAElb",
+              "name": "comprou-seguro atualização cdr-21/7/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "5kJoQN7zjY0lNDfv5CB9",
+              "name": "comprou-seguro atualização cdr-24/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "gwvMKBSbiXAWnHUmNyr3",
+              "name": "comprou-seguro atualização cdr-28/2/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "XzvO1W3uUoZ7PhYPwxzU",
+              "name": "comprou-seguro atualização cdr-30/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Mwsq8QLXUgjVu6joM38v",
+              "name": "comprou-seguro atualização cdr-30/4/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "YL4j6utWBv5xLT8uaSel",
+              "name": "comprou-seguro atualização cdr-30/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "EH2KkZSnTlHjQyD2Juiv",
+              "name": "comprou-seguro atualização cdr-30/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "ABUAYl3TNAUHK2WCGuba",
+              "name": "comprou-seguro atualização cdr-30/7/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "pBBov0cD3pcXFkiiaxFZ",
+              "name": "comprou-seguro atualização cdr-30/8/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "QTg6L14jQe7vEt71MNIH",
+              "name": "comprou-seguro atualização cdr-31/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "bpkYL5qy710q5oBpIf2w",
+              "name": "comprou-seguro atualização cdr-31/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "znV0uMRfwIWwb24oHat3",
+              "name": "comprou-seguro atualização cdr-6/2/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "5mzvJ0NtHwGLhgZOaBZc",
+              "name": "comprou-seguro atualização cdr-8/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "KGQQESERcYcl5YlVWSll",
+              "name": "comprou-seguro atualização cdr-9/5/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "hnSs46RedGtnNnDqstDj",
+              "name": "comprou-seguro atualização cdr-9/6/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "admSqgdNA5eyV5rIKJaL",
+              "name": "comprou-seguro atualização cdr-9/7/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "hy305sv4wQf1kc7fHhsG",
+              "name": "comprou-seguro atualização cdr-9/8/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "qSdW9sjzE1oAyafFrFiq",
+              "name": "comprou-seguro atualização cdr-april",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "a8HOTKZQGv8QxTMcNXmw",
+              "name": "comprou-seguro atualização cdr-august",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "GX2IgcJgB4Id6SLUrYQC",
+              "name": "comprou-seguro atualização cdr-february",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "7O50sIeZim4eFTHFE9Hz",
+              "name": "comprou-seguro atualização cdr-july",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Fhuy3I8HoZ9BtgVdaZw5",
+              "name": "comprou-seguro atualização cdr-june",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "VpSpkvoSaBNQ8EyU6AW8",
+              "name": "comprou-seguro atualização cdr-march",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "WlBe8khasyDKVYbKeGLN",
+              "name": "comprou-seguro atualização cdr-may",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "uM7xJkhT89C2ya4OMSHo",
+              "name": "comprou-social selling",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "ySMYlZWsIq5dJaN4mQFd",
+              "name": "comprou-social selling-27/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "ZcwWq1dpwxWKg1hfcl6m",
+              "name": "comprou-social selling-7/7/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "4LSEokjxo4fNr59Ydfhv",
+              "name": "comprou-social selling-july",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "HpnVssWnV3wLszFCo4p7",
+              "name": "comprou-social selling-march",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "cZKj97tbq0h6hyS28jdI",
+              "name": "comprou-venda pelo whatsapp",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "oD3nNhdKBphRRiT8Jm5j",
+              "name": "comprou-venda pelo whatsapp-28/2/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "oFksM39LiUkwL9syZNBe",
+              "name": "comprou-venda pelo whatsapp-3/3/2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "CaMVPVYdAe99EJDl40IE",
+              "name": "comprou-venda pelo whatsapp-february",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "QHPn0oOmmHR8BgHjZGoU",
+              "name": "comprou-venda pelo whatsapp-march",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "LvDhOyUQB0NMxaDOXIqS",
+              "name": "comprou: silver cdr-dez-24",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "OELBtKfuuJ81zjD60aee",
+              "name": "comprou_cdr_fast_jan_25",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "xaJb3TxTxZ6odUHKGWyS",
+              "name": "comprou_cdr_fast_jan_26",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "3FvfTuyeYXPOQ14MTaI8",
+              "name": "comprou_cdr_fast_jan_27",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "DS0ZaoGXPlHr9QvlVki1",
+              "name": "comprou_cdr_fast_jan_28",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "9ieRFMeQei0dhvPIa8Xv",
+              "name": "comprou_cdr_fast_jan_29",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "POaM0fe6ivNMI4Vk839R",
+              "name": "comprou_cdr_fast_jan_30",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "wiOM6GpEaZxpTOn4ViDm",
+              "name": "comprou_cdr_fast_jan_31",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "5yX7MBqIo9XoPPnPxvMq",
+              "name": "comprou_cdr_fast_jan_32",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "ItULBgeHF8W8zbVBBuLn",
+              "name": "comprou_cdr_fast_jan_33",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "lJ2Y3L5eCXnDcvATa4lE",
+              "name": "comprou_cdr_fast_jan_34",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "23YVqoQ4zEFuhDA60DSE",
+              "name": "comprou_cdr_fast_jan_35",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "K8B5ULcN5wNTRHUCdwaW",
+              "name": "comprou_cdr_fast_jan_36",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "9tFlDf0LvCE6nPm1ahbq",
+              "name": "comprou_cdr_fast_jan_37",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "KGGteBBuGO1782Px4dEL",
+              "name": "comprou_cdr_fast_jan_38",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "hUcpbSZDnCb0IKQFU9Uw",
+              "name": "comprou_cdr_fast_jan_39",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "k0mOHaHRY7uYdfhIOkoY",
+              "name": "comprou_cdr_fast_jan_40",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "46nlDhpiGEKAoOLEQnEQ",
+              "name": "comprou_cdr_fast_jan_41",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "UOlMzK6zSOcMXgexOxgQ",
+              "name": "comprou_cdr_fast_jan_42",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "ISwmCji5t0eG1lpSmQJq",
+              "name": "comprou_cdr_fast_jan_43",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "DZANaYgZY9TAEhjGAQi6",
+              "name": "comprou_cdr_fast_jan_44",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "V9yYbxRJbMe7I9oRyhQt",
+              "name": "comprou_cdr_fast_jan_45",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "FfgszF67ok5kF0VIrK5L",
+              "name": "comprou_cdr_fast_jan_46",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "qFXvfW5ee8DFWkrkIdIV",
+              "name": "comprou_cdr_fast_jan_47",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "2y3htJ1UuPlXcRVGmXJw",
+              "name": "comprou_cdr_fast_jan_48",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "fDIurzaftPImZT7vd3tK",
+              "name": "comprou_cdr_fast_jan_49",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "vpHKVUxz5VzJYrUSHOfz",
+              "name": "comprou_cdr_fast_jan_50",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "0Klk5uUxIKIMe1myXhJW",
+              "name": "comprou_cdr_fast_jan_51",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Z28wjVQ2vPPngIE1DSkd",
+              "name": "comprou_cdr_fast_jan_52",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "7FXhZ0YpE5KIX2ANg9sK",
+              "name": "comprou_cdr_fast_jan_53",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "5J7vLK5i0xIeJPgYTzOT",
+              "name": "comprou_cdr_fast_jan_54",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "9QwvaCtjsRdIU3XeR7wE",
+              "name": "comprou_cdr_fast_jan_55",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "tSsglxPVD1nfjnvKqI5J",
+              "name": "comprou_cdr_fast_jan_56",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "QMIX8hS6pDp0YEh8J9uw",
+              "name": "comprou_cdr_fast_jan_57",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "DFQ6kQeZl31DBxUlJZMd",
+              "name": "comprou_cdr_fast_jan_58",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "WJZIP5L4mpgOLkZj61ah",
+              "name": "comprou_cdr_fast_jan_59",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "HMMnmVl35GaTNKYTqKhd",
+              "name": "comprou_cdr_fast_jan_60",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "DmeNaPoFwNLcSwu4BJk9",
+              "name": "comprou_cdr_fast_jan_61",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "AnEfCBJJbZWl788B4JQT",
+              "name": "comprou_cdr_fast_jan_62",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "UCDVf7TGwcG77e0aDaNj",
+              "name": "comprou_cdr_fast_jan_63",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "SdHML6bilzRZ4UeTSJAw",
+              "name": "comprou_cdr_fast_jan_64",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "lh3Bt85FyfABRJXkElML",
+              "name": "comprou_cdr_fast_jan_65",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "6fyr7UaKJ3YYis0hul8S",
+              "name": "comprou_cdr_fast_jan_66",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "hZb1zGe2X74hEb4lsEkD",
+              "name": "comprou_cdr_fast_jan_67",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "2MbdERrtp5UE4zTqT6p4",
+              "name": "comprou_cdr_fast_jan_68",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "EX2cQrGkmuedUDJzoyhX",
+              "name": "comprou_cdr_fast_jan_69",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "3JsElk1NenlImf3drHCV",
+              "name": "comprou_cdr_fast_jan_70",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "mI5pAOr7zMQBNZdiJPn1",
+              "name": "comprou_cdr_fast_jan_71",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "SpfGiCnNg03T0332ODXf",
+              "name": "comprou_cdr_fast_jan_72",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "X36UggFlFLToHevsUHB7",
+              "name": "comprou_cdr_fast_jan_73",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "DOKAAO28sPf8rxFmAbSF",
+              "name": "comprou_cdr_fast_jan_74",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "lkCSBtyszPhnd4xsGaYn",
+              "name": "comprou_cdr_fast_jan_75",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "BXpDnik2wp4P7DPqq20i",
+              "name": "comprou_cdr_fast_jan_76",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "UU3Z2b98VLSW2xTL8yXM",
+              "name": "comprou_cdr_fast_jan_77",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "YIf1kSXx0iNSUqMn3uKJ",
+              "name": "comprou_cdr_fast_jan_78",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "TpdwxmkPutNjD8TL29Yu",
+              "name": "comprou_cdr_fast_jan_79",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "wA3DbM9pwZ2PiJ9XfaJt",
+              "name": "comprou_cdr_fast_jan_80",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "SjvVRtS7otR6M1QwRFYC",
+              "name": "comprou_cdr_fast_jan_81",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "kzXBuewbNCI9BPYoaPqE",
+              "name": "comprou_cdr_fast_jan_82",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "2ecNVxGfxdUFYqYhyzDi",
+              "name": "comprou_cdr_fast_jan_83",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "jFggHMMVKMHgAqbtPKDw",
+              "name": "comprou_cdr_fast_jan_84",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "PShdFLc0966ZJ1oP6Dnx",
+              "name": "comprou_cdr_fast_jan_85",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "TD4OpZQiRCUJhewFt0ZL",
+              "name": "comprou_cdr_fast_jan_86",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "j3aphrVwUhrFm3AmRZV8",
+              "name": "comprou_cdr_fast_jan_87",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "mwGVH8dYZBU0H3urqchZ",
+              "name": "comprou_cdr_fast_jan_88",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "JZv0RS8Q5FD6e1YvFxkN",
+              "name": "comprou_cdr_fast_jan_89",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "cuZKFnKnmWOSC4FMkcto",
+              "name": "comprou_cdr_fast_jan_90",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "1ZX8qsK2SJkkfFvoKh6o",
+              "name": "comprou_cdr_fast_jan_91",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "oJmcyZhQPvGGhkFzcy00",
+              "name": "comprou_cdr_fast_jan_92",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "YJGFd3vCdr6DqZG2pOth",
+              "name": "comprou_cdr_fast_jan_93",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "lbshk1EOzAQGAXVJiXW9",
+              "name": "comprou_cdr_fast_jan_94",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "oi6oD6hyK2nC6nGeHNNY",
+              "name": "comprou_cdr_fast_jan_95",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "3OU3yFa2BDoMAuKzyxeD",
+              "name": "comprou_cdr_fast_jan_96",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Sp7UJFACjZRSiqPRsJtL",
+              "name": "comprou_cdr_fast_jan_97",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "oh8mPQ0IOKKXGLy6QWsQ",
+              "name": "comprou_cdr_fast_jan_98",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "p4LSae0u0tNENoxLyaSz",
+              "name": "comprou_cdr_fast_jan_99",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "q6WTUlJNMgUb43mtQNKi",
+              "name": "comprou_ingresso_fv",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "iSivSYj2KPgYEYtq4VqK",
+              "name": "confirmados bave - 11_20 - página1",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "2IQ7kMg1ip44gLA0Mczu",
+              "name": "couldn't find caller name",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "1dCTNMBGmdWAfK2l7XR7",
+              "name": "cs-suporte-adicional",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "s8ZsLm2dTrr7TFzA08cg",
+              "name": "cvw-compra-cancelada-naoaprovada",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "9GV7RPhHPAdzxPE8vjap",
+              "name": "cvw-compra-reembolsada",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "XqLlgpqpS2CEhyTYBToS",
+              "name": "deoginis-closer",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "coIHM8OW22tYvc7tUphm",
+              "name": "desengajado",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "U9RUMhYqAmkqRHzk1nEp",
+              "name": "dvm_e002_0625_compradores_silver_e_vip",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Vm8Uzv2moESWzNNPHwgu",
+              "name": "engajado",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "YqRQXS5BzvevC8YVboqW",
+              "name": "enrollment-275-definir-quem-o-cliente-comprador-compulsivo-desse-mercado-1701474627003",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "W8QpRBu1bM4yAgu7b6Hw",
+              "name": "entrou na planilha de compras - cdr 052025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "SLFUyMNjmEjxLS5NN6ch",
+              "name": "entrou na planilha de compras - cdr 052025 - silver",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "A7YJP3pMXIro1HG6QfZS",
+              "name": "envio de teste",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "klknMReFi1lwhFN40AwX",
+              "name": "excluir",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "BV8BWhpSWkOKy7DkkrW0",
+              "name": "fabiana-comercial",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "lwwP5NexbGalfFBdff4m",
+              "name": "fabio",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "VrgHbbp6tPqYW0vhFYcA",
+              "name": "finish-275-definir-quem-o-cliente-comprador-compulsivo-desse-mercado-1701474627003",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "zTBf4gE6Jeg7zgjiKlvw",
+              "name": "imersão-abril-compraaprovada",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "vaew7GTP9uvMQbNSZTcP",
+              "name": "imersão-abril-compracancelada(saldo insuficiente)",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "hLTn5q9UsrcS3FZYrsVQ",
+              "name": "import bounced sendgrid 06/10",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "lb5IeSTQQE4LG0gaVoMD",
+              "name": "import compradores curso whatsapp 2024",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "kbX2uSBNEZzupPF1poCn",
+              "name": "import invalid emails sengrid 06/10",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "zSsVoXE3B9QkJyYKaway",
+              "name": "import spam report sendgrid 06/10",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "bN1OoDgf2RwBSmIc6IFJ",
+              "name": "inativo",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "2DU12ame2wG7zXWFsugP",
+              "name": "ingresso fv [gold]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "JBDsPJ0GD57K3KO334Q3",
+              "name": "ingresso fv [safira]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "30dgdNCretRRpbKvGzfo",
+              "name": "ingresso fv [silver]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Fdrta6KbSbMEZ5rSQ8az",
+              "name": "ingresso fv [vip]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "3JM6yuwnwFUdlbfjAAUS",
+              "name": "ingresso fv [webinar 22/06]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "li0meKE5wE3NhaipkXeh",
+              "name": "jullyana-closer",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "jqoackGxQJiMLM8DyRme",
+              "name": "larissa-comercial",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Y6vOyFBWAFShFZIOR5HP",
+              "name": "lorena-comercial",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Z8dE6T7lqj7tIowSautH",
+              "name": "masterclass-fv-compra",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "o6DNb3n2BTV0SO1aAaiq",
+              "name": "masterclass10x-fevereiro-compraaprovada",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "795BQQtPJeqZEv28pCBb",
+              "name": "name via lookup",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "4ijJR1PXt5yekp0WzcVc",
+              "name": "numero-deogenis",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "8nbMrYB8aMUJ7iJIOTQ8",
+              "name": "numero-queli",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "kgFIOL6ZsuEFKSDJVVSZ",
+              "name": "opt-out_disp_38",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "q2qRrP8voF0X7PqxzzEG",
+              "name": "optin: cdr - jan2025",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "GainNtNM9eZt8TiCwnWh",
+              "name": "out",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "kXfBaz1Yw1CRmJvDEZDL",
+              "name": "priscila-gerente",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "qpM0VvzWwRURuLpSHvRf",
+              "name": "re-import hotmart",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "4Khxe7XWGjx6pyUK9ziZ",
+              "name": "tag: [#bave] [broadcast] [aplicação] [clicked-link]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "sWDlXn79MDOpVktKMKTe",
+              "name": "tag: [#bave] [broadcast] [aviso] [clicked-link]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "e69321luC9oRr8LZciWu",
+              "name": "tag: [#bave] [broadcast] [cadê-você] [clicked-link]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Bx7WecoKNIvLFnOTtHuj",
+              "name": "tag: [#bave] [broadcast] [check-in] [clicked-link]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "jbkZW9HJDDYoiye3J08h",
+              "name": "tag: [#bave] [broadcast] [comercial] [clicked-link]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "b9mLP322pJkCtAZA42ym",
+              "name": "tag: [#bave] [broadcast] [confirmação] [clicked-link]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "6wmNhhvtrxkh9Sj3utHK",
+              "name": "tag: [#bave] [broadcast] [no-show] [clicked-link]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "zmONDawK3KLPTqIee5qn",
+              "name": "tag: [#bave] [broadcast] [participants] [clicked-link]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "UhPGSy7khrAOJZAZuQUI",
+              "name": "tag: [#bave] [broadcast] [pesquisa] [clicked-link]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "knuZ6UajlIN06Bmjo0LN",
+              "name": "tag: [#bave] [broadcast] [vendas] [clicked-link]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "PPHaaMC5IXICN9Ki1y25",
+              "name": "tag: [#cdr] [broadcast] [convite] [clicked-link]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Fi7PHEWDail3dtKDjvwO",
+              "name": "tag: [#cdr] [broadcast] [vendas] [clicked-link]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "lS421yesqmdYwRQ52k8K",
+              "name": "tag: [#fast] [broadcast] [aplicação] [opt-in]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "078PYpUOjrRhAmKmdbIE",
+              "name": "tag: [#fast] [broadcast] [convite] [clicked-link]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "NdGRVHWFZvUOqe3zw2xU",
+              "name": "tag: [#fast] [e-mail] [aplicação] [clicked-link]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "d8VhSJHLMjgn1RachAFx",
+              "name": "tag: [#fst] [broadcast] [convite]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "vYebe1Sg0UlEhXPhX09F",
+              "name": "tag: [#fst] [broadcast] [convite] [clicked-link]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Mbt2UWXBc9jUbgGp9O6s",
+              "name": "tag: [#wmr] [broadcast] [é-hoje] [clicked-link]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "yVATq2sXTVSnD0Wi1v5O",
+              "name": "tag: [#wmr] [broadcast] [é-hoje] [opt-in]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "LuVe3SMAbdpsWwEdOoxd",
+              "name": "tag: [#wmr] [broadcast] [é-hoje] [opt-out]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "Mkn65s2B5620vhIMwi9q",
+              "name": "tag: [#wsoo] [broadcast] [invite] [clicked-link]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "qtvkmnJJTqjFlRorhD3q",
+              "name": "tag: [#wsoo] [broadcast] [é-hoje] [opt-out]",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "3E2mexkCufTTdqhipHob",
+              "name": "teste paloma",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            },
+            {
+              "id": "9325XQWqsLjEERww5YAO",
+              "name": "xxyz",
+              "locationId": "GrB2kAoc7ZO681juhPJ1"
+            }
+          ],
+          "traceId": "c47a4020-fc92-4daa-b799-f007a1e86281"
+        },
+        "pairedItem": {
+          "item": 0
         }
       }
     ]
@@ -4210,6 +8794,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-03-06T22:47:39.000Z",
-  "versionId": "83f5914d-e125-4bcf-a737-00711bbb4a53"
+  "updatedAt": "2026-03-14T23:35:08.443Z",
+  "versionId": "70078b7a-205a-407a-82ec-2b158e2756dd"
 }
