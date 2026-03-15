@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-03-14T00:19:43.000Z",
-    "createdAt": "2026-03-14T00:19:42.471Z",
-    "versionId": "66468b4a-c57f-4d5f-8cee-3c8d6196e7ea",
+    "updatedAt": "2026-03-14T23:17:19.000Z",
+    "createdAt": "2026-03-14T23:16:42.111Z",
+    "versionId": "92c5bc16-aec0-45b4-ac8a-c3f6d51e2373",
     "workflowId": "WLDMvH0zERsGkGBc",
     "nodes": [
       {
@@ -1358,7 +1358,8 @@
             "options": {
               "caseSensitive": true,
               "leftValue": "",
-              "typeValidation": "strict"
+              "typeValidation": "strict",
+              "version": 1
             },
             "conditions": [
               {
@@ -2638,7 +2639,7 @@
         "type": "n8n-nodes-base.rabbitmqTrigger",
         "typeVersion": 1,
         "position": [
-          -2656,
+          -2640,
           240
         ],
         "credentials": {
@@ -3839,11 +3840,11 @@
       }
     },
     "authors": "Automagic Bots",
-    "name": "Version 66468b4a",
+    "name": "Version 92c5bc16",
     "description": "",
     "autosaved": true
   },
-  "activeVersionId": "66468b4a-c57f-4d5f-8cee-3c8d6196e7ea",
+  "activeVersionId": "92c5bc16-aec0-45b4-ac8a-c3f6d51e2373",
   "connections": {
     "pesquisa_variavel_n8n_fluxo_users": {
       "main": [
@@ -6168,7 +6169,8 @@
           "options": {
             "caseSensitive": true,
             "leftValue": "",
-            "typeValidation": "strict"
+            "typeValidation": "strict",
+            "version": 1
           },
           "conditions": [
             {
@@ -7448,7 +7450,7 @@
       "type": "n8n-nodes-base.rabbitmqTrigger",
       "typeVersion": 1,
       "position": [
-        -2656,
+        -2640,
         240
       ],
       "credentials": {
@@ -7689,8 +7691,8 @@
       {
         "json": {
           "fields": {
-            "consumerTag": "amq.ctag-YgcS4-JXkG-q6DjVCSYkUw",
-            "deliveryTag": 1,
+            "consumerTag": "amq.ctag-Xht1JT0A8iAuWOWlncS-yA",
+            "deliveryTag": 24,
             "redelivered": false,
             "exchange": "",
             "routingKey": "Fila de Ações de Funis"
@@ -7699,31 +7701,31 @@
             "headers": {}
           },
           "content": {
-            "nome": "Otavio",
-            "sobrenome": "Baptista da Costa",
-            "nome_completo": "Otavio Baptista da Costa",
-            "email": "obcosta@gmail.com",
-            "telefone": "5511991272357",
-            "cpf": "144.244.378-25",
-            "utm_source": "ig",
-            "utm_campaign": "social",
-            "utm_term": "instagram",
-            "utm_medium": "link_in_bio",
-            "utm_content": "bio",
+            "nome": "Robert",
+            "sobrenome": "Augusto",
+            "nome_completo": "Robert Augusto",
+            "email": "robertaugustocontato@gmail.com",
+            "telefone": "5511971509703",
+            "cpf": "228.099.318-01",
+            "utm_source": "facebook",
+            "utm_campaign": "cpc",
+            "utm_term": "[A7CDR] VENDAS ",
+            "utm_medium": " ESCALA ",
+            "utm_content": " CBO ",
             "form_id": "ogl1dc1y",
             "form_name": "",
             "value": 37.9,
-            "transaction_id": "HP1912030247",
-            "net_value": 37.04,
+            "transaction_id": "HP0494647887",
+            "net_value": 37.05,
             "trans_status": "Compra Aprovada",
-            "payment_method": "Cartão de Crédito",
+            "payment_method": "PIX",
             "refund_date": "",
-            "event_date": "2026-03-08 16:50:41",
-            "payment_date": "2026-03-08 16:50:30",
+            "event_date": "2026-03-14 16:46:27",
+            "payment_date": "2026-03-14 16:46:16",
             "product_type": "Cobrança única",
             "product_id": 6238670,
             "product_name": "Ingresso Silver – Desafio As 7 Chaves da Riqueza",
-            "warranty_date": "2026-03-14",
+            "warranty_date": "2026-03-20",
             "offer_code": "ogl1dc1y",
             "discount_coupon": "",
             "street": "",
@@ -7735,24 +7737,24 @@
             "address_state": "",
             "zipcode": "",
             "affiliate_value": "",
-            "gateway_comission": 0.86,
-            "billet_barcode": "",
+            "gateway_comission": 0.85,
+            "billet_barcode": "00020101021226740014br.gov.bcb.pix2552pix.ebanx.com/qr/v2/917BB6062EA4795D9ECC8642288BE0715204000053039865802BR5911Ebanx LTDA.6008CURITIBA62070503***63047D7E",
             "currency": "BRL",
-            "bankslip": "",
+            "bankslip": "https://customer.ebanx.com/pix/checkout?hash=69b5bacbb1d3740c7a5209e16aed08bff20f76627c32bcaf",
             "recurrenceExpirationDate": "",
             "cancelledDate": "",
             "cnpj": "",
             "installments": 1,
-            "billetExpirationDate": "",
+            "billetExpirationDate": "2026-03-16",
             "recurrenceNumber": "",
             "src": "",
-            "sck": "ig|social|instagram|link_in_bio|bio|/optin-a/",
+            "sck": "facebook|cpc|[A7CDR] VENDAS | ESCALA | CBO | PAG-B | VID | PIXEL DE FABIO | ADV+ 180D - 14/03/26|120244497487330672|ig_Instagram_Feed|/",
             "refusalReason": "",
             "subscriberCode": "",
             "planName": "",
             "planId": "",
-            "eventId": "7ebb8555-efd2-47cf-8782-06df29f0fe4f",
-            "tipo_forms": "Cadastro",
+            "eventId": "f674e899-764c-4f91-a73d-65203a7184be",
+            "tipo_forms": "Checkout",
             "id_funil": "1",
             "id_forms": "1"
           }
@@ -7777,6 +7779,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-03-14T00:19:42.470Z",
-  "versionId": "66468b4a-c57f-4d5f-8cee-3c8d6196e7ea"
+  "updatedAt": "2026-03-14T23:16:42.111Z",
+  "versionId": "92c5bc16-aec0-45b4-ac8a-c3f6d51e2373"
 }
