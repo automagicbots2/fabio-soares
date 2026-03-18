@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-03-14T23:34:56.000Z",
-    "createdAt": "2026-03-14T23:26:40.066Z",
-    "versionId": "97f912ea-479c-437e-90ca-7a99b4077f6f",
+    "updatedAt": "2026-03-17T23:04:28.000Z",
+    "createdAt": "2026-03-14T23:35:08.444Z",
+    "versionId": "70078b7a-205a-407a-82ec-2b158e2756dd",
     "workflowId": "GipwLV2Oi93sRdr8",
     "nodes": [
       {
@@ -1581,8 +1581,8 @@
         "type": "n8n-nodes-base.httpRequest",
         "typeVersion": 4.2,
         "position": [
-          -1360,
-          320
+          -1616,
+          128
         ],
         "id": "1d23654a-6c24-460b-9fcd-65b10ddc0e17",
         "name": "get_tags",
@@ -2149,11 +2149,11 @@
       }
     },
     "authors": "Automagic Bots",
-    "name": "Version 97f912ea",
+    "name": "Version 70078b7a",
     "description": "",
     "autosaved": true
   },
-  "activeVersionId": "97f912ea-479c-437e-90ca-7a99b4077f6f",
+  "activeVersionId": "70078b7a-205a-407a-82ec-2b158e2756dd",
   "connections": {
     "pesquisa_stage_pipeline4": {
       "main": [
