@@ -1,0 +1,526 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "cria_atualiza_user1": {
+      "main": [
+        [
+          {
+            "node": "dados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "pesquisa_variavel_n8n_fluxo_users1": {
+      "main": [
+        [
+          {
+            "node": "cria_atualiza_user1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "campaign.metrics": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "pesquisa_variavel_n8n_fluxo_users1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "sendflow_event": {
+      "main": [
+        [
+          {
+            "node": "fila_trata_dados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "formata_dados": {
+      "main": [
+        [
+          {
+            "node": "campaign.metrics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "chega_da_fila": {
+      "main": [
+        [
+          {
+            "node": "formata_dados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "dados": {
+      "main": [
+        [
+          {
+            "node": "fila_acoes_funis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-03-17T14:23:40.976Z",
+  "id": "f6isYyiuxe98FQ6A",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "⌚[7CDR-MAR26][DevZapp] - Evento de Grupo",
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "93103cc7-1870-4962-bb01-59462196b4de",
+              "name": "telefone",
+              "value": "={{ $node[\"formata_dados\"].json[\"whatsapp\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "866136ed-0c9b-4e19-8a6f-1e716d408e4c",
+              "name": "grupo",
+              "value": "={{ $node[\"formata_dados\"].json[\"groupId\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "a676f67c-1200-4cde-bd7c-8ac1d93d6220",
+              "name": "evento",
+              "value": "={{ $node[\"formata_dados\"].json[\"event\"].replace('group.updated.members.added','add').replace('group.updated.members.removed','remove') }}",
+              "type": "string"
+            },
+            {
+              "id": "6d91c48a-fe3b-4e0a-8c1b-cd082cdc3e79",
+              "name": "id_funil",
+              "value": "1",
+              "type": "string"
+            },
+            {
+              "id": "533bf61d-a8c8-4df7-9036-7bfd8b942a9d",
+              "name": "tipo_forms",
+              "value": "={{ $node[\"formata_dados\"].json[\"event\"].replace('group.updated.members.added','Entrada no Grupo').replace('group.updated.members.removed','Saída do Grupo') }}",
+              "type": "string"
+            },
+            {
+              "id": "2de10083-f2e0-4c9d-8fe3-42aa5c7c24e3",
+              "name": "email",
+              "value": "={{ $node[\"cria_atualiza_user1\"].json[\"email\"] || \"\" }}",
+              "type": "string"
+            },
+            {
+              "id": "26f5828e-97cf-4687-9425-2a66862f38a5",
+              "name": "id_user",
+              "value": "={{ $node[\"cria_atualiza_user1\"].json[\"id\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "5ad861de-ee3a-4813-987b-ac3b317aeb18",
+              "name": "nome",
+              "value": "={{ $node[\"cria_atualiza_user1\"].json[\"nome\"] + ($node[\"cria_atualiza_user1\"].json[\"sobrenome\"] ? ' ' + $node[\"cria_atualiza_user1\"].json[\"sobrenome\"] : '') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "718a3e58-0842-48cd-86b3-46c8a518be77",
+      "name": "dados",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        432,
+        176
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $node[\"pesquisa_variavel_n8n_fluxo_users1\"].json[\"valor_variavel\"] }}",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "nome",
+              "value": "={{ ($node[\"formata_dados\"].json[\"fname\"] || \"\").replace(/[^a-zA-Z0-9\\s]/g, \"\") }}"
+            },
+            {
+              "name": "sobrenome",
+              "value": "={{ ($node[\"formata_dados\"].json[\"lname\"] || \"\").replace(/[^a-zA-Z0-9\\s]/g, \"\") }}"
+            },
+            {
+              "name": "email",
+              "value": "={{ $node[\"formata_dados\"].json[\"email\"] || \"\" }}"
+            },
+            {
+              "name": "telefone",
+              "value": "={{ $node[\"formata_dados\"].json[\"whatsapp\"] || \"\" }}"
+            },
+            {
+              "name": "instagram",
+              "value": "={{ $node[\"formata_dados\"].json[\"instagram\"] || \"\" }}"
+            },
+            {
+              "name": "cpf",
+              "value": "={{ $node[\"formata_dados\"].json[\"cpf\"] || \"\" }}"
+            },
+            {
+              "name": "cnpj",
+              "value": "={{ $node[\"formata_dados\"].json[\"cnpj\"] || \"\" }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        224,
+        176
+      ],
+      "id": "74d156be-a198-4c59-87e9-087a305ca5e7",
+      "name": "cria_atualiza_user1"
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "table": {
+          "__rl": true,
+          "value": "variaveis_globais_n8n",
+          "mode": "list",
+          "cachedResultName": "variaveis_globais_n8n"
+        },
+        "where": {
+          "values": [
+            {
+              "column": "nome_variavel",
+              "value": "URL do Fluxo de Verificação de Users"
+            }
+          ]
+        },
+        "combineConditions": "OR",
+        "options": {}
+      },
+      "id": "426a1849-aad4-4410-936b-77c598138268",
+      "name": "pesquisa_variavel_n8n_fluxo_users1",
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.4,
+      "position": [
+        0,
+        176
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "mySql": {
+          "id": "SMjhjBLFctIENkHc",
+          "name": "[MySQL] - Fabio Soares"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "7917d5e0-01af-4ea2-b856-bed41e0b6db8",
+              "leftValue": "={{ $node[\"formata_dados\"].json[\"event\"] }}",
+              "rightValue": "campaign.metrics",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "5b2f15ca-1cf1-4970-815f-b9403b2ab379",
+      "name": "campaign.metrics",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -224,
+        176
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "36229e12-b5b9-4494-bff3-b3144b2bd726",
+      "name": "No Operation, do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "c5l-mar26-evento-grupo",
+        "options": {}
+      },
+      "id": "8306dee9-7ec9-424e-8a37-d54f3e2f78c9",
+      "name": "sendflow_event",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -656,
+        432
+      ],
+      "webhookId": "695c68eb-537b-4179-b637-f769ec92c094"
+    },
+    {
+      "parameters": {
+        "jsCode": "  const whatsappInput = $node[\"chega_da_fila\"].json[\"content\"][\"body\"][\"data\"][\"number\"]  || \"\";\n  const groupId = $node[\"chega_da_fila\"].json[\"content\"][\"body\"][\"data\"][\"groupName\"];\n  const event = $node[\"chega_da_fila\"].json[\"content\"][\"body\"][\"event\"];\nconst result = {\n    whatsapp: whatsappInput,\n    groupId: groupId,\n    event: event\n};\n\n// Aqui estamos ajustando a estrutura do retorno para se adequar ao que o n8n espera\nreturn [{ json: result }];\n"
+      },
+      "id": "21e5eb78-4e19-4a4d-a3c4-56e3d3f549d8",
+      "name": "formata_dados",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -432,
+        176
+      ]
+    },
+    {
+      "parameters": {
+        "queue": "[C5L MAR26] - Entrou no Grupo",
+        "options": {
+          "arguments": {
+            "argument": [
+              {
+                "key": "x-queue-type",
+                "value": "quorum"
+              }
+            ]
+          },
+          "acknowledge": "executionFinishesSuccessfully",
+          "jsonParseBody": "={{ true }}",
+          "parallelMessages": 20
+        }
+      },
+      "id": "6ca32264-122c-4f58-914f-1de83ac7e416",
+      "name": "chega_da_fila",
+      "type": "n8n-nodes-base.rabbitmqTrigger",
+      "typeVersion": 1,
+      "position": [
+        -656,
+        176
+      ],
+      "credentials": {
+        "rabbitmq": {
+          "id": "eKnFCoTy5bVlhIj3",
+          "name": "[RabbitMQ] - Fabio Soares"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "queue": "[7CDR MAR26] - Entrou no Grupo",
+        "options": {
+          "arguments": {
+            "argument": [
+              {
+                "key": "x-queue-type",
+                "value": "quorum"
+              }
+            ]
+          },
+          "durable": true
+        }
+      },
+      "id": "b289a7b2-f78e-4629-a8de-16b6f36da7ba",
+      "name": "fila_trata_dados",
+      "type": "n8n-nodes-base.rabbitmq",
+      "typeVersion": 1,
+      "position": [
+        -432,
+        432
+      ],
+      "credentials": {
+        "rabbitmq": {
+          "id": "eKnFCoTy5bVlhIj3",
+          "name": "[RabbitMQ] - Fabio Soares"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "queue": "Fila de Ações de Funis",
+        "options": {
+          "arguments": {
+            "argument": [
+              {
+                "key": "x-queue-type",
+                "value": "quorum"
+              }
+            ]
+          },
+          "durable": true
+        }
+      },
+      "id": "2a21b7c0-5046-44c1-8f75-57def0272d2c",
+      "name": "fila_acoes_funis",
+      "type": "n8n-nodes-base.rabbitmq",
+      "typeVersion": 1,
+      "position": [
+        656,
+        176
+      ],
+      "credentials": {
+        "rabbitmq": {
+          "id": "eKnFCoTy5bVlhIj3",
+          "name": "[RabbitMQ] - Fabio Soares"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "sendflow_event": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n-n8n.zkgge2.easypanel.host",
+            "user-agent": "axios/1.7.7",
+            "content-length": "342",
+            "accept": "application/json, text/plain, */*",
+            "accept-encoding": "gzip, compress, deflate, br",
+            "content-type": "application/json",
+            "sendtok": "4B87C4E9FF2D8258C55263431D0A61524F03B4DEE1",
+            "x-forwarded-for": "168.138.146.104",
+            "x-forwarded-host": "n8n-n8n.zkgge2.easypanel.host",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "c81dc40e1dde",
+            "x-real-ip": "168.138.146.104"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "id": "lm5IEqi5hNnXYoIF3r7N",
+            "event": "group.updated.members.added",
+            "data": {
+              "campaignName": "WIP12",
+              "groupName": "Workshop Importação na Prática 🚀 #1",
+              "groupJid": "120363402370435073@g.us",
+              "groupId": "z2BwWN0JrSnfNtHEXjZF",
+              "campaignId": "opA1bhCH1B77hokGW09q",
+              "number": "5511955835870",
+              "createdAt": "2025-09-25T19:06:02.307Z"
+            },
+            "version": "1.0.0"
+          },
+          "webhookUrl": "https://n8n-n8n.zkgge2.easypanel.host/webhook/695c68eb-537b-4179-b637-f769ec92c094",
+          "executionMode": "production"
+        }
+      }
+    ],
+    "chega_da_fila": [
+      {
+        "json": {
+          "fields": {
+            "consumerTag": "amq.ctag-XdYnWWJkYH8Eytol5531cw",
+            "deliveryTag": 2773,
+            "redelivered": false,
+            "exchange": "",
+            "routingKey": "wip13-grupo"
+          },
+          "properties": {
+            "headers": {}
+          },
+          "content": {
+            "headers": {
+              "host": "c5l-mar26-n8n.pktqwb.easypanel.host",
+              "user-agent": "axios/1.9.0",
+              "content-length": "412",
+              "accept": "application/json, text/plain, */*",
+              "accept-encoding": "gzip, compress, deflate, br",
+              "content-type": "application/json",
+              "sendtok": "CB436A9DAE3E69051C22BF1FAA982097B6937060C1",
+              "x-forwarded-for": "168.138.150.10",
+              "x-forwarded-host": "c5l-mar26-n8n.pktqwb.easypanel.host",
+              "x-forwarded-port": "443",
+              "x-forwarded-proto": "https",
+              "x-forwarded-server": "d138e98f8a05",
+              "x-real-ip": "168.138.150.10"
+            },
+            "params": {},
+            "query": {},
+            "body": {
+              "id": "xZvm7uQDvkwAWMhzsM8v",
+              "event": "group.updated.members.added",
+              "data": {
+                "campaignName": "C5L16 - Tráfego- 2402",
+                "groupName": "Super Aula | Wendell Carvalho #5",
+                "groupJid": "120363424527244281@g.us",
+                "groupId": "P2E3Tx5lgp5FTxNv0KSZ",
+                "campaignId": "aKlOs6UnIcEKrRAJKut7",
+                "number": "5511955835870",
+                "createdAt": "2026-02-28T20:52:04.917Z",
+                "createdAt_with_timezone_br": "2026-02-28T17:52:04.917-03:00"
+              },
+              "version": "1.0.0"
+            },
+            "webhookUrl": "https://c5l-mar26-n8n.pktqwb.easypanel.host/webhook/c5l-mar26-evento-grupo",
+            "executionMode": "production"
+          }
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-03-17T14:23:40.979Z",
+      "createdAt": "2026-03-17T14:23:40.979Z",
+      "role": "workflow:owner",
+      "workflowId": "f6isYyiuxe98FQ6A",
+      "projectId": "DsELi0ezptx4jHSs"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-03-17T15:18:33.251Z",
+  "versionId": "72283bfb-eea5-4465-b9f9-94ef46b2eb7e"
+}
