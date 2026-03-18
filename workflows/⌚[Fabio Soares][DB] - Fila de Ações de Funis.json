@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-03-14T23:17:19.000Z",
-    "createdAt": "2026-03-14T23:16:42.111Z",
-    "versionId": "92c5bc16-aec0-45b4-ac8a-c3f6d51e2373",
+    "updatedAt": "2026-03-17T23:28:33.000Z",
+    "createdAt": "2026-03-17T23:22:24.749Z",
+    "versionId": "7500fd68-3b1e-4cb7-ae27-a55b84f22c9f",
     "workflowId": "WLDMvH0zERsGkGBc",
     "nodes": [
       {
@@ -2631,7 +2631,7 @@
             },
             "acknowledge": "executionFinishesSuccessfully",
             "jsonParseBody": "={{ true }}",
-            "parallelMessages": 20
+            "parallelMessages": 1
           }
         },
         "id": "c1a6ecbf-71e4-4127-92e2-818d1b9a8580",
@@ -2873,6 +2873,30 @@
         ],
         "id": "4c35d548-0eda-4fdf-9ff1-c7d50729eb23",
         "name": "send_message_api_oficial3"
+      },
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.wait",
+        "typeVersion": 1.1,
+        "position": [
+          1568,
+          1872
+        ],
+        "id": "369fd564-6590-4124-80f7-1efca8424a0b",
+        "name": "Wait",
+        "webhookId": "4a593bf3-6ebd-4032-a015-cbb9fc9e8237"
+      },
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.wait",
+        "typeVersion": 1.1,
+        "position": [
+          1280,
+          2928
+        ],
+        "id": "cbb58bbb-86d8-4f4a-8704-7522a0afb2c7",
+        "name": "Wait1",
+        "webhookId": "4a593bf3-6ebd-4032-a015-cbb9fc9e8237"
       }
     ],
     "connections": {
@@ -3488,6 +3512,13 @@
               "type": "main",
               "index": 0
             }
+          ],
+          [
+            {
+              "node": "Wait",
+              "type": "main",
+              "index": 0
+            }
           ]
         ]
       },
@@ -3819,6 +3850,13 @@
               "type": "main",
               "index": 0
             }
+          ],
+          [
+            {
+              "node": "Wait1",
+              "type": "main",
+              "index": 0
+            }
           ]
         ]
       },
@@ -3837,14 +3875,36 @@
         "main": [
           []
         ]
+      },
+      "send_message_api_oficial1": {
+        "main": [
+          [
+            {
+              "node": "Wait",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "send_message_api_oficial3": {
+        "main": [
+          [
+            {
+              "node": "Wait1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
       }
     },
     "authors": "Automagic Bots",
-    "name": "Version 92c5bc16",
+    "name": "Version 3a4e0ce5",
     "description": "",
     "autosaved": true
   },
-  "activeVersionId": "92c5bc16-aec0-45b4-ac8a-c3f6d51e2373",
+  "activeVersionId": "7500fd68-3b1e-4cb7-ae27-a55b84f22c9f",
   "connections": {
     "pesquisa_variavel_n8n_fluxo_users": {
       "main": [
@@ -4458,6 +4518,13 @@
             "type": "main",
             "index": 0
           }
+        ],
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
         ]
       ]
     },
@@ -4789,6 +4856,13 @@
             "type": "main",
             "index": 0
           }
+        ],
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
         ]
       ]
     },
@@ -4806,6 +4880,28 @@
     "No Operation, do nothing": {
       "main": [
         []
+      ]
+    },
+    "send_message_api_oficial1": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "send_message_api_oficial3": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     }
   },
@@ -7442,7 +7538,7 @@
           },
           "acknowledge": "executionFinishesSuccessfully",
           "jsonParseBody": "={{ true }}",
-          "parallelMessages": 20
+          "parallelMessages": 1
         }
       },
       "id": "c1a6ecbf-71e4-4127-92e2-818d1b9a8580",
@@ -7684,6 +7780,30 @@
       ],
       "id": "4c35d548-0eda-4fdf-9ff1-c7d50729eb23",
       "name": "send_message_api_oficial3"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1568,
+        1872
+      ],
+      "id": "369fd564-6590-4124-80f7-1efca8424a0b",
+      "name": "Wait",
+      "webhookId": "4a593bf3-6ebd-4032-a015-cbb9fc9e8237"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1280,
+        2928
+      ],
+      "id": "cbb58bbb-86d8-4f4a-8704-7522a0afb2c7",
+      "name": "Wait1",
+      "webhookId": "4a593bf3-6ebd-4032-a015-cbb9fc9e8237"
     }
   ],
   "pinData": {
@@ -7779,6 +7899,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-03-14T23:16:42.111Z",
-  "versionId": "92c5bc16-aec0-45b4-ac8a-c3f6d51e2373"
+  "updatedAt": "2026-03-17T23:20:24.167Z",
+  "versionId": "7500fd68-3b1e-4cb7-ae27-a55b84f22c9f"
 }
