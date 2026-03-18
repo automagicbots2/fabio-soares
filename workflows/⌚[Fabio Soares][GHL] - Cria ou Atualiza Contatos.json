@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-03-14T20:56:21.000Z",
-    "createdAt": "2026-03-14T20:29:23.968Z",
-    "versionId": "2231f719-6ebe-47ee-b79b-d0bc7613c27a",
+    "updatedAt": "2026-03-17T19:57:45.000Z",
+    "createdAt": "2026-03-17T16:15:23.977Z",
+    "versionId": "d4172174-1999-46b0-a88f-151cc1ec5c9d",
     "workflowId": "fD0qAgNM6ackkDpv",
     "nodes": [
       {
@@ -722,7 +722,9 @@
           464
         ],
         "id": "3ed5482a-2e2c-40aa-a610-eff2c949556f",
-        "name": "busca_contato_pelo_email1"
+        "name": "busca_contato_pelo_email1",
+        "alwaysOutputData": true,
+        "onError": "continueRegularOutput"
       },
       {
         "parameters": {
@@ -863,7 +865,9 @@
           688
         ],
         "id": "7797f941-28de-4dc2-ac5a-24b3e14b528e",
-        "name": "busca_contato_pelo_telefone1"
+        "name": "busca_contato_pelo_telefone1",
+        "executeOnce": true,
+        "onError": "continueRegularOutput"
       },
       {
         "parameters": {
@@ -1281,11 +1285,11 @@
       }
     },
     "authors": "Automagic Bots",
-    "name": "Version 2231f719",
+    "name": "Version d4172174",
     "description": "",
     "autosaved": true
   },
-  "activeVersionId": "2231f719-6ebe-47ee-b79b-d0bc7613c27a",
+  "activeVersionId": "d4172174-1999-46b0-a88f-151cc1ec5c9d",
   "connections": {
     "fluxo_chamado": {
       "main": [
@@ -2376,7 +2380,9 @@
         464
       ],
       "id": "3ed5482a-2e2c-40aa-a610-eff2c949556f",
-      "name": "busca_contato_pelo_email1"
+      "name": "busca_contato_pelo_email1",
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
     },
     {
       "parameters": {
@@ -2517,7 +2523,9 @@
         688
       ],
       "id": "7797f941-28de-4dc2-ac5a-24b3e14b528e",
-      "name": "busca_contato_pelo_telefone1"
+      "name": "busca_contato_pelo_telefone1",
+      "executeOnce": true,
+      "onError": "continueRegularOutput"
     },
     {
       "parameters": {
@@ -2568,7 +2576,96 @@
       }
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "fluxo_chamado": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n-n8n.yqd7ni.easypanel.host",
+            "user-agent": "axios/1.13.5",
+            "content-length": "1721",
+            "accept": "application/json,text/html,application/xhtml+xml,application/xml,text/*;q=0.9, image/*;q=0.8, */*;q=0.7",
+            "accept-encoding": "gzip, compress, deflate, br",
+            "content-type": "application/json",
+            "x-forwarded-for": "172.18.0.1",
+            "x-forwarded-host": "n8n-n8n.yqd7ni.easypanel.host",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "95876c3beb17",
+            "x-real-ip": "172.18.0.1"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "id_etapa_funil": 6,
+            "id_funil": "1",
+            "id_user": 1046,
+            "payload": {
+              "nome": "Nilson",
+              "sobrenome": "Gomes",
+              "nome_completo": "Nilson Gomes",
+              "email": "nilson.mgr@gmail.com",
+              "telefone": "5511973880407",
+              "cpf": "126.782.538-30",
+              "utm_source": "facebook",
+              "utm_campaign": "cpc",
+              "utm_term": "[A7CDR] VENDAS ",
+              "utm_medium": " ESCALA ",
+              "utm_content": " CBO ",
+              "form_id": "ogl1dc1y",
+              "form_name": "",
+              "value": 37.9,
+              "transaction_id": "HP1783110656",
+              "net_value": 37.05,
+              "trans_status": "Compra Aprovada",
+              "payment_method": "PIX",
+              "refund_date": "",
+              "event_date": "2026-03-15 06:57:53",
+              "payment_date": "2026-03-15 06:57:43",
+              "product_type": "Cobrança única",
+              "product_id": 6238670,
+              "product_name": "Ingresso Silver – Desafio As 7 Chaves da Riqueza",
+              "warranty_date": "2026-03-21",
+              "offer_code": "ogl1dc1y",
+              "discount_coupon": "",
+              "street": "",
+              "address_number": "",
+              "country": "",
+              "district": "",
+              "address_complement": "",
+              "city": "",
+              "address_state": "",
+              "zipcode": "",
+              "affiliate_value": "",
+              "gateway_comission": 0.85,
+              "billet_barcode": "00020101021226740014br.gov.bcb.pix2552pix.ebanx.com/qr/v2/296587CEB90DB393307DBF18E0050B0E5204000053039865802BR5911Ebanx LTDA.6008CURITIBA62070503***6304588B",
+              "currency": "BRL",
+              "bankslip": "https://customer.ebanx.com/pix/checkout?hash=69b6822a139bb4f681bdc5fc17ea84639e0c81eaf2f1406b",
+              "recurrenceExpirationDate": "",
+              "cancelledDate": "",
+              "cnpj": "",
+              "installments": 1,
+              "billetExpirationDate": "2026-03-17",
+              "recurrenceNumber": "",
+              "src": "",
+              "sck": "facebook|cpc|[A7CDR] VENDAS | ESCALA | CBO | PAG-A | VID | PIXEL DCDR | 180D - 13/03/26|120244445968460672|fb_Facebook_Mobile_Reels|/",
+              "refusalReason": "",
+              "subscriberCode": "",
+              "planName": "",
+              "planId": "",
+              "eventId": "485bd576-6736-4664-b8e7-6185a62a5e78",
+              "tipo_forms": "Checkout",
+              "id_funil": "1",
+              "id_forms": "1"
+            },
+            "id_situacao_checkout": 1
+          },
+          "webhookUrl": "https://n8n-n8n.yqd7ni.easypanel.host/webhook/cria-contato-ghl",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
   "settings": {
     "executionOrder": "v1",
     "callerPolicy": "workflowsFromSameOwner",
@@ -2586,6 +2683,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-03-14T20:29:23.967Z",
-  "versionId": "2231f719-6ebe-47ee-b79b-d0bc7613c27a"
+  "updatedAt": "2026-03-17T16:15:23.976Z",
+  "versionId": "d4172174-1999-46b0-a88f-151cc1ec5c9d"
 }
