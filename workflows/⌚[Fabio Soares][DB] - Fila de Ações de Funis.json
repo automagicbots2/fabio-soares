@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-03-17T23:28:33.000Z",
-    "createdAt": "2026-03-17T23:22:24.749Z",
-    "versionId": "7500fd68-3b1e-4cb7-ae27-a55b84f22c9f",
+    "updatedAt": "2026-03-18T22:28:01.000Z",
+    "createdAt": "2026-03-18T22:26:59.983Z",
+    "versionId": "9d3fedd7-0f20-4dd8-bb94-d3f4c77884a8",
     "workflowId": "WLDMvH0zERsGkGBc",
     "nodes": [
       {
@@ -2639,7 +2639,7 @@
         "type": "n8n-nodes-base.rabbitmqTrigger",
         "typeVersion": 1,
         "position": [
-          -2640,
+          -2816,
           240
         ],
         "credentials": {
@@ -2879,8 +2879,8 @@
         "type": "n8n-nodes-base.wait",
         "typeVersion": 1.1,
         "position": [
-          1568,
-          1872
+          -2640,
+          240
         ],
         "id": "369fd564-6590-4124-80f7-1efca8424a0b",
         "name": "Wait",
@@ -3513,13 +3513,7 @@
               "index": 0
             }
           ],
-          [
-            {
-              "node": "Wait",
-              "type": "main",
-              "index": 0
-            }
-          ]
+          []
         ]
       },
       "pesquisa_acao_send_message_api_oficial": {
@@ -3795,7 +3789,7 @@
         "main": [
           [
             {
-              "node": "nome_email_telefone_ig_null",
+              "node": "Wait",
               "type": "main",
               "index": 0
             }
@@ -3878,13 +3872,7 @@
       },
       "send_message_api_oficial1": {
         "main": [
-          [
-            {
-              "node": "Wait",
-              "type": "main",
-              "index": 0
-            }
-          ]
+          []
         ]
       },
       "send_message_api_oficial3": {
@@ -3897,14 +3885,25 @@
             }
           ]
         ]
+      },
+      "Wait": {
+        "main": [
+          [
+            {
+              "node": "nome_email_telefone_ig_null",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
       }
     },
     "authors": "Automagic Bots",
-    "name": "Version 3a4e0ce5",
+    "name": "Version 9d3fedd7",
     "description": "",
-    "autosaved": true
+    "autosaved": false
   },
-  "activeVersionId": "7500fd68-3b1e-4cb7-ae27-a55b84f22c9f",
+  "activeVersionId": "9d3fedd7-0f20-4dd8-bb94-d3f4c77884a8",
   "connections": {
     "pesquisa_variavel_n8n_fluxo_users": {
       "main": [
@@ -4519,13 +4518,7 @@
             "index": 0
           }
         ],
-        [
-          {
-            "node": "Wait",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "pesquisa_acao_send_message_api_oficial": {
@@ -4801,7 +4794,7 @@
       "main": [
         [
           {
-            "node": "nome_email_telefone_ig_null",
+            "node": "Wait",
             "type": "main",
             "index": 0
           }
@@ -4884,13 +4877,7 @@
     },
     "send_message_api_oficial1": {
       "main": [
-        [
-          {
-            "node": "Wait",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "send_message_api_oficial3": {
@@ -4898,6 +4885,17 @@
         [
           {
             "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "nome_email_telefone_ig_null",
             "type": "main",
             "index": 0
           }
@@ -7546,7 +7544,7 @@
       "type": "n8n-nodes-base.rabbitmqTrigger",
       "typeVersion": 1,
       "position": [
-        -2640,
+        -2816,
         240
       ],
       "credentials": {
@@ -7786,8 +7784,8 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        1568,
-        1872
+        -2640,
+        240
       ],
       "id": "369fd564-6590-4124-80f7-1efca8424a0b",
       "name": "Wait",
@@ -7811,41 +7809,43 @@
       {
         "json": {
           "fields": {
-            "consumerTag": "amq.ctag-Xht1JT0A8iAuWOWlncS-yA",
-            "deliveryTag": 24,
-            "redelivered": false,
+            "consumerTag": "amq.ctag-jkbMZ-Apbh3sXYaKhEBv7A",
+            "deliveryTag": 1,
+            "redelivered": true,
             "exchange": "",
             "routingKey": "Fila de Ações de Funis"
           },
           "properties": {
-            "headers": {}
+            "headers": {
+              "x-delivery-count": 33811
+            }
           },
           "content": {
-            "nome": "Robert",
-            "sobrenome": "Augusto",
-            "nome_completo": "Robert Augusto",
-            "email": "robertaugustocontato@gmail.com",
-            "telefone": "5511971509703",
-            "cpf": "228.099.318-01",
-            "utm_source": "facebook",
-            "utm_campaign": "cpc",
-            "utm_term": "[A7CDR] VENDAS ",
-            "utm_medium": " ESCALA ",
-            "utm_content": " CBO ",
+            "nome": "Ana",
+            "sobrenome": "Laura da Silva Maria",
+            "nome_completo": "Ana Laura da Silva Maria",
+            "email": "analaura.gestaosm@gmail.com",
+            "telefone": "5511980429402",
+            "cpf": "353.429.958-25",
+            "utm_source": "",
+            "utm_campaign": "",
+            "utm_term": "",
+            "utm_medium": "",
+            "utm_content": "",
             "form_id": "ogl1dc1y",
             "form_name": "",
-            "value": 37.9,
-            "transaction_id": "HP0494647887",
-            "net_value": 37.05,
+            "value": 1,
+            "transaction_id": "HP2219167957",
+            "net_value": 0.96,
             "trans_status": "Compra Aprovada",
-            "payment_method": "PIX",
+            "payment_method": "Cartão de Crédito",
             "refund_date": "",
-            "event_date": "2026-03-14 16:46:27",
-            "payment_date": "2026-03-14 16:46:16",
+            "event_date": "2026-03-16 23:56:19",
+            "payment_date": "2026-03-16 23:56:08",
             "product_type": "Cobrança única",
             "product_id": 6238670,
             "product_name": "Ingresso Silver – Desafio As 7 Chaves da Riqueza",
-            "warranty_date": "2026-03-20",
+            "warranty_date": "2026-03-22",
             "offer_code": "ogl1dc1y",
             "discount_coupon": "",
             "street": "",
@@ -7857,23 +7857,23 @@
             "address_state": "",
             "zipcode": "",
             "affiliate_value": "",
-            "gateway_comission": 0.85,
-            "billet_barcode": "00020101021226740014br.gov.bcb.pix2552pix.ebanx.com/qr/v2/917BB6062EA4795D9ECC8642288BE0715204000053039865802BR5911Ebanx LTDA.6008CURITIBA62070503***63047D7E",
+            "gateway_comission": 0.04,
+            "billet_barcode": "",
             "currency": "BRL",
-            "bankslip": "https://customer.ebanx.com/pix/checkout?hash=69b5bacbb1d3740c7a5209e16aed08bff20f76627c32bcaf",
+            "bankslip": "",
             "recurrenceExpirationDate": "",
             "cancelledDate": "",
             "cnpj": "",
             "installments": 1,
-            "billetExpirationDate": "2026-03-16",
+            "billetExpirationDate": "",
             "recurrenceNumber": "",
             "src": "",
-            "sck": "facebook|cpc|[A7CDR] VENDAS | ESCALA | CBO | PAG-B | VID | PIXEL DE FABIO | ADV+ 180D - 14/03/26|120244497487330672|ig_Instagram_Feed|/",
+            "sck": "|||||/",
             "refusalReason": "",
             "subscriberCode": "",
             "planName": "",
             "planId": "",
-            "eventId": "f674e899-764c-4f91-a73d-65203a7184be",
+            "eventId": "7ec7914a-fd30-4170-98c6-d2eca5b6cc9f",
             "tipo_forms": "Checkout",
             "id_funil": "1",
             "id_forms": "1"
@@ -7899,6 +7899,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-03-17T23:20:24.167Z",
-  "versionId": "7500fd68-3b1e-4cb7-ae27-a55b84f22c9f"
+  "updatedAt": "2026-03-18T22:26:59.982Z",
+  "versionId": "9d3fedd7-0f20-4dd8-bb94-d3f4c77884a8"
 }
