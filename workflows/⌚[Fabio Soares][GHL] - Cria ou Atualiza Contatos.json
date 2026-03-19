@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-03-17T19:57:45.000Z",
-    "createdAt": "2026-03-17T16:15:23.977Z",
-    "versionId": "d4172174-1999-46b0-a88f-151cc1ec5c9d",
+    "updatedAt": "2026-03-18T23:03:06.000Z",
+    "createdAt": "2026-03-18T22:56:21.620Z",
+    "versionId": "045870f3-9bdc-4a8f-9593-5f54c25e5a33",
     "workflowId": "fD0qAgNM6ackkDpv",
     "nodes": [
       {
@@ -15,7 +15,7 @@
         "type": "n8n-nodes-base.webhook",
         "typeVersion": 2,
         "position": [
-          -5024,
+          -4592,
           320
         ],
         "id": "cf12c0b0-71ef-403e-a37f-7d7482850db6",
@@ -378,7 +378,7 @@
           },
           "sendBody": true,
           "specifyBody": "json",
-          "jsonBody": "={{ JSON.stringify(\n  (() => {\n    const fx = $node[\"fluxo_chamado\"].json.body.payload || {};\n    const pu = $node[\"pesquisa_user1\"].json || {};\n\n    const firstName  = fx.nome ?? pu.nome ?? \"\";\n    const lastName   = fx.sobrenome ?? pu.sobrenome ?? \"\";\n    const phone      = fx.telefone ?? pu.telefone ?? \"\";\n    const email      = fx.email ?? pu.email ?? \"\";\n    const locationId = $node[\"pesquisa_location_crm1\"].json.valor_variavel;\n\n    const name = `${firstName}${lastName ? \" \" + lastName : \"\"}`.trim();\n\n    // Helpers\n    const nonEmpty = (v) => Array.isArray(v) && v.length > 0;\n\n    const getCF = (nodeName) => {\n      if ($node[nodeName]?.runIndex >= 0) {\n        const viaItems = $items(nodeName, 0)?.json?.custom_fields_values;\n        if (nonEmpty(viaItems)) return viaItems;\n\n        const viaNode = $node[nodeName]?.json?.custom_fields_values;\n        if (nonEmpty(viaNode)) return viaNode;\n      }\n      return null;\n    };\n\n    const cf =\n      getCF(\"formata_campos_contact3\") ||\n      getCF(\"formata_campos_contact4\") ||\n      getCF(\"formata_campos_contact5\") ||\n      null;\n\n    // removido assignedTo\n    const body = { firstName, lastName, name, locationId };\n\n    if (phone) body.phone = phone;   // inclui só se houver valor\n    if (email) body.email = email;   // idem\n    if (cf) body.customFields = cf;  // inclui apenas se não vazio\n\n    return body;\n  })()\n) }}\n",
+          "jsonBody": "={{ JSON.stringify(\n  (() => {\n    const fx = $node[\"fluxo_chamado\"].json.body.payload || {};\n    const pu = $node[\"pesquisa_user1\"].json || {};\n\n    const firstName  = fx.nome ?? pu.nome ?? \"\";\n    const lastName   = fx.sobrenome ?? pu.sobrenome ?? \"\";\n    const rawPhone   = fx.telefone ?? pu.telefone ?? \"\";\n    const email      = fx.email ?? pu.email ?? \"\";\n    const locationId = $node[\"pesquisa_location_crm1\"].json.valor_variavel;\n\n    const name = `${firstName}${lastName ? \" \" + lastName : \"\"}`.trim();\n\n    // Helpers\n    const nonEmpty = (v) => Array.isArray(v) && v.length > 0;\n\n    const getCF = (nodeName) => {\n      if ($node[nodeName]?.runIndex >= 0) {\n        const viaItems = $items(nodeName, 0)?.json?.custom_fields_values;\n        if (nonEmpty(viaItems)) return viaItems;\n\n        const viaNode = $node[nodeName]?.json?.custom_fields_values;\n        if (nonEmpty(viaNode)) return viaNode;\n      }\n      return null;\n    };\n\n    const normalizePhone = (phone) => {\n      if (!phone) return \"\";\n      const cleaned = String(phone).trim().replace(/\\s+/g, \"\");\n      return cleaned.startsWith(\"+\") ? cleaned : `+${cleaned}`;\n    };\n\n    const phone = normalizePhone(rawPhone);\n\n    const cf =\n      getCF(\"formata_campos_contact3\") ||\n      getCF(\"formata_campos_contact4\") ||\n      getCF(\"formata_campos_contact5\") ||\n      null;\n\n    // removido assignedTo\n    const body = { firstName, lastName, name, locationId };\n\n    if (phone) body.phone = phone;\n    if (email) body.email = email;\n    if (cf) body.customFields = cf;\n\n    return body;\n  })()\n) }}",
           "options": {}
         },
         "type": "n8n-nodes-base.httpRequest",
@@ -593,7 +593,7 @@
           },
           "sendBody": true,
           "specifyBody": "json",
-          "jsonBody": "={{ JSON.stringify(\n  (() => {\n    const fx = $node[\"fluxo_chamado\"].json.body.payload || {};\n    const pu = $node[\"pesquisa_user1\"].json || {};\n\n    const firstName  = fx.nome ?? pu.nome ?? \"\";\n    const lastName   = fx.sobrenome ?? pu.sobrenome ?? \"\";\n    const phone      = fx.telefone ?? pu.telefone ?? \"\";\n    const email      = fx.email ?? pu.email ?? \"\";\n\n    const name = `${firstName}${lastName ? \" \" + lastName : \"\"}`.trim();\n\n    // Helpers\n    const nonEmpty = (v) => Array.isArray(v) && v.length > 0;\n\n    const getCF = (nodeName) => {\n      if ($node[nodeName]?.runIndex >= 0) {\n        const viaItems = $items(nodeName, 0)?.json?.custom_fields_values;\n        if (nonEmpty(viaItems)) return viaItems;\n\n        const viaNode = $node[nodeName]?.json?.custom_fields_values;\n        if (nonEmpty(viaNode)) return viaNode;\n      }\n      return null;\n    };\n\n    const cf =\n      getCF(\"formata_campos_contact3\") ||\n      getCF(\"formata_campos_contact4\") ||\n      getCF(\"formata_campos_contact5\") ||\n      null;\n\n    // removidos locationId e assignedTo\n    const body = { firstName, lastName, name };\n\n    if (phone) body.phone = phone;\n    if (email) body.email = email;\n    if (cf) body.customFields = cf;\n\n    return body;\n  })()\n) }}\n",
+          "jsonBody": "={{ JSON.stringify(\n  (() => {\n    const fx = $node[\"fluxo_chamado\"].json.body.payload || {};\n    const pu = $node[\"pesquisa_user1\"].json || {};\n\n    const firstName  = fx.nome ?? pu.nome ?? \"\";\n    const lastName   = fx.sobrenome ?? pu.sobrenome ?? \"\";\n    const rawPhone   = fx.telefone ?? pu.telefone ?? \"\";\n    const email      = fx.email ?? pu.email ?? \"\";\n\n    const name = `${firstName}${lastName ? \" \" + lastName : \"\"}`.trim();\n\n    // Helpers\n    const nonEmpty = (v) => Array.isArray(v) && v.length > 0;\n\n    const getCF = (nodeName) => {\n      if ($node[nodeName]?.runIndex >= 0) {\n        const viaItems = $items(nodeName, 0)?.json?.custom_fields_values;\n        if (nonEmpty(viaItems)) return viaItems;\n\n        const viaNode = $node[nodeName]?.json?.custom_fields_values;\n        if (nonEmpty(viaNode)) return viaNode;\n      }\n      return null;\n    };\n\n    const normalizePhone = (phone) => {\n      if (!phone) return \"\";\n      const cleaned = String(phone).trim().replace(/\\s+/g, \"\");\n      return cleaned.startsWith(\"+\") ? cleaned : `+${cleaned}`;\n    };\n\n    const phone = normalizePhone(rawPhone);\n\n    const cf =\n      getCF(\"formata_campos_contact3\") ||\n      getCF(\"formata_campos_contact4\") ||\n      getCF(\"formata_campos_contact5\") ||\n      null;\n\n    // removidos locationId e assignedTo\n    const body = { firstName, lastName, name };\n\n    if (phone) body.phone = phone;\n    if (email) body.email = email;\n    if (cf) body.customFields = cf;\n\n    return body;\n  })()\n) }}",
           "options": {}
         },
         "type": "n8n-nodes-base.httpRequest",
@@ -868,54 +868,6 @@
         "name": "busca_contato_pelo_telefone1",
         "executeOnce": true,
         "onError": "continueRegularOutput"
-      },
-      {
-        "parameters": {
-          "jsCode": "// Obter o template do banco de dados\nlet template = $node[\"pesquisa_json_fields_contact6\"].json[\"payload_fields\"];\n\n// Verifique se o template é válido (precisa ser um objeto)\nif (typeof template !== \"object\" || template === null) {\n    throw new Error(\"O template payload_fields não é um objeto válido.\");\n}\n\n// Obter os dados diretamente do \"body\" do webhook\nconst payload = $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"];\n\n// Criar uma cópia do payload e adicionar o campo \"nome\" concatenado com \"sobrenome\"\nconst payloadAtualizado = { \n    ...payload, \n    nome: `${payload.nome || ''} ${payload.sobrenome || ''}`.trim() \n};\n\n// Função para substituir os placeholders\nconst replacePlaceholders = (template, data) => {\n    return Object.keys(template).map(key => {\n        let fieldValue = template[key];\n\n        if (typeof fieldValue === \"string\") {\n            // Substituir placeholders no formato {{ chave }}\n            fieldValue = fieldValue.replace(/{{\\s*(\\w+)\\s*}}/g, (_, key) => {\n                return data[key] !== undefined ? data[key] : ''; // Substitui ou deixa vazio se não encontrado\n            });\n        }\n\n        return { field: key, value: fieldValue };\n    });\n};\n\n// Substituir os placeholders no template com os dados do webhook atualizado\nlet result = replacePlaceholders(template, payloadAtualizado);\n\n// Retornar o resultado no formato esperado\nreturn {\n    custom_fields_values: result\n};\n"
-        },
-        "type": "n8n-nodes-base.code",
-        "typeVersion": 2,
-        "position": [
-          -4608,
-          320
-        ],
-        "id": "022d4b37-01db-4c51-9e07-537a6965349d",
-        "name": "formata_campos_contact6"
-      },
-      {
-        "parameters": {
-          "operation": "select",
-          "table": {
-            "__rl": true,
-            "value": "fields_crm_etapas_funil",
-            "mode": "list",
-            "cachedResultName": "fields_crm_etapas_funil"
-          },
-          "where": {
-            "values": [
-              {
-                "column": "entidade",
-                "value": "contact"
-              }
-            ]
-          },
-          "options": {}
-        },
-        "id": "280f3889-4cba-4930-8b81-1f10d2c4644a",
-        "name": "pesquisa_json_fields_contact6",
-        "type": "n8n-nodes-base.mySql",
-        "typeVersion": 2.4,
-        "position": [
-          -4816,
-          320
-        ],
-        "alwaysOutputData": true,
-        "credentials": {
-          "mySql": {
-            "id": "SMjhjBLFctIENkHc",
-            "name": "[MySQL] - Fabio Soares"
-          }
-        }
       }
     ],
     "connections": {
@@ -923,7 +875,7 @@
         "main": [
           [
             {
-              "node": "pesquisa_json_fields_contact6",
+              "node": "pesquisa_url_base_crm1",
               "type": "main",
               "index": 0
             }
@@ -1260,42 +1212,20 @@
             }
           ]
         ]
-      },
-      "formata_campos_contact6": {
-        "main": [
-          [
-            {
-              "node": "pesquisa_url_base_crm1",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "pesquisa_json_fields_contact6": {
-        "main": [
-          [
-            {
-              "node": "formata_campos_contact6",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
       }
     },
     "authors": "Automagic Bots",
-    "name": "Version d4172174",
+    "name": "Version 045870f3",
     "description": "",
     "autosaved": true
   },
-  "activeVersionId": "d4172174-1999-46b0-a88f-151cc1ec5c9d",
+  "activeVersionId": "045870f3-9bdc-4a8f-9593-5f54c25e5a33",
   "connections": {
     "fluxo_chamado": {
       "main": [
         [
           {
-            "node": "pesquisa_json_fields_contact6",
+            "node": "pesquisa_url_base_crm1",
             "type": "main",
             "index": 0
           }
@@ -1632,28 +1562,6 @@
           }
         ]
       ]
-    },
-    "formata_campos_contact6": {
-      "main": [
-        [
-          {
-            "node": "pesquisa_url_base_crm1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "pesquisa_json_fields_contact6": {
-      "main": [
-        [
-          {
-            "node": "formata_campos_contact6",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
     }
   },
   "createdAt": "2026-03-06T21:33:27.244Z",
@@ -1673,7 +1581,7 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
       "position": [
-        -5024,
+        -4592,
         320
       ],
       "id": "cf12c0b0-71ef-403e-a37f-7d7482850db6",
@@ -2036,7 +1944,7 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify(\n  (() => {\n    const fx = $node[\"fluxo_chamado\"].json.body.payload || {};\n    const pu = $node[\"pesquisa_user1\"].json || {};\n\n    const firstName  = fx.nome ?? pu.nome ?? \"\";\n    const lastName   = fx.sobrenome ?? pu.sobrenome ?? \"\";\n    const phone      = fx.telefone ?? pu.telefone ?? \"\";\n    const email      = fx.email ?? pu.email ?? \"\";\n    const locationId = $node[\"pesquisa_location_crm1\"].json.valor_variavel;\n\n    const name = `${firstName}${lastName ? \" \" + lastName : \"\"}`.trim();\n\n    // Helpers\n    const nonEmpty = (v) => Array.isArray(v) && v.length > 0;\n\n    const getCF = (nodeName) => {\n      if ($node[nodeName]?.runIndex >= 0) {\n        const viaItems = $items(nodeName, 0)?.json?.custom_fields_values;\n        if (nonEmpty(viaItems)) return viaItems;\n\n        const viaNode = $node[nodeName]?.json?.custom_fields_values;\n        if (nonEmpty(viaNode)) return viaNode;\n      }\n      return null;\n    };\n\n    const cf =\n      getCF(\"formata_campos_contact3\") ||\n      getCF(\"formata_campos_contact4\") ||\n      getCF(\"formata_campos_contact5\") ||\n      null;\n\n    // removido assignedTo\n    const body = { firstName, lastName, name, locationId };\n\n    if (phone) body.phone = phone;   // inclui só se houver valor\n    if (email) body.email = email;   // idem\n    if (cf) body.customFields = cf;  // inclui apenas se não vazio\n\n    return body;\n  })()\n) }}\n",
+        "jsonBody": "={{ JSON.stringify(\n  (() => {\n    const fx = $node[\"fluxo_chamado\"].json.body.payload || {};\n    const pu = $node[\"pesquisa_user1\"].json || {};\n\n    const firstName  = fx.nome ?? pu.nome ?? \"\";\n    const lastName   = fx.sobrenome ?? pu.sobrenome ?? \"\";\n    const rawPhone   = fx.telefone ?? pu.telefone ?? \"\";\n    const email      = fx.email ?? pu.email ?? \"\";\n    const locationId = $node[\"pesquisa_location_crm1\"].json.valor_variavel;\n\n    const name = `${firstName}${lastName ? \" \" + lastName : \"\"}`.trim();\n\n    // Helpers\n    const nonEmpty = (v) => Array.isArray(v) && v.length > 0;\n\n    const getCF = (nodeName) => {\n      if ($node[nodeName]?.runIndex >= 0) {\n        const viaItems = $items(nodeName, 0)?.json?.custom_fields_values;\n        if (nonEmpty(viaItems)) return viaItems;\n\n        const viaNode = $node[nodeName]?.json?.custom_fields_values;\n        if (nonEmpty(viaNode)) return viaNode;\n      }\n      return null;\n    };\n\n    const normalizePhone = (phone) => {\n      if (!phone) return \"\";\n      const cleaned = String(phone).trim().replace(/\\s+/g, \"\");\n      return cleaned.startsWith(\"+\") ? cleaned : `+${cleaned}`;\n    };\n\n    const phone = normalizePhone(rawPhone);\n\n    const cf =\n      getCF(\"formata_campos_contact3\") ||\n      getCF(\"formata_campos_contact4\") ||\n      getCF(\"formata_campos_contact5\") ||\n      null;\n\n    // removido assignedTo\n    const body = { firstName, lastName, name, locationId };\n\n    if (phone) body.phone = phone;\n    if (email) body.email = email;\n    if (cf) body.customFields = cf;\n\n    return body;\n  })()\n) }}",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -2251,7 +2159,7 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify(\n  (() => {\n    const fx = $node[\"fluxo_chamado\"].json.body.payload || {};\n    const pu = $node[\"pesquisa_user1\"].json || {};\n\n    const firstName  = fx.nome ?? pu.nome ?? \"\";\n    const lastName   = fx.sobrenome ?? pu.sobrenome ?? \"\";\n    const phone      = fx.telefone ?? pu.telefone ?? \"\";\n    const email      = fx.email ?? pu.email ?? \"\";\n\n    const name = `${firstName}${lastName ? \" \" + lastName : \"\"}`.trim();\n\n    // Helpers\n    const nonEmpty = (v) => Array.isArray(v) && v.length > 0;\n\n    const getCF = (nodeName) => {\n      if ($node[nodeName]?.runIndex >= 0) {\n        const viaItems = $items(nodeName, 0)?.json?.custom_fields_values;\n        if (nonEmpty(viaItems)) return viaItems;\n\n        const viaNode = $node[nodeName]?.json?.custom_fields_values;\n        if (nonEmpty(viaNode)) return viaNode;\n      }\n      return null;\n    };\n\n    const cf =\n      getCF(\"formata_campos_contact3\") ||\n      getCF(\"formata_campos_contact4\") ||\n      getCF(\"formata_campos_contact5\") ||\n      null;\n\n    // removidos locationId e assignedTo\n    const body = { firstName, lastName, name };\n\n    if (phone) body.phone = phone;\n    if (email) body.email = email;\n    if (cf) body.customFields = cf;\n\n    return body;\n  })()\n) }}\n",
+        "jsonBody": "={{ JSON.stringify(\n  (() => {\n    const fx = $node[\"fluxo_chamado\"].json.body.payload || {};\n    const pu = $node[\"pesquisa_user1\"].json || {};\n\n    const firstName  = fx.nome ?? pu.nome ?? \"\";\n    const lastName   = fx.sobrenome ?? pu.sobrenome ?? \"\";\n    const rawPhone   = fx.telefone ?? pu.telefone ?? \"\";\n    const email      = fx.email ?? pu.email ?? \"\";\n\n    const name = `${firstName}${lastName ? \" \" + lastName : \"\"}`.trim();\n\n    // Helpers\n    const nonEmpty = (v) => Array.isArray(v) && v.length > 0;\n\n    const getCF = (nodeName) => {\n      if ($node[nodeName]?.runIndex >= 0) {\n        const viaItems = $items(nodeName, 0)?.json?.custom_fields_values;\n        if (nonEmpty(viaItems)) return viaItems;\n\n        const viaNode = $node[nodeName]?.json?.custom_fields_values;\n        if (nonEmpty(viaNode)) return viaNode;\n      }\n      return null;\n    };\n\n    const normalizePhone = (phone) => {\n      if (!phone) return \"\";\n      const cleaned = String(phone).trim().replace(/\\s+/g, \"\");\n      return cleaned.startsWith(\"+\") ? cleaned : `+${cleaned}`;\n    };\n\n    const phone = normalizePhone(rawPhone);\n\n    const cf =\n      getCF(\"formata_campos_contact3\") ||\n      getCF(\"formata_campos_contact4\") ||\n      getCF(\"formata_campos_contact5\") ||\n      null;\n\n    // removidos locationId e assignedTo\n    const body = { firstName, lastName, name };\n\n    if (phone) body.phone = phone;\n    if (email) body.email = email;\n    if (cf) body.customFields = cf;\n\n    return body;\n  })()\n) }}",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -2526,54 +2434,6 @@
       "name": "busca_contato_pelo_telefone1",
       "executeOnce": true,
       "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "jsCode": "// Obter o template do banco de dados\nlet template = $node[\"pesquisa_json_fields_contact6\"].json[\"payload_fields\"];\n\n// Verifique se o template é válido (precisa ser um objeto)\nif (typeof template !== \"object\" || template === null) {\n    throw new Error(\"O template payload_fields não é um objeto válido.\");\n}\n\n// Obter os dados diretamente do \"body\" do webhook\nconst payload = $node[\"fluxo_chamado\"].json[\"body\"][\"payload\"];\n\n// Criar uma cópia do payload e adicionar o campo \"nome\" concatenado com \"sobrenome\"\nconst payloadAtualizado = { \n    ...payload, \n    nome: `${payload.nome || ''} ${payload.sobrenome || ''}`.trim() \n};\n\n// Função para substituir os placeholders\nconst replacePlaceholders = (template, data) => {\n    return Object.keys(template).map(key => {\n        let fieldValue = template[key];\n\n        if (typeof fieldValue === \"string\") {\n            // Substituir placeholders no formato {{ chave }}\n            fieldValue = fieldValue.replace(/{{\\s*(\\w+)\\s*}}/g, (_, key) => {\n                return data[key] !== undefined ? data[key] : ''; // Substitui ou deixa vazio se não encontrado\n            });\n        }\n\n        return { field: key, value: fieldValue };\n    });\n};\n\n// Substituir os placeholders no template com os dados do webhook atualizado\nlet result = replacePlaceholders(template, payloadAtualizado);\n\n// Retornar o resultado no formato esperado\nreturn {\n    custom_fields_values: result\n};\n"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        -4608,
-        320
-      ],
-      "id": "022d4b37-01db-4c51-9e07-537a6965349d",
-      "name": "formata_campos_contact6"
-    },
-    {
-      "parameters": {
-        "operation": "select",
-        "table": {
-          "__rl": true,
-          "value": "fields_crm_etapas_funil",
-          "mode": "list",
-          "cachedResultName": "fields_crm_etapas_funil"
-        },
-        "where": {
-          "values": [
-            {
-              "column": "entidade",
-              "value": "contact"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "280f3889-4cba-4930-8b81-1f10d2c4644a",
-      "name": "pesquisa_json_fields_contact6",
-      "type": "n8n-nodes-base.mySql",
-      "typeVersion": 2.4,
-      "position": [
-        -4816,
-        320
-      ],
-      "alwaysOutputData": true,
-      "credentials": {
-        "mySql": {
-          "id": "SMjhjBLFctIENkHc",
-          "name": "[MySQL] - Fabio Soares"
-        }
-      }
     }
   ],
   "pinData": {
@@ -2583,7 +2443,7 @@
           "headers": {
             "host": "n8n-n8n.yqd7ni.easypanel.host",
             "user-agent": "axios/1.13.5",
-            "content-length": "1721",
+            "content-length": "448",
             "accept": "application/json,text/html,application/xhtml+xml,application/xml,text/*;q=0.9, image/*;q=0.8, */*;q=0.7",
             "accept-encoding": "gzip, compress, deflate, br",
             "content-type": "application/json",
@@ -2597,68 +2457,27 @@
           "params": {},
           "query": {},
           "body": {
-            "id_etapa_funil": 6,
+            "id_etapa_funil": 1,
             "id_funil": "1",
-            "id_user": 1046,
+            "id_user": 1091,
             "payload": {
-              "nome": "Nilson",
-              "sobrenome": "Gomes",
-              "nome_completo": "Nilson Gomes",
-              "email": "nilson.mgr@gmail.com",
-              "telefone": "5511973880407",
-              "cpf": "126.782.538-30",
-              "utm_source": "facebook",
-              "utm_campaign": "cpc",
-              "utm_term": "[A7CDR] VENDAS ",
-              "utm_medium": " ESCALA ",
-              "utm_content": " CBO ",
-              "form_id": "ogl1dc1y",
-              "form_name": "",
-              "value": 37.9,
-              "transaction_id": "HP1783110656",
-              "net_value": 37.05,
-              "trans_status": "Compra Aprovada",
-              "payment_method": "PIX",
-              "refund_date": "",
-              "event_date": "2026-03-15 06:57:53",
-              "payment_date": "2026-03-15 06:57:43",
-              "product_type": "Cobrança única",
-              "product_id": 6238670,
-              "product_name": "Ingresso Silver – Desafio As 7 Chaves da Riqueza",
-              "warranty_date": "2026-03-21",
-              "offer_code": "ogl1dc1y",
-              "discount_coupon": "",
-              "street": "",
-              "address_number": "",
-              "country": "",
-              "district": "",
-              "address_complement": "",
-              "city": "",
-              "address_state": "",
-              "zipcode": "",
-              "affiliate_value": "",
-              "gateway_comission": 0.85,
-              "billet_barcode": "00020101021226740014br.gov.bcb.pix2552pix.ebanx.com/qr/v2/296587CEB90DB393307DBF18E0050B0E5204000053039865802BR5911Ebanx LTDA.6008CURITIBA62070503***6304588B",
-              "currency": "BRL",
-              "bankslip": "https://customer.ebanx.com/pix/checkout?hash=69b6822a139bb4f681bdc5fc17ea84639e0c81eaf2f1406b",
-              "recurrenceExpirationDate": "",
-              "cancelledDate": "",
-              "cnpj": "",
-              "installments": 1,
-              "billetExpirationDate": "2026-03-17",
-              "recurrenceNumber": "",
-              "src": "",
-              "sck": "facebook|cpc|[A7CDR] VENDAS | ESCALA | CBO | PAG-A | VID | PIXEL DCDR | 180D - 13/03/26|120244445968460672|fb_Facebook_Mobile_Reels|/",
-              "refusalReason": "",
-              "subscriberCode": "",
-              "planName": "",
-              "planId": "",
-              "eventId": "485bd576-6736-4664-b8e7-6185a62a5e78",
-              "tipo_forms": "Checkout",
+              "nome": "Gabriel",
+              "sobrenome": "",
+              "email": "teste@automagicbots.com.br",
+              "telefone": "5511955835870",
+              "utm_source": "whatsapp",
+              "utm_campaign": "7cdr-032026",
+              "utm_term": "",
+              "utm_medium": "mensagem",
+              "utm_content": "",
               "id_funil": "1",
-              "id_forms": "1"
+              "instagram": "",
+              "id_forms": "2",
+              "tipo_forms": "Cadastro",
+              "pagina": "https://as7chavesdariqueza.com/optin-e/",
+              "data_cadastro": "2026-03-18 19:32:00"
             },
-            "id_situacao_checkout": 1
+            "tipo_forms": "Cadastro"
           },
           "webhookUrl": "https://n8n-n8n.yqd7ni.easypanel.host/webhook/cria-contato-ghl",
           "executionMode": "production"
@@ -2669,7 +2488,10 @@
   "settings": {
     "executionOrder": "v1",
     "callerPolicy": "workflowsFromSameOwner",
-    "errorWorkflow": "JC1jRbnEV3QDh2TT"
+    "errorWorkflow": "JC1jRbnEV3QDh2TT",
+    "timeSavedMode": "fixed",
+    "binaryMode": "separate",
+    "availableInMCP": false
   },
   "shared": [
     {
@@ -2683,6 +2505,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-03-17T16:15:23.976Z",
-  "versionId": "d4172174-1999-46b0-a88f-151cc1ec5c9d"
+  "updatedAt": "2026-03-18T23:03:20.595Z",
+  "versionId": "045870f3-9bdc-4a8f-9593-5f54c25e5a33"
 }
