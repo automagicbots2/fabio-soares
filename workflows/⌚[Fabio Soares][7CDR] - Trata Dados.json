@@ -1,14 +1,14 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-03-20T14:47:58.000Z",
-    "createdAt": "2026-03-20T14:47:19.689Z",
-    "versionId": "83d3904c-c230-464f-80a0-598b134141a0",
+    "updatedAt": "2026-03-20T17:41:06.000Z",
+    "createdAt": "2026-03-20T17:40:23.637Z",
+    "versionId": "f3f60b57-f190-4d6a-9cdb-df51919aa900",
     "workflowId": "vTuYolwZNf9vjfDr",
     "nodes": [
       {
         "parameters": {
-          "jsCode": "const body = $node[\"chega_da_fila\"].json[\"content\"][\"body\"] || {};\n\n// Captura segura dos dados (NOVO PAYLOAD)\nconst fullNameAnswer = body[\"name\"] || body[\"Nome\"] || body[\"nome_completo\"] || \"\";\nconst emailAnswer = body[\"email\"] || \"\";\nconst telefoneClienteOriginal = body[\"phonenumber\"] || body[\"phone\"] || body[\"Telefone\"] || \"\";\n\n// UTM (NOVO PAYLOAD)\nconst utm_source   = body[\"utm_source\"]   || \"\";\nconst utm_campaign = body[\"utm_campaign\"] || \"\";\nconst utm_medium   = body[\"utm_medium\"]   || \"\";\nconst utm_term     = body[\"utm_term\"]     || \"\";\nconst utm_content  = body[\"utm_content\"]  || \"\";\n\n// Form info\nconst form_id   = body[\"form_id\"]   || \"\";\nconst form_name = body[\"form_name\"] || \"\";\n\n// URL da página\nconst urlPaginaRaw = body[\"URL da página\"] || body[\"page_url\"] || body[\"url\"] || \"\";\n\n// NOVO → Data + Horário\nconst dataRaw = body[\"Data\"] || \"\";\nconst horarioRaw = body[\"Horário\"] || \"\";\n\n// Funções auxiliares\nfunction capitalizeName(fullName) {\n  if (!fullName) return { fname: \"\", lname: \"\", fullname: \"\" };\n\n  const lowerCaseWords = [\"da\", \"de\", \"do\", \"di\", \"du\"];\n  const words = String(fullName)\n    .toLowerCase()\n    .split(\" \")\n    .filter(Boolean)\n    .map((word, index) => {\n      if (lowerCaseWords.includes(word) && index !== 0) return word;\n      return word.charAt(0).toUpperCase() + word.slice(1);\n    });\n\n  const fname = words.shift() || \"\";\n  const lname = words.join(\" \");\n\n  return { fname, lname, fullname: lname ? `${fname} ${lname}` : fname };\n}\n\nfunction formatEmail(email) {\n  return String(email || \"\").toLowerCase().trim();\n}\n\n// FORMATA DATA\nfunction formatDataCadastro(dataStr, horaStr) {\n  if (!dataStr || !horaStr) return \"\";\n\n  const meses = {\n    janeiro: \"01\",\n    fevereiro: \"02\",\n    março: \"03\",\n    marco: \"03\",\n    abril: \"04\",\n    maio: \"05\",\n    junho: \"06\",\n    julho: \"07\",\n    agosto: \"08\",\n    setembro: \"09\",\n    outubro: \"10\",\n    novembro: \"11\",\n    dezembro: \"12\"\n  };\n\n  const partesData = dataStr.toLowerCase().replace(\",\", \"\").split(\" \");\n  const mes = meses[partesData[0]];\n  const dia = String(partesData[1] || \"\").padStart(2, \"0\");\n  const ano = partesData[2];\n\n  let horaNormalizada = horaStr.toLowerCase().trim();\n  let [hora, minuto] = horaNormalizada.replace(\" pm\", \"\").replace(\" am\", \"\").split(\":\");\n  hora = parseInt(hora, 10);\n\n  if (horaNormalizada.includes(\"pm\") && hora !== 12) {\n    hora += 12;\n  }\n  if (horaNormalizada.includes(\"am\") && hora === 12) {\n    hora = 0;\n  }\n\n  const horaFormatada = String(hora).padStart(2, \"0\");\n  const minutoFormatado = String(minuto || \"00\").padStart(2, \"0\");\n\n  return `${ano}-${mes}-${dia} ${horaFormatada}:${minutoFormatado}:00`;\n}\n\n// LIMPA URL E MANTÉM ATÉ O PATH\nfunction formatPageUrl(url) {\n  if (!url) return \"\";\n\n  try {\n    const parsedUrl = new URL(String(url).trim());\n    return `${parsedUrl.origin}${parsedUrl.pathname}`;\n  } catch (error) {\n    return String(url).split(\"?\")[0].split(\"#\")[0].trim();\n  }\n}\n\n// Tratamento do telefone\nfunction formatTelefone(telefone) {\n  const original = String(telefone || \"\").trim();\n  const telefoneLimpo = original.replace(/\\D/g, \"\");\n\n  if (!telefoneLimpo) return \"\";\n\n  // Se veio com + e não é +55, considera internacional e não mexe\n  if (original.startsWith(\"+\") && !telefoneLimpo.startsWith(\"55\")) {\n    return telefoneLimpo;\n  }\n\n  // Se já veio com 55, trata como número BR\n  if (telefoneLimpo.startsWith(\"55\")) {\n    const DDI = \"55\";\n    const DDD = telefoneLimpo.slice(2, 4);\n    let numero = telefoneLimpo.slice(4);\n\n    if (!DDD || !numero) return telefoneLimpo;\n\n    if (Number(DDD) > 28 && numero.length === 9 && numero.startsWith(\"9\")) {\n      numero = numero.slice(1);\n    } else if (Number(DDD) <= 28 && numero.length === 8) {\n      numero = `9${numero}`;\n    }\n\n    return `${DDI}${DDD}${numero}`;\n  }\n\n  // Se não veio com + e tem tamanho típico BR, assume nacional\n  if (telefoneLimpo.length === 10 || telefoneLimpo.length === 11) {\n    const DDI = \"55\";\n    const DDD = telefoneLimpo.slice(0, 2);\n    let numero = telefoneLimpo.slice(2);\n\n    if (!DDD || !numero) return telefoneLimpo;\n\n    if (Number(DDD) > 28 && numero.length === 9 && numero.startsWith(\"9\")) {\n      numero = numero.slice(1);\n    } else if (Number(DDD) <= 28 && numero.length === 8) {\n      numero = `9${numero}`;\n    }\n\n    return `${DDI}${DDD}${numero}`;\n  }\n\n  // Outros casos: mantém como internacional/indefinido sem adicionar 55\n  return telefoneLimpo;\n}\n\n// Formatação final\nconst formattedNames = capitalizeName(fullNameAnswer);\nconst formattedEmail = formatEmail(emailAnswer);\nconst telefoneFinal = formatTelefone(telefoneClienteOriginal);\nconst dataCadastro = formatDataCadastro(dataRaw, horarioRaw);\nconst urlPagina = formatPageUrl(urlPaginaRaw);\n\n// Resultado\nconst result = {\n  ...formattedNames,\n  email: formattedEmail,\n  whatsapp: telefoneFinal,\n  instagram: \"\",\n  cpf: \"\",\n  cnpj: \"\",\n  utm_source,\n  utm_campaign,\n  utm_term,\n  utm_medium,\n  utm_content,\n  form_id,\n  form_name,\n  page_url: urlPagina,\n  data_cadastro: dataCadastro\n};\n\nreturn [{ json: result }];"
+          "jsCode": "const body = $node[\"chega_da_fila\"].json[\"content\"][\"body\"] || {};\n\n// Captura segura dos dados (NOVO PAYLOAD)\nconst fullNameAnswer = body[\"name\"] || body[\"Nome\"] || body[\"nome_completo\"] || \"\";\nconst emailAnswer = body[\"email\"] || body[\"Email\"] || \"\";\nconst telefoneClienteOriginal = body[\"phonenumber\"] || body[\"phone\"] || body[\"Telefone\"] || \"\";\n\n// UTM (NOVO PAYLOAD)\nconst utm_source   = body[\"utm_source\"]   || \"\";\nconst utm_campaign = body[\"utm_campaign\"] || \"\";\nconst utm_medium   = body[\"utm_medium\"]   || \"\";\nconst utm_term     = body[\"utm_term\"]     || \"\";\nconst utm_content  = body[\"utm_content\"]  || \"\";\n\n// Form info\nconst form_id   = body[\"form_id\"]   || \"\";\nconst form_name = body[\"form_name\"] || \"\";\n\n// URL da página\nconst urlPaginaRaw = body[\"URL da página\"] || body[\"page_url\"] || body[\"url\"] || \"\";\n\n// NOVO → Data + Horário\nconst dataRaw = body[\"Data\"] || \"\";\nconst horarioRaw = body[\"Horário\"] || \"\";\n\n// Funções auxiliares\nfunction capitalizeName(fullName) {\n  if (!fullName) return { fname: '', lname: '', fullname: '' };\n\n  const lowerCaseWords = ['da', 'de', 'do', 'di', 'du'];\n  let words = fullName.toLowerCase().split(' ').map((word, index) => {\n    if (lowerCaseWords.includes(word) && index !== 0) return word;\n    return word.charAt(0).toUpperCase() + word.slice(1);\n  });\n\n  let fname = words.shift();\n  let lname = words.join(' ');\n\n  return { fname, lname, fullname: lname ? `${fname} ${lname}` : fname };\n}\n\nfunction formatEmail(email) {\n  return String(email || \"\").toLowerCase().trim();\n}\n\n// FORMATA DATA\nfunction formatDataCadastro(dataStr, horaStr) {\n  if (!dataStr || !horaStr) return \"\";\n\n  const meses = {\n    janeiro: \"01\",\n    fevereiro: \"02\",\n    março: \"03\",\n    marco: \"03\",\n    abril: \"04\",\n    maio: \"05\",\n    junho: \"06\",\n    julho: \"07\",\n    agosto: \"08\",\n    setembro: \"09\",\n    outubro: \"10\",\n    novembro: \"11\",\n    dezembro: \"12\"\n  };\n\n  const partesData = dataStr.toLowerCase().replace(\",\", \"\").split(\" \");\n  const mes = meses[partesData[0]];\n  const dia = String(partesData[1] || \"\").padStart(2, \"0\");\n  const ano = partesData[2];\n\n  let horaNormalizada = horaStr.toLowerCase().trim();\n  let [hora, minuto] = horaNormalizada.replace(\" pm\", \"\").replace(\" am\", \"\").split(\":\");\n  hora = parseInt(hora, 10);\n\n  if (horaNormalizada.includes(\"pm\") && hora !== 12) {\n    hora += 12;\n  }\n  if (horaNormalizada.includes(\"am\") && hora === 12) {\n    hora = 0;\n  }\n\n  const horaFormatada = String(hora).padStart(2, \"0\");\n  const minutoFormatado = String(minuto || \"00\").padStart(2, \"0\");\n\n  return `${ano}-${mes}-${dia} ${horaFormatada}:${minutoFormatado}:00`;\n}\n\n// NOVA FUNÇÃO → LIMPA URL E MANTÉM ATÉ O PATH\nfunction formatPageUrl(url) {\n  if (!url) return \"\";\n\n  try {\n    const parsedUrl = new URL(String(url).trim());\n    return `${parsedUrl.origin}${parsedUrl.pathname}`;\n  } catch (error) {\n    return String(url).split(\"?\")[0].split(\"#\")[0].trim();\n  }\n}\n\nfunction formatTelefone(telefone) {\n  const telefoneOriginal = String(telefone || \"\").trim();\n  const telefoneLimpo = telefoneOriginal.replace(/\\D/g, \"\");\n\n  if (!telefoneLimpo) return \"\";\n\n  // DDDs válidos do Brasil\n  const dddsValidos = new Set([\n    \"11\",\"12\",\"13\",\"14\",\"15\",\"16\",\"17\",\"18\",\"19\",\n    \"21\",\"22\",\"24\",\"27\",\"28\",\n    \"31\",\"32\",\"33\",\"34\",\"35\",\"37\",\"38\",\n    \"41\",\"42\",\"43\",\"44\",\"45\",\"46\",\n    \"47\",\"48\",\"49\",\n    \"51\",\"53\",\"54\",\"55\",\n    \"61\",\"62\",\"64\",\"63\",\"65\",\"66\",\"67\",\"68\",\"69\",\n    \"71\",\"73\",\"74\",\"75\",\"77\",\"79\",\n    \"81\",\"82\",\"83\",\"84\",\"85\",\"86\",\"87\",\"88\",\"89\",\n    \"91\",\"92\",\"93\",\"94\",\"95\",\"96\",\"97\",\"98\",\"99\"\n  ]);\n\n  function aplicarRegraBrasil(ddd, numero) {\n    let num = numero;\n\n    // Remove o 9º dígito para DDD > 28\n    if (Number(ddd) > 28 && num.length === 9 && num.startsWith(\"9\")) {\n      num = num.slice(1);\n    }\n    // Adiciona 9º dígito para DDD <= 28 quando vier faltando\n    else if (Number(ddd) <= 28 && num.length === 8) {\n      num = `9${num}`;\n    }\n\n    return `55${ddd}${num}`;\n  }\n\n  // 1) Brasil com DDI 55\n  if (telefoneLimpo.startsWith(\"55\")) {\n    const ddd = telefoneLimpo.slice(2, 4);\n    const numero = telefoneLimpo.slice(4);\n\n    if (dddsValidos.has(ddd)) {\n      return aplicarRegraBrasil(ddd, numero);\n    }\n\n    return telefoneLimpo;\n  }\n\n  // 2) Internacional explícito com + ou 00\n  if (\n    (telefoneOriginal.startsWith(\"+\") || telefoneOriginal.startsWith(\"00\")) &&\n    !telefoneOriginal.startsWith(\"+55\") &&\n    !telefoneOriginal.startsWith(\"0055\")\n  ) {\n    return telefoneLimpo;\n  }\n\n  // 3) Brasil sem DDI — celular brasileiro:\n  // precisa ter 11 dígitos, DDD válido e começar com 9 após o DDD\n  if (telefoneLimpo.length === 11) {\n    const ddd = telefoneLimpo.slice(0, 2);\n    const numero = telefoneLimpo.slice(2);\n\n    if (dddsValidos.has(ddd) && numero.startsWith(\"9\")) {\n      return aplicarRegraBrasil(ddd, numero);\n    }\n\n    // se não tiver cara de celular BR, assume internacional\n    return telefoneLimpo;\n  }\n\n  // 4) Brasil sem DDI — fixo brasileiro:\n  // 10 dígitos, DDD válido e primeiro dígito do número entre 2 e 5\n  if (telefoneLimpo.length === 10) {\n    const ddd = telefoneLimpo.slice(0, 2);\n    const numero = telefoneLimpo.slice(2);\n\n    if (dddsValidos.has(ddd) && /^[2-5]/.test(numero)) {\n      return aplicarRegraBrasil(ddd, numero);\n    }\n\n    return telefoneLimpo;\n  }\n\n  // 5) Qualquer outro caso: mantém só números\n  return telefoneLimpo;\n}\n\n// Formatação final\nconst formattedNames = capitalizeName(fullNameAnswer);\nconst formattedEmail = formatEmail(emailAnswer);\nconst telefoneFinal = formatTelefone(telefoneClienteOriginal);\nconst dataCadastro = formatDataCadastro(dataRaw, horarioRaw);\nconst urlPagina = formatPageUrl(urlPaginaRaw);\n\n// Resultado\nconst result = {\n  ...formattedNames,\n  email: formattedEmail,\n  whatsapp: telefoneFinal,\n  instagram: \"\",\n  cpf: \"\",\n  cnpj: \"\",\n  utm_source,\n  utm_campaign,\n  utm_term,\n  utm_medium,\n  utm_content,\n  form_id,\n  form_name,\n  page_url: urlPagina,\n  data_cadastro: dataCadastro\n};\n\nreturn [{ json: result }];"
         },
         "id": "3e3545c6-969e-4aa2-abef-6d946e84cd25",
         "name": "formata_dados",
@@ -468,11 +468,11 @@
       }
     },
     "authors": "Automagic Bots",
-    "name": "Version 83d3904c",
+    "name": "Version f3f60b57",
     "description": "",
     "autosaved": true
   },
-  "activeVersionId": "83d3904c-c230-464f-80a0-598b134141a0",
+  "activeVersionId": "f3f60b57-f190-4d6a-9cdb-df51919aa900",
   "connections": {
     "formata_dados": {
       "main": [
@@ -573,7 +573,7 @@
   "nodes": [
     {
       "parameters": {
-        "jsCode": "const body = $node[\"chega_da_fila\"].json[\"content\"][\"body\"] || {};\n\n// Captura segura dos dados (NOVO PAYLOAD)\nconst fullNameAnswer = body[\"name\"] || body[\"Nome\"] || body[\"nome_completo\"] || \"\";\nconst emailAnswer = body[\"email\"] || \"\";\nconst telefoneClienteOriginal = body[\"phonenumber\"] || body[\"phone\"] || body[\"Telefone\"] || \"\";\n\n// UTM (NOVO PAYLOAD)\nconst utm_source   = body[\"utm_source\"]   || \"\";\nconst utm_campaign = body[\"utm_campaign\"] || \"\";\nconst utm_medium   = body[\"utm_medium\"]   || \"\";\nconst utm_term     = body[\"utm_term\"]     || \"\";\nconst utm_content  = body[\"utm_content\"]  || \"\";\n\n// Form info\nconst form_id   = body[\"form_id\"]   || \"\";\nconst form_name = body[\"form_name\"] || \"\";\n\n// URL da página\nconst urlPaginaRaw = body[\"URL da página\"] || body[\"page_url\"] || body[\"url\"] || \"\";\n\n// NOVO → Data + Horário\nconst dataRaw = body[\"Data\"] || \"\";\nconst horarioRaw = body[\"Horário\"] || \"\";\n\n// Funções auxiliares\nfunction capitalizeName(fullName) {\n  if (!fullName) return { fname: \"\", lname: \"\", fullname: \"\" };\n\n  const lowerCaseWords = [\"da\", \"de\", \"do\", \"di\", \"du\"];\n  const words = String(fullName)\n    .toLowerCase()\n    .split(\" \")\n    .filter(Boolean)\n    .map((word, index) => {\n      if (lowerCaseWords.includes(word) && index !== 0) return word;\n      return word.charAt(0).toUpperCase() + word.slice(1);\n    });\n\n  const fname = words.shift() || \"\";\n  const lname = words.join(\" \");\n\n  return { fname, lname, fullname: lname ? `${fname} ${lname}` : fname };\n}\n\nfunction formatEmail(email) {\n  return String(email || \"\").toLowerCase().trim();\n}\n\n// FORMATA DATA\nfunction formatDataCadastro(dataStr, horaStr) {\n  if (!dataStr || !horaStr) return \"\";\n\n  const meses = {\n    janeiro: \"01\",\n    fevereiro: \"02\",\n    março: \"03\",\n    marco: \"03\",\n    abril: \"04\",\n    maio: \"05\",\n    junho: \"06\",\n    julho: \"07\",\n    agosto: \"08\",\n    setembro: \"09\",\n    outubro: \"10\",\n    novembro: \"11\",\n    dezembro: \"12\"\n  };\n\n  const partesData = dataStr.toLowerCase().replace(\",\", \"\").split(\" \");\n  const mes = meses[partesData[0]];\n  const dia = String(partesData[1] || \"\").padStart(2, \"0\");\n  const ano = partesData[2];\n\n  let horaNormalizada = horaStr.toLowerCase().trim();\n  let [hora, minuto] = horaNormalizada.replace(\" pm\", \"\").replace(\" am\", \"\").split(\":\");\n  hora = parseInt(hora, 10);\n\n  if (horaNormalizada.includes(\"pm\") && hora !== 12) {\n    hora += 12;\n  }\n  if (horaNormalizada.includes(\"am\") && hora === 12) {\n    hora = 0;\n  }\n\n  const horaFormatada = String(hora).padStart(2, \"0\");\n  const minutoFormatado = String(minuto || \"00\").padStart(2, \"0\");\n\n  return `${ano}-${mes}-${dia} ${horaFormatada}:${minutoFormatado}:00`;\n}\n\n// LIMPA URL E MANTÉM ATÉ O PATH\nfunction formatPageUrl(url) {\n  if (!url) return \"\";\n\n  try {\n    const parsedUrl = new URL(String(url).trim());\n    return `${parsedUrl.origin}${parsedUrl.pathname}`;\n  } catch (error) {\n    return String(url).split(\"?\")[0].split(\"#\")[0].trim();\n  }\n}\n\n// Tratamento do telefone\nfunction formatTelefone(telefone) {\n  const original = String(telefone || \"\").trim();\n  const telefoneLimpo = original.replace(/\\D/g, \"\");\n\n  if (!telefoneLimpo) return \"\";\n\n  // Se veio com + e não é +55, considera internacional e não mexe\n  if (original.startsWith(\"+\") && !telefoneLimpo.startsWith(\"55\")) {\n    return telefoneLimpo;\n  }\n\n  // Se já veio com 55, trata como número BR\n  if (telefoneLimpo.startsWith(\"55\")) {\n    const DDI = \"55\";\n    const DDD = telefoneLimpo.slice(2, 4);\n    let numero = telefoneLimpo.slice(4);\n\n    if (!DDD || !numero) return telefoneLimpo;\n\n    if (Number(DDD) > 28 && numero.length === 9 && numero.startsWith(\"9\")) {\n      numero = numero.slice(1);\n    } else if (Number(DDD) <= 28 && numero.length === 8) {\n      numero = `9${numero}`;\n    }\n\n    return `${DDI}${DDD}${numero}`;\n  }\n\n  // Se não veio com + e tem tamanho típico BR, assume nacional\n  if (telefoneLimpo.length === 10 || telefoneLimpo.length === 11) {\n    const DDI = \"55\";\n    const DDD = telefoneLimpo.slice(0, 2);\n    let numero = telefoneLimpo.slice(2);\n\n    if (!DDD || !numero) return telefoneLimpo;\n\n    if (Number(DDD) > 28 && numero.length === 9 && numero.startsWith(\"9\")) {\n      numero = numero.slice(1);\n    } else if (Number(DDD) <= 28 && numero.length === 8) {\n      numero = `9${numero}`;\n    }\n\n    return `${DDI}${DDD}${numero}`;\n  }\n\n  // Outros casos: mantém como internacional/indefinido sem adicionar 55\n  return telefoneLimpo;\n}\n\n// Formatação final\nconst formattedNames = capitalizeName(fullNameAnswer);\nconst formattedEmail = formatEmail(emailAnswer);\nconst telefoneFinal = formatTelefone(telefoneClienteOriginal);\nconst dataCadastro = formatDataCadastro(dataRaw, horarioRaw);\nconst urlPagina = formatPageUrl(urlPaginaRaw);\n\n// Resultado\nconst result = {\n  ...formattedNames,\n  email: formattedEmail,\n  whatsapp: telefoneFinal,\n  instagram: \"\",\n  cpf: \"\",\n  cnpj: \"\",\n  utm_source,\n  utm_campaign,\n  utm_term,\n  utm_medium,\n  utm_content,\n  form_id,\n  form_name,\n  page_url: urlPagina,\n  data_cadastro: dataCadastro\n};\n\nreturn [{ json: result }];"
+        "jsCode": "const body = $node[\"chega_da_fila\"].json[\"content\"][\"body\"] || {};\n\n// Captura segura dos dados (NOVO PAYLOAD)\nconst fullNameAnswer = body[\"name\"] || body[\"Nome\"] || body[\"nome_completo\"] || \"\";\nconst emailAnswer = body[\"email\"] || body[\"Email\"] || \"\";\nconst telefoneClienteOriginal = body[\"phonenumber\"] || body[\"phone\"] || body[\"Telefone\"] || \"\";\n\n// UTM (NOVO PAYLOAD)\nconst utm_source   = body[\"utm_source\"]   || \"\";\nconst utm_campaign = body[\"utm_campaign\"] || \"\";\nconst utm_medium   = body[\"utm_medium\"]   || \"\";\nconst utm_term     = body[\"utm_term\"]     || \"\";\nconst utm_content  = body[\"utm_content\"]  || \"\";\n\n// Form info\nconst form_id   = body[\"form_id\"]   || \"\";\nconst form_name = body[\"form_name\"] || \"\";\n\n// URL da página\nconst urlPaginaRaw = body[\"URL da página\"] || body[\"page_url\"] || body[\"url\"] || \"\";\n\n// NOVO → Data + Horário\nconst dataRaw = body[\"Data\"] || \"\";\nconst horarioRaw = body[\"Horário\"] || \"\";\n\n// Funções auxiliares\nfunction capitalizeName(fullName) {\n  if (!fullName) return { fname: '', lname: '', fullname: '' };\n\n  const lowerCaseWords = ['da', 'de', 'do', 'di', 'du'];\n  let words = fullName.toLowerCase().split(' ').map((word, index) => {\n    if (lowerCaseWords.includes(word) && index !== 0) return word;\n    return word.charAt(0).toUpperCase() + word.slice(1);\n  });\n\n  let fname = words.shift();\n  let lname = words.join(' ');\n\n  return { fname, lname, fullname: lname ? `${fname} ${lname}` : fname };\n}\n\nfunction formatEmail(email) {\n  return String(email || \"\").toLowerCase().trim();\n}\n\n// FORMATA DATA\nfunction formatDataCadastro(dataStr, horaStr) {\n  if (!dataStr || !horaStr) return \"\";\n\n  const meses = {\n    janeiro: \"01\",\n    fevereiro: \"02\",\n    março: \"03\",\n    marco: \"03\",\n    abril: \"04\",\n    maio: \"05\",\n    junho: \"06\",\n    julho: \"07\",\n    agosto: \"08\",\n    setembro: \"09\",\n    outubro: \"10\",\n    novembro: \"11\",\n    dezembro: \"12\"\n  };\n\n  const partesData = dataStr.toLowerCase().replace(\",\", \"\").split(\" \");\n  const mes = meses[partesData[0]];\n  const dia = String(partesData[1] || \"\").padStart(2, \"0\");\n  const ano = partesData[2];\n\n  let horaNormalizada = horaStr.toLowerCase().trim();\n  let [hora, minuto] = horaNormalizada.replace(\" pm\", \"\").replace(\" am\", \"\").split(\":\");\n  hora = parseInt(hora, 10);\n\n  if (horaNormalizada.includes(\"pm\") && hora !== 12) {\n    hora += 12;\n  }\n  if (horaNormalizada.includes(\"am\") && hora === 12) {\n    hora = 0;\n  }\n\n  const horaFormatada = String(hora).padStart(2, \"0\");\n  const minutoFormatado = String(minuto || \"00\").padStart(2, \"0\");\n\n  return `${ano}-${mes}-${dia} ${horaFormatada}:${minutoFormatado}:00`;\n}\n\n// NOVA FUNÇÃO → LIMPA URL E MANTÉM ATÉ O PATH\nfunction formatPageUrl(url) {\n  if (!url) return \"\";\n\n  try {\n    const parsedUrl = new URL(String(url).trim());\n    return `${parsedUrl.origin}${parsedUrl.pathname}`;\n  } catch (error) {\n    return String(url).split(\"?\")[0].split(\"#\")[0].trim();\n  }\n}\n\nfunction formatTelefone(telefone) {\n  const telefoneOriginal = String(telefone || \"\").trim();\n  const telefoneLimpo = telefoneOriginal.replace(/\\D/g, \"\");\n\n  if (!telefoneLimpo) return \"\";\n\n  // DDDs válidos do Brasil\n  const dddsValidos = new Set([\n    \"11\",\"12\",\"13\",\"14\",\"15\",\"16\",\"17\",\"18\",\"19\",\n    \"21\",\"22\",\"24\",\"27\",\"28\",\n    \"31\",\"32\",\"33\",\"34\",\"35\",\"37\",\"38\",\n    \"41\",\"42\",\"43\",\"44\",\"45\",\"46\",\n    \"47\",\"48\",\"49\",\n    \"51\",\"53\",\"54\",\"55\",\n    \"61\",\"62\",\"64\",\"63\",\"65\",\"66\",\"67\",\"68\",\"69\",\n    \"71\",\"73\",\"74\",\"75\",\"77\",\"79\",\n    \"81\",\"82\",\"83\",\"84\",\"85\",\"86\",\"87\",\"88\",\"89\",\n    \"91\",\"92\",\"93\",\"94\",\"95\",\"96\",\"97\",\"98\",\"99\"\n  ]);\n\n  function aplicarRegraBrasil(ddd, numero) {\n    let num = numero;\n\n    // Remove o 9º dígito para DDD > 28\n    if (Number(ddd) > 28 && num.length === 9 && num.startsWith(\"9\")) {\n      num = num.slice(1);\n    }\n    // Adiciona 9º dígito para DDD <= 28 quando vier faltando\n    else if (Number(ddd) <= 28 && num.length === 8) {\n      num = `9${num}`;\n    }\n\n    return `55${ddd}${num}`;\n  }\n\n  // 1) Brasil com DDI 55\n  if (telefoneLimpo.startsWith(\"55\")) {\n    const ddd = telefoneLimpo.slice(2, 4);\n    const numero = telefoneLimpo.slice(4);\n\n    if (dddsValidos.has(ddd)) {\n      return aplicarRegraBrasil(ddd, numero);\n    }\n\n    return telefoneLimpo;\n  }\n\n  // 2) Internacional explícito com + ou 00\n  if (\n    (telefoneOriginal.startsWith(\"+\") || telefoneOriginal.startsWith(\"00\")) &&\n    !telefoneOriginal.startsWith(\"+55\") &&\n    !telefoneOriginal.startsWith(\"0055\")\n  ) {\n    return telefoneLimpo;\n  }\n\n  // 3) Brasil sem DDI — celular brasileiro:\n  // precisa ter 11 dígitos, DDD válido e começar com 9 após o DDD\n  if (telefoneLimpo.length === 11) {\n    const ddd = telefoneLimpo.slice(0, 2);\n    const numero = telefoneLimpo.slice(2);\n\n    if (dddsValidos.has(ddd) && numero.startsWith(\"9\")) {\n      return aplicarRegraBrasil(ddd, numero);\n    }\n\n    // se não tiver cara de celular BR, assume internacional\n    return telefoneLimpo;\n  }\n\n  // 4) Brasil sem DDI — fixo brasileiro:\n  // 10 dígitos, DDD válido e primeiro dígito do número entre 2 e 5\n  if (telefoneLimpo.length === 10) {\n    const ddd = telefoneLimpo.slice(0, 2);\n    const numero = telefoneLimpo.slice(2);\n\n    if (dddsValidos.has(ddd) && /^[2-5]/.test(numero)) {\n      return aplicarRegraBrasil(ddd, numero);\n    }\n\n    return telefoneLimpo;\n  }\n\n  // 5) Qualquer outro caso: mantém só números\n  return telefoneLimpo;\n}\n\n// Formatação final\nconst formattedNames = capitalizeName(fullNameAnswer);\nconst formattedEmail = formatEmail(emailAnswer);\nconst telefoneFinal = formatTelefone(telefoneClienteOriginal);\nconst dataCadastro = formatDataCadastro(dataRaw, horarioRaw);\nconst urlPagina = formatPageUrl(urlPaginaRaw);\n\n// Resultado\nconst result = {\n  ...formattedNames,\n  email: formattedEmail,\n  whatsapp: telefoneFinal,\n  instagram: \"\",\n  cpf: \"\",\n  cnpj: \"\",\n  utm_source,\n  utm_campaign,\n  utm_term,\n  utm_medium,\n  utm_content,\n  form_id,\n  form_name,\n  page_url: urlPagina,\n  data_cadastro: dataCadastro\n};\n\nreturn [{ json: result }];"
       },
       "id": "3e3545c6-969e-4aa2-abef-6d946e84cd25",
       "name": "formata_dados",
@@ -948,8 +948,8 @@
         "json": {
           "headers": {
             "host": "n8n-n8n.yqd7ni.easypanel.host",
-            "user-agent": "WordPress/6.9.4; https://as7chavesdariqueza.com",
-            "content-length": "552",
+            "user-agent": "WordPress/6.9.4; https://ofunilperfeito.com",
+            "content-length": "645",
             "accept": "*/*",
             "accept-encoding": "deflate, gzip",
             "content-type": "application/x-www-form-urlencoded",
@@ -963,23 +963,22 @@
           "params": {},
           "query": {},
           "body": {
-            "Nome": "Mateus Porto",
-            "Telefone": "+5531992796934",
-            "E-mail": "contato.mportob@gmail.com",
-            "utm_campaign": "",
+            "Nome": "Vanessa Soares",
+            "Telefone": "+14078138483",
+            "Email": "vanessasoares.fv@gmail.com",
+            "utm_campaign": "7cdr-032026",
             "utm_term": "",
-            "utm_medium": "",
-            "utm_source": "",
+            "utm_medium": "mensagem",
+            "utm_source": "whatsapp",
             "utm_content": "",
-            "id_formulario": "9d13775_silver",
-            "Data": "março 18, 2026",
-            "Horário": "1:59 pm",
-            "URL da página": "https://as7chavesdariqueza.com/optin-a/?#inscricao",
+            "Data": "março 20, 2026",
+            "Horário": "2:03 pm",
+            "URL da página": "https://ofunilperfeito.com/optin-e/?utm_campaign=7cdr-032026&utm_medium=mensagem&utm_source=whatsapp#stack",
             "Agente de usuário": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36",
-            "IP remoto": "187.20.21.142",
+            "IP remoto": "2804:1b2:1000:8a35:1fe:2f39:6421:1e9a",
             "Desenvolvido por": "Elementor",
             "form_id": "9d13775",
-            "form_name": "Ingresso Silver"
+            "form_name": "Silver"
           },
           "webhookUrl": "https://n8n-n8n.yqd7ni.easypanel.host/webhook/cdr-trata-dados-ca",
           "executionMode": "production"
@@ -990,8 +989,8 @@
       {
         "json": {
           "fields": {
-            "consumerTag": "amq.ctag-BBwcutKSwTBUZjOx4dhheA",
-            "deliveryTag": 4,
+            "consumerTag": "amq.ctag-5qMhQPMETv_dqLjm4Y-R9g",
+            "deliveryTag": 2,
             "redelivered": false,
             "exchange": "",
             "routingKey": "[fabio soares] - Trata Dados CDR"
@@ -1002,38 +1001,48 @@
           "content": {
             "headers": {
               "host": "n8n-n8n.yqd7ni.easypanel.host",
-              "user-agent": "WordPress/6.9.4; https://as7chavesdariqueza.com",
-              "content-length": "646",
+              "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36",
+              "content-length": "542",
               "accept": "*/*",
-              "accept-encoding": "deflate, gzip",
-              "content-type": "application/x-www-form-urlencoded",
-              "x-forwarded-for": "203.159.80.234",
+              "accept-encoding": "gzip, deflate, br, zstd",
+              "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+              "content-type": "application/json",
+              "origin": "https://ofunilperfeito.com",
+              "priority": "u=1, i",
+              "referer": "https://ofunilperfeito.com/",
+              "sec-ch-ua": "\"Chromium\";v=\"146\", \"Not-A.Brand\";v=\"24\", \"Google Chrome\";v=\"146\"",
+              "sec-ch-ua-mobile": "?0",
+              "sec-ch-ua-platform": "\"Windows\"",
+              "sec-fetch-dest": "empty",
+              "sec-fetch-mode": "cors",
+              "sec-fetch-site": "cross-site",
+              "x-forwarded-for": "177.40.200.157",
               "x-forwarded-host": "n8n-n8n.yqd7ni.easypanel.host",
               "x-forwarded-port": "443",
               "x-forwarded-proto": "https",
               "x-forwarded-server": "95876c3beb17",
-              "x-real-ip": "203.159.80.234"
+              "x-real-ip": "177.40.200.157"
             },
             "params": {},
             "query": {},
             "body": {
-              "Nome": "gabriel",
-              "Telefone": "+11955835870",
-              "E-mail": "teste@automagicbots.com.br",
-              "utm_campaign": "7cdr-032026",
-              "utm_term": "",
-              "utm_medium": "mensagem",
+              "tempId": "1774028251656-177",
+              "form_id": "elementor-popup-modal-582",
+              "form_name": "Form Silver",
+              "offer_type": "silver",
+              "name": "Vanessa Soares",
+              "email": "vanessasoares.fv@gmail.com",
+              "phone": "14078138483",
               "utm_source": "whatsapp",
+              "utm_medium": "mensagem",
+              "utm_campaign": "7cdr-032026",
               "utm_content": "",
-              "id_formulario": "9d13775_silver",
-              "Data": "março 18, 2026",
-              "Horário": "7:32 pm",
-              "URL da página": "https://as7chavesdariqueza.com/optin-e/?utm_campaign=7cdr-032026&utm_medium=mensagem&utm_source=whatsapp#stack",
-              "Agente de usuário": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36",
-              "IP remoto": "177.40.200.157",
-              "Desenvolvido por": "Elementor",
-              "form_id": "9d13775",
-              "form_name": "Ingresso Silver"
+              "utm_term": "",
+              "path": "/optin-b/",
+              "page_url": "https://ofunilperfeito.com/optin-b/?utm_campaign=7cdr-032026&utm_medium=mensagem&utm_source=whatsapp#stack",
+              "sck": "whatsapp|mensagem|7cdr-032026|||/optin-b/",
+              "Data": "março 20, 2026",
+              "Horário": "2:37 pm"
             },
             "webhookUrl": "https://n8n-n8n.yqd7ni.easypanel.host/webhook/cdr-trata-dados-ca",
             "executionMode": "production"
@@ -1066,6 +1075,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 2,
-  "updatedAt": "2026-03-20T14:47:36.843Z",
-  "versionId": "83d3904c-c230-464f-80a0-598b134141a0"
+  "updatedAt": "2026-03-20T17:40:40.566Z",
+  "versionId": "f3f60b57-f190-4d6a-9cdb-df51919aa900"
 }
