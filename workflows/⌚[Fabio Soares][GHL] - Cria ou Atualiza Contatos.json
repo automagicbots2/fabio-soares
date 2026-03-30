@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-03-18T23:03:06.000Z",
-    "createdAt": "2026-03-18T22:56:21.620Z",
-    "versionId": "045870f3-9bdc-4a8f-9593-5f54c25e5a33",
+    "updatedAt": "2026-03-30T15:05:33.000Z",
+    "createdAt": "2026-03-30T15:05:14.994Z",
+    "versionId": "559eab95-de9e-4e5c-87bc-9054d2954521",
     "workflowId": "fD0qAgNM6ackkDpv",
     "nodes": [
       {
@@ -15,7 +15,7 @@
         "type": "n8n-nodes-base.webhook",
         "typeVersion": 2,
         "position": [
-          -4592,
+          -4688,
           320
         ],
         "id": "cf12c0b0-71ef-403e-a37f-7d7482850db6",
@@ -1215,11 +1215,11 @@
       }
     },
     "authors": "Automagic Bots",
-    "name": "Version 045870f3",
+    "name": "Current changes",
     "description": "",
     "autosaved": true
   },
-  "activeVersionId": "045870f3-9bdc-4a8f-9593-5f54c25e5a33",
+  "activeVersionId": "559eab95-de9e-4e5c-87bc-9054d2954521",
   "connections": {
     "fluxo_chamado": {
       "main": [
@@ -1581,7 +1581,7 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
       "position": [
-        -4592,
+        -4688,
         320
       ],
       "id": "cf12c0b0-71ef-403e-a37f-7d7482850db6",
@@ -2443,7 +2443,7 @@
           "headers": {
             "host": "n8n-n8n.yqd7ni.easypanel.host",
             "user-agent": "axios/1.13.5",
-            "content-length": "448",
+            "content-length": "550",
             "accept": "application/json,text/html,application/xhtml+xml,application/xml,text/*;q=0.9, image/*;q=0.8, */*;q=0.7",
             "accept-encoding": "gzip, compress, deflate, br",
             "content-type": "application/json",
@@ -2457,25 +2457,25 @@
           "params": {},
           "query": {},
           "body": {
-            "id_etapa_funil": 1,
-            "id_funil": "1",
-            "id_user": 1091,
+            "id_etapa_funil": 5,
+            "id_funil": "2",
+            "id_user": 1287,
             "payload": {
-              "nome": "Gabriel",
-              "sobrenome": "",
-              "email": "teste@automagicbots.com.br",
-              "telefone": "5511955835870",
-              "utm_source": "whatsapp",
-              "utm_campaign": "7cdr-032026",
-              "utm_term": "",
-              "utm_medium": "mensagem",
-              "utm_content": "",
-              "id_funil": "1",
+              "nome": "Maisa",
+              "sobrenome": "Cristina Justino de Paula",
+              "email": "maisacjpaula@gmail.com",
+              "telefone": "016981258814",
+              "utm_source": "facebook",
+              "utm_campaign": "[A7CDR] VENDAS | ESCALA | CBO | PAG-A | VID | PIXEL DCDR | 180D - 13/03/26",
+              "utm_term": "ig_Instagram_Stories",
+              "utm_medium": "cpc",
+              "utm_content": "120244445968510672",
+              "id_funil": "2",
               "instagram": "",
-              "id_forms": "2",
+              "id_forms": "3",
               "tipo_forms": "Cadastro",
-              "pagina": "https://as7chavesdariqueza.com/optin-e/",
-              "data_cadastro": "2026-03-18 19:32:00"
+              "pagina": "https://ofunilperfeito.com/",
+              "data_cadastro": "2026-03-25 09:03:00"
             },
             "tipo_forms": "Cadastro"
           },
@@ -2505,6 +2505,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-03-18T23:03:20.595Z",
-  "versionId": "045870f3-9bdc-4a8f-9593-5f54c25e5a33"
+  "updatedAt": "2026-03-30T15:05:19.283Z",
+  "versionId": "559eab95-de9e-4e5c-87bc-9054d2954521"
 }
